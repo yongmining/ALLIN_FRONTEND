@@ -1,0 +1,19 @@
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.camera-text {
+  margin-top: 5%; /* 필요에 따라 여백 조정 */
+}
+
+video {
+  width: 40%;
+  border: 3px solid black;
+  transform: scaleX(-1); /* 수평 반전 */
+}
+
+body {
+  background-color: #ffe5d5;
+}

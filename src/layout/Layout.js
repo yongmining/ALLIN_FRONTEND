@@ -1,4 +1,5 @@
 
+import { Outlet } from 'react-router-dom';
 import '../css/common.css';
 import Header from '../component/Header';
 import Socialkakao from '../component/kakaologin'
@@ -12,6 +13,7 @@ function Layout() {
       
       <Header />
       <Home />
+     <Outlet />
       <Socialkakao />
       <Unlogin />
       <Footer />
