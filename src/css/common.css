@@ -1,0 +1,15 @@
+.headerLogo {
+  display: flex;
+  align-items: center;
+}
+
+.headerLogo img {
+  width: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.username {
+  margin-left: auto;
+  margin-right: 20px;
+}
