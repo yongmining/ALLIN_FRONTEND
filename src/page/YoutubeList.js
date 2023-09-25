@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function YouTubeList({ videoId }) {
+function YoutubeList({ videoId }) {
   const [videoData, setVideoData] = useState(null);
   const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -29,4 +29,4 @@ function YouTubeList({ videoId }) {
   );
 }
 
-export default YouTubeList;
+export default YoutubeList;
