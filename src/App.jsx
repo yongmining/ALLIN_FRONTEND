@@ -1,4 +1,6 @@
 import React from 'react';
+import TakePicture from './page/takePiceture';
+import React from "react";
 import Home from './component/home';
 import Contents from './component/contents/contents';
 import Contentsdetails from './component/contents/contentsdetails';
