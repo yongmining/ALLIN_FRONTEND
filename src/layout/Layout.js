@@ -1,19 +1,17 @@
-
 import { Outlet } from 'react-router-dom';
 import '../css/common.css';
-import Header from '../component/Header';
-import Socialkakao from '../component/kakaologin'
-import Unlogin from '../component/unlogin'
-import Footer from '../component/footer'
-import Home from '../component/home'
+import Header from '../component/header';
+import Socialkakao from '../component/kakaologin';
+import Unlogin from '../component/unlogin';
+import Footer from '../component/footer';
+import Home from '../component/home';
 
-function Layout() {
+function layout() {
   return (
     <>
-      
       <Header />
       <Home />
-     <Outlet />
+      <Outlet />
       <Socialkakao />
       <Unlogin />
       <Footer />
@@ -21,4 +19,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default layout;
