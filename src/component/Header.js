@@ -4,7 +4,11 @@ function Header() {
     <div>
       <div className="headerLogo">
         <img src="/img/logo.png" alt="Logo" />
+        <Link to="/" className="custom-link">
+          All-in
+        </Link>
         <Link to="/">All-in</Link>
+        <Link to="/contents">contents</Link>
         <div className="username">
           <h5>사용자 이름</h5>
         </div>

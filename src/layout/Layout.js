@@ -6,6 +6,7 @@ import Unlogin from "../component/unlogin";
 import Footer from "../component/footer";
 import Home from "../component/home";
 
+
 function Layout() {
   return (
     <>
