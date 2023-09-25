@@ -1,6 +1,7 @@
 import React from "react";
 import Contentsitem from "./contentsitem";
 
+
 const Contentdata = [
 	{
 		title: "Lorem ipsum, dolor sit",
@@ -31,7 +32,7 @@ const Contents = () => {
 			<h3>All contents</h3>
 			<div className="Contents">
 				{Contentdata.map((item, i) => (
-					<Contentsitem key={i} project={item}></Contentsitem>
+					<Contentsitem key={i} content={item}></Contentsitem>
 				))}
 			</div>
 		</div>
