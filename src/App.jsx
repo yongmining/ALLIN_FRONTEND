@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './layout/layout';
 import MainContents from './page/mainContents';
 import YouTubeList from './page/youtubeList'; // YouTubeList 컴포넌트 임포트
+import Profile from "./component/profile";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="MainContents" element={<MainContents />} />
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
-
+          <Route path="profile" element={<Profile />} />
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
           </Route>

@@ -1,20 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
-
 const Home = () => {
-    return (
-        <nav>
-            <div className="logo">
-                <Link to="/">All-in</Link>
-            </div>
-            <div className="nav-links">
-                <Link to="/">Home</Link>
-                <Link to="../contents/contents">contents</Link>
-            </div>
-        </nav>
-    );
+  return (
+    <div>
+      <div className="home">
+        <p>You Film Face?</p>
+      </div>
+      <div className="home">
+        <p>감정을 보여주세요</p>
+        <Link to="./profile">프로필</Link>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
