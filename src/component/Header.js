@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
-
 function Header() {
   return (
     <div>
       <div className="headerLogo">
         <img src="/img/logo.png" alt="Logo" />
+        <Link to="/" className="custom-link">
+          All-in
+        </Link>
         <Link to="/">All-in</Link>
         <Link to="/contents">contents</Link>
         <div className="username">

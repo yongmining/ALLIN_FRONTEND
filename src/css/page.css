@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: auto;
+  height: 85vh;
 }
 
 .camera-text {
@@ -16,4 +18,10 @@ video {
 
 body {
   background-color: #ffe5d5;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 20px;
+  }
 }
