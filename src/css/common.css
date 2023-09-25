@@ -24,3 +24,23 @@
 .unlogin {
   text-align: center;
 }
+
+
+.contents {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 15px;
+}
+
+.contents .content-item {
+	border: 1px solid;
+	padding: 0 10px;
+}
+.contents .content-item:hover {
+	border-color: rgb(248, 224, 86);
+}
+
+.contents .content-item a {
+	color: initial;
+	text-decoration: none;
+}
