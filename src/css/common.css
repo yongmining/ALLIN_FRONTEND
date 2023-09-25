@@ -4,7 +4,7 @@
 }
 
 .headerLogo img {
-  width: 3%;
+  width: 4%;
   margin-left: 1%;
   margin-right: 1%;
   margin-top: 1%;
@@ -23,4 +23,16 @@
 
 .unlogin {
   text-align: center;
+}
+
+.custom-link {
+  color: black;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+/* 마우스가 위에 있을 때의 스타일 */
+.custom-link:hover {
+  cursor: pointer; /* 마우스 포인터로 변경 */
+  text-decoration: underline; /* 밑줄 추가 (원하는 스타일로 변경 가능) */
 }
