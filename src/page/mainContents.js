@@ -1,5 +1,6 @@
-//import React, { useRef, useEffect } from "react";
-import "../css/mainContents.css";
+import React, { useRef, useEffect } from 'react';
+import '../css/mainContents.css';
+
 
 function mainContents() {
   return (

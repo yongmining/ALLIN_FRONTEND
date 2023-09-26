@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../css/youtubeList.css';
 
-function YoutubeList() {
+function ExersizeList() {
   const videoIds = ['6VEnTQ2rx_4', '5V0LrWVmKRA', 'bTUKUB8CI_4', 'VuDY1PBAuWU', 'EOCZYxmi7ho', '9avkrmhScQk'];
   const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -40,4 +40,4 @@ function YoutubeList() {
   );
 }
 
-export default YoutubeList;
+export default ExersizeList;

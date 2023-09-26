@@ -7,6 +7,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './layout/layout';
 import MainContents from './page/mainContents';
 import YouTubeList from './page/youtubeList'; // YouTubeList 컴포넌트 임포트
+import Consulting from './page/consulting';
+import MusicList from './page/musicList';
+import ExersizeList from './page/exersizeList';
 import Profile from "./component/profile";
 import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
@@ -30,6 +33,9 @@ function App() {
             <Route index element={<MainContents />} />
           </Route>
           <Route path="/youtubeList" element={<YouTubeList videoId="6VEnTQ2rx_4" />} />
+          <Route path="/exersizeList" element={<ExersizeList videoId="6VEnTQ2rx_4" />} />
+          <Route path="/musicList" element={<MusicList videoId="6VEnTQ2rx_4" />} />
+          {/* <Route path="/consulting" element={<Consulting />} /> */}
           <Route path="/feedback" element={<FeedBack />} />
           <Route path="/fbmodal" element={<FbModal />} />
           <Route path="/clinic" element={<Clinic />} />
