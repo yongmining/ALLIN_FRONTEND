@@ -1,20 +1,19 @@
-import BookList from "./page/recommendContent/bookList";
-import React from "react";
-import TakePicture from "./page/takePicture";
-import Home from "./page/home";
-import Contents from "./component/contents/contents";
-import Contentsdetails from "./component/contents/contentsdetails";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./layout/layout";
-import MainContents from "./page/profile/mainContents";
-import YouTubeList from "./page/recommendContent/youtubeList"; // YouTubeList 컴포넌트 임포트
-import Consulting from "./page/consulting";
-import MusicList from "./page/recommendContent/musicList";
-import ExerciseList from "./page/recommendContent/exerciseList";
-import Profile from "./page/profile/profile";
-import FeedBack from "./page/feedback";
-import FbModal from "./component/modal/fbModal";
-import Clinic from "./page/recommendContent/clinic";
+import BookList from './page/recommendContent/bookList';
+import React from 'react';
+import TakePicture from './page/takePicture';
+import Home from './page/home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './layout/layout';
+import MainContents from './page/profile/mainContents';
+import YouTubeList from './page/recommendContent/youtubeList'; // YouTubeList 컴포넌트 임포트
+import Consulting from './page/consulting';
+import MusicList from './page/recommendContent/musicList';
+import ExersizeList from './page/recommendContent/exersizeList';
+import Profile from './page/profile/profile';
+import FeedBack from './page/feedback';
+import FbModal from './component/modal/fbModal';
+import Clinic from './page/recommendContent/clinic';
+
 
 function App() {
   return (
@@ -24,8 +23,6 @@ function App() {
           {/* <Route index element={<MainPage />} /> */}
           <Route path="takepicture" element={<TakePicture />} />
           <Route path="/" element={<Home />} />
-          <Route path="contents" element={<Contents />} />
-          <Route path="contents/:id" element={<Contentsdetails />} />
           {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
