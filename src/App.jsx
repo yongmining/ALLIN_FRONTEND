@@ -2,8 +2,6 @@ import BookList from './page/recommendContent/bookList';
 import React from 'react';
 import TakePicture from './page/takePicture';
 import Home from './page/home';
-import Contents from './component/contents/contents';
-import Contentsdetails from './component/contents/contentsdetails';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './layout/layout';
 import MainContents from './page/profile/mainContents';
@@ -24,8 +22,6 @@ function App() {
           {/* <Route index element={<MainPage />} /> */}
           <Route path="takepicture" element={<TakePicture />} />
           <Route path="/" element={<Home />} />
-          <Route path="contents" element={<Contents />} />
-          <Route path="contents/:id" element={<Contentsdetails />} />
           {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
