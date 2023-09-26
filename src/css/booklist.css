@@ -1,0 +1,38 @@
+.booklist-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.book-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.book-img {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.book-img-size {
+  width: 50%;
+  height: auto;
+}
+
+.book-text {
+  width: 60%;
+  font-size: 24px;
+  padding-left: 20px;
+}
+
+@media (max-width: 769px) {
+  .book-img-size {
+    width: 60%;
+  }
+
+  .book-text {
+    font-size: 16px;
+  }
+}

@@ -1,30 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+// import "../css/youtubeList.css"; // or import './YoutubeList.css'; if you name it differently
 
-function YoutubeList({ videoId }) {
-  const [videoData, setVideoData] = useState(null);
+function YoutubeList() {
+  const videoIds = ["6VEnTQ2rx_4", "5V0LrWVmKRA", "bTUKUB8CI_4", "VuDY1PBAuWU"];
   const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
 
-  useEffect(() => {
-    fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const snippet = data.items[0].snippet;
-        setVideoData({
-          title: snippet.title,
-          thumbnail: snippet.thumbnails.medium.url,
-          link: `https://www.youtube.com/watch?v=${videoId}`,
-        });
-      });
-  }, [videoId, apiKey]);
+  const [videosData, setVideosData] = useState([]);
 
-  if (!videoData) return null;
+  useEffect(() => {
+    Promise.all(
+      videoIds.map((videoId) =>
+        fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            const snippet = data.items[0].snippet;
+            return {
+              title: snippet.title,
+              thumbnail: snippet.thumbnails.medium.url,
+              link: `https://www.youtube.com/watch?v=${videoId}`,
+            };
+          })
+      )
+    ).then((videos) => setVideosData(videos));
+  }, [apiKey]);
+
+  if (videosData.length === 0) return null;
 
   return (
-    <div>
-      <a href={videoData.link} target="_blank" rel="noopener noreferrer">
-        <img src={videoData.thumbnail} alt={videoData.title} />
-        <h3>{videoData.title}</h3>
-      </a>
+    <div className="videoContainer">
+      {videosData.map((video) => (
+        <div className="videoItem" key={video.link}>
+          <a href={video.link} target="_blank" rel="noopener noreferrer">
+            <img src={video.thumbnail} alt={video.title} />
+            <h3>{video.title}</h3>
+          </a>
+        </div>
+      ))}
     </div>
   );
 }
