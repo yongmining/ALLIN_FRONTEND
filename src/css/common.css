@@ -36,21 +36,31 @@
   cursor: pointer; /* 마우스 포인터로 변경 */
   text-decoration: underline; /* 밑줄 추가 (원하는 스타일로 변경 가능) */
 }
-.contents {
+
+.home {
+  text-align: center;
+}
+
+.profile-text {
+  align-items: center;
+}
+
+.Contents {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 15px;
 }
 
-.contents .content-item {
+.Contents .content-item {
   border: 1px solid;
   padding: 0 10px;
 }
-.contents .content-item:hover {
+
+.Contents .content-item:hover {
   border-color: rgb(248, 224, 86);
 }
 
-.contents .content-item a {
+.Contents .content-item a {
   color: initial;
   text-decoration: none;
 }
