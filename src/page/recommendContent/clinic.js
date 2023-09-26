@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/clinic.css';
+import '../../css/clinic.css';
 
 function Clinic() {
   return (

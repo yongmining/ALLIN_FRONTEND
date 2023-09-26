@@ -1,20 +1,20 @@
-import BookList from "./page/bookList";
+import BookList from './page/recommendContent/bookList';
 import React from 'react';
 import TakePicture from './page/takePicture';
-import Home from './component/home';
+import Home from './page/home';
 import Contents from './component/contents/contents';
 import Contentsdetails from './component/contents/contentsdetails';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './layout/layout';
-import MainContents from './page/mainContents';
-import YouTubeList from './page/youtubeList'; // YouTubeList 컴포넌트 임포트
+import MainContents from './page/profile/mainContents';
+import YouTubeList from './page/recommendContent/youtubeList'; // YouTubeList 컴포넌트 임포트
 import Consulting from './page/consulting';
-import MusicList from './page/musicList';
-import ExersizeList from './page/exersizeList';
-import Profile from "./component/profile";
+import MusicList from './page/recommendContent/musicList';
+import ExersizeList from './page/recommendContent/exersizeList';
+import Profile from './page/profile/profile';
 import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
-import Clinic from './page/clinic';
+import Clinic from './page/recommendContent/clinic';
 
 function App() {
   return (

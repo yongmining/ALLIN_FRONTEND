@@ -1,16 +1,16 @@
-import React, { useRef, useEffect } from "react";
-import "../css/mainContents.css";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useEffect } from 'react';
+import '../../css/mainContents.css';
+import { useNavigate } from 'react-router-dom';
 
 function MainContents() {
   const navigate = useNavigate();
 
   const goToYoutube = () => {
-    navigate("/choicecontents/YouTubeList");
+    navigate('/choicecontents/YouTubeList');
   };
 
   const goToBook = () => {
-    navigate("/choicecontents/bookList");
+    navigate('/choicecontents/bookList');
   };
 
   return (
