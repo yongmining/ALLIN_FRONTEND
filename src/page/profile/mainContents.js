@@ -1,16 +1,22 @@
-import React, { useRef, useEffect } from 'react';
-import '../../css/mainContents.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useEffect } from "react";
+import "../../css/mainContents.css";
+import { useNavigate } from "react-router-dom";
 
 function MainContents() {
   const navigate = useNavigate();
 
   const goToYoutube = () => {
-    navigate('/choicecontents/YouTubeList');
+    navigate("/choicecontents/YouTubeList");
   };
 
   const goToBook = () => {
-    navigate('/choicecontents/bookList');
+    navigate("/choicecontents/bookList");
+  };
+  const goToMusic = () => {
+    navigate("/choicecontents/musicList");
+  };
+  const goToExercise = () => {
+    navigate("/choicecontents/exerciseList");
   };
 
   return (
@@ -39,8 +45,12 @@ function MainContents() {
           </button>
         </div>
         <div className="choice-btn">
-          <button className="choice-btns">노래</button>
-          <button className="choice-btns">운동</button>
+          <button className="choice-btns" onClick={goToMusic}>
+            노래
+          </button>
+          <button className="choice-btns" onClick={goToExercise}>
+            운동
+          </button>
           <button className="choice-btns">상담</button>
         </div>
       </div>
