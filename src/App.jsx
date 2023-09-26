@@ -1,3 +1,4 @@
+import BookList from "./page/bookList";
 import React from 'react';
 import TakePicture from './page/takePicture';
 import Home from './component/home';
@@ -25,12 +26,17 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="contents" element={<Contents />} />
           <Route path="contents/:id" element={<Contentsdetails />} />
-          <Route path="MainContents" element={<MainContents />} />
+          {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
           <Route path="profile" element={<Profile />} />
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
+            <Route path="bookList" element={<BookList />} />
+            {/* <Route
+              path="/youtubeList"
+              element={<YouTubeList videoId="6VEnTQ2rx_4" />}
+            /> */}
           </Route>
           <Route path="/youtubeList" element={<YouTubeList videoId="6VEnTQ2rx_4" />} />
           <Route path="/exersizeList" element={<ExersizeList videoId="6VEnTQ2rx_4" />} />

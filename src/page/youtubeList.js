@@ -10,7 +10,10 @@ function YoutubeList() {
   useEffect(() => {
     Promise.all(
       videoIds.map((videoId) =>
-        fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`)
+        fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`
+        )
+
           .then((response) => response.json())
           .then((data) => {
             const snippet = data.items[0].snippet;
