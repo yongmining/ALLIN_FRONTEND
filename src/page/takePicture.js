@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import '../css/page.css';
+import React, { useRef, useEffect } from "react";
+import "../css/page.css";
 
 function TakePicture() {
   const videoRef = useRef(null);
@@ -13,7 +13,7 @@ function TakePicture() {
             videoRef.current.srcObject = stream;
           }
         })
-        .catch((err) => console.error('Error accessing camera:', err));
+        .catch((err) => console.error("Error accessing camera:", err));
     }
   }, []);
 

@@ -14,6 +14,7 @@ import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
 import Clinic from './page/recommendContent/clinic';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -26,17 +27,24 @@ function App() {
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
           <Route path="profile" element={<Profile />} />
+
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
             <Route path="bookList" element={<BookList />} />
-            {/* <Route
-              path="/youtubeList"
+            <Route
+              path="youtubeList"
               element={<YouTubeList videoId="6VEnTQ2rx_4" />}
-            /> */}
+            />
+            <Route
+              path="exerciseList"
+              element={<ExerciseList videoId="6VEnTQ2rx_4" />}
+            />
+            <Route
+              path="musicList"
+              element={<MusicList videoId="6VEnTQ2rx_4" />}
+            />
           </Route>
-          <Route path="/youtubeList" element={<YouTubeList videoId="6VEnTQ2rx_4" />} />
-          <Route path="/exersizeList" element={<ExersizeList videoId="6VEnTQ2rx_4" />} />
-          <Route path="/musicList" element={<MusicList videoId="6VEnTQ2rx_4" />} />
+
           {/* <Route path="/consulting" element={<Consulting />} /> */}
           <Route path="/feedback" element={<FeedBack />} />
           <Route path="/fbmodal" element={<FbModal />} />

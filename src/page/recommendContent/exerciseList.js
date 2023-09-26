@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react';
-import '../../css/youtubeList.css';
+import { useEffect, useState } from "react";
+import "../../css/youtubeList.css";
 
-function ExersizeList() {
-  const videoIds = ['6VEnTQ2rx_4', '5V0LrWVmKRA', 'bTUKUB8CI_4', 'VuDY1PBAuWU', 'EOCZYxmi7ho', '9avkrmhScQk'];
+function ExerciseList() {
+  const videoIds = [
+    "6VEnTQ2rx_4",
+    "5V0LrWVmKRA",
+    "bTUKUB8CI_4",
+    "VuDY1PBAuWU",
+    "EOCZYxmi7ho",
+    "9avkrmhScQk",
+  ];
   const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
 
   const [videosData, setVideosData] = useState([]);
@@ -10,7 +17,9 @@ function ExersizeList() {
   useEffect(() => {
     Promise.all(
       videoIds.map((videoId) =>
-        fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`)
+        fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`
+        )
           .then((response) => response.json())
           .then((data) => {
             const snippet = data.items[0].snippet;
@@ -40,4 +49,4 @@ function ExersizeList() {
   );
 }
 
-export default ExersizeList;
+export default ExerciseList;
