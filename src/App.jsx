@@ -8,12 +8,11 @@ import MainContents from './page/profile/mainContents';
 import YouTubeList from './page/recommendContent/youtubeList'; // YouTubeList 컴포넌트 임포트
 import Consulting from './page/consulting';
 import MusicList from './page/recommendContent/musicList';
-import ExersizeList from './page/recommendContent/exersizeList';
+import ExerciseList from './page/recommendContent/exerciseList';
 import Profile from './page/profile/profile';
 import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
 import Clinic from './page/recommendContent/clinic';
-
 
 function App() {
   return (
@@ -31,18 +30,9 @@ function App() {
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
             <Route path="bookList" element={<BookList />} />
-            <Route
-              path="youtubeList"
-              element={<YouTubeList videoId="6VEnTQ2rx_4" />}
-            />
-            <Route
-              path="exerciseList"
-              element={<ExerciseList videoId="6VEnTQ2rx_4" />}
-            />
-            <Route
-              path="musicList"
-              element={<MusicList videoId="6VEnTQ2rx_4" />}
-            />
+            <Route path="youtubeList" element={<YouTubeList videoId="6VEnTQ2rx_4" />} />
+            <Route path="exerciseList" element={<ExerciseList videoId="6VEnTQ2rx_4" />} />
+            <Route path="musicList" element={<MusicList videoId="6VEnTQ2rx_4" />} />
           </Route>
 
           {/* <Route path="/consulting" element={<Consulting />} /> */}
