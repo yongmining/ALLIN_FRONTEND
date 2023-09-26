@@ -10,6 +10,10 @@ import YouTubeList from './page/youtubeList'; // YouTubeList 컴포넌트 임포
 import Consulting from './page/consulting';
 import MusicList from './page/musicList';
 import ExersizeList from './page/exersizeList';
+import Profile from "./component/profile";
+import FeedBack from './page/feedback';
+import FbModal from './component/modal/fbModal';
+import Clinic from './page/clinic';
 
 function App() {
   return (
@@ -24,7 +28,7 @@ function App() {
           <Route path="MainContents" element={<MainContents />} />
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
-
+          <Route path="profile" element={<Profile />} />
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
           </Route>
@@ -32,6 +36,9 @@ function App() {
           <Route path="/exersizeList" element={<ExersizeList videoId="6VEnTQ2rx_4" />} />
           <Route path="/musicList" element={<MusicList videoId="6VEnTQ2rx_4" />} />
           {/* <Route path="/consulting" element={<Consulting />} /> */}
+          <Route path="/feedback" element={<FeedBack />} />
+          <Route path="/fbmodal" element={<FbModal />} />
+          <Route path="/clinic" element={<Clinic />} />
         </Route>
       </Routes>
     </BrowserRouter>
