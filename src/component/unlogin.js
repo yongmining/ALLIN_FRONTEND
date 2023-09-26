@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import Modal from "./unloginModal";
 
-const Unlogin = () => {
+function Unlogin() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [login, setLogin] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-    return (
-        <div className="unlogin">
-            <button type="button" onClick={() => {
-                setLogin(true);
-            }}>비회원 로그인</button>
-        </div>
-    );
-};
+  return (
+    <div className="unlogin">
+      <button onClick={openModal}>비회원 로그인</button>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
+    </div>
+  );
+}
 
 export default Unlogin;
