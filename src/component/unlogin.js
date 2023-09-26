@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Modal from "./unloginModal";
+import React, { useState } from 'react';
+import Modal from './modal/unloginModal';
 
 function Unlogin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
