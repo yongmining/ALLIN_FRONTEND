@@ -8,6 +8,9 @@ import Layout from './layout/layout';
 import MainContents from './page/mainContents';
 import YouTubeList from './page/youtubeList'; // YouTubeList 컴포넌트 임포트
 import Profile from "./component/profile";
+import FeedBack from './page/feedback';
+import FbModal from './component/modal/fbModal';
+import Clinic from './page/clinic';
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
             <Route index element={<MainContents />} />
           </Route>
           <Route path="/youtubeList" element={<YouTubeList videoId="6VEnTQ2rx_4" />} />
+          <Route path="/feedback" element={<FeedBack />} />
+          <Route path="/fbmodal" element={<FbModal />} />
+          <Route path="/clinic" element={<Clinic />} />
         </Route>
       </Routes>
     </BrowserRouter>

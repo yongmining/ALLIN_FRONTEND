@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fbContent {
+  width: 95%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  background-color: #f6ecec;
+}
+.fbBtn {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: center;
+}
+
+.fbBtn > button {
+  width: 100px;
+  height: 45px;
+  background-color: #ffe5d5;
+  border: solid 1.5px white;
+  color: #e38981;
+}
+
+.fbModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: solid 1px white;
+  width: 330px;
+  height: 200px;
+}
+
+.fbmdBtn {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: center;
+}
+
+.fbmdBtn > button {
+  width: 60px;
+  height: 30px;
+  background-color: #ffe5d5;
+  border: solid 1.5px white;
+  color: #e38981;
+}
+
+.mainContent {
+  display: flex;
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.subContent {
+  display: flex;
+  font-size: 10px;
+  flex-direction: center;
+}
+
+.star {
+  color: gray; /* 기본 별 색상 */
+}
+
+.yellow {
+  color: yellow; /* 선택된 별 색상 */
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+.fbModal fieldset {
+  width: 200px;
+  height: 25px;
+  display: flex;
+  justify-content: space-around;
+}

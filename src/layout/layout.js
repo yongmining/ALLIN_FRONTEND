@@ -9,9 +9,11 @@ function Layout() {
   return (
     <>
       <Header />
+      {/* <div className="content main-width"> */}
       <Outlet />
       <Socialkakao />
       <Unlogin />
+      {/* </div> */}
       <Footer />
     </>
   );
