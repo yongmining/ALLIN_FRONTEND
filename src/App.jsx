@@ -1,6 +1,6 @@
 import BookList from './page/recommendContent/bookList';
 import React from 'react';
-import TakePicture from './page/takePicture';
+import TakePicture from './page/takePicture1';
 import Home from './page/home';
 import Contents from './component/contents/contents';
 import Contentsdetails from './component/contents/contentsdetails';
