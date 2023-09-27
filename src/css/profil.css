@@ -1,0 +1,38 @@
+.profil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.profilImage {
+  display: flex;
+  background-color: aqua;
+  width: 80%;
+  height: 300px;
+}
+
+.profilText {
+  display: flex;
+  margin-top: 30px;
+  width: 70%;
+  height: 130px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 20px;
+}
+
+.genderbox {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (min-width: 768px) {
+  .profilImage {
+    display: flex;
+    background-color: aqua;
+    width: 50%;
+    height: 400px;
+  }
+}
