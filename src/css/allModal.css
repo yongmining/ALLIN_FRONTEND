@@ -1,0 +1,107 @@
+.allModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: solid 1px white;
+  background-color: #ffe5d5;
+  border-radius: 5%;
+  width: 330px;
+  height: 200px;
+}
+
+.allmdBtn {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: center;
+}
+
+.allmdBtn > button {
+  width: 60px;
+  height: 30px;
+  background-color: #ffe5d5;
+  border: solid 2px white;
+  color: #e38981;
+}
+
+.fbmainContent {
+  display: flex;
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.fbsubContent {
+  display: flex;
+  height: 70px;
+  font-size: 10px;
+  align-items: center;
+  flex-direction: center;
+}
+
+.unloginTitle {
+  display: flex;
+  height: 60px;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+}
+.unloginsubContent {
+  display: flex;
+  height: 50px;
+  font-size: 10px;
+  align-items: center;
+  flex-direction: center;
+  flex-direction: column;
+}
+
+.Modal fieldset {
+  width: 200px;
+  height: 25px;
+  display: flex;
+  justify-content: space-around;
+}
+
+@media (min-width: 768px) {
+  .allModal {
+    width: 500px;
+    height: 300px;
+  }
+
+  .allmdBtn {
+    width: 100%;
+    height: 100px;
+  }
+
+  .allmdBtn > button {
+    width: 100px;
+    height: 40px;
+  }
+
+  .fbmainContent {
+    font-size: 22px;
+  }
+  .fbsubContent {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  .unloginTitle {
+    display: flex;
+    height: 70px;
+    font-size: 35px;
+    justify-content: center;
+    align-items: center;
+  }
+  .unloginsubContent {
+    display: flex;
+    height: 70px;
+    font-size: 20px;
+    align-items: center;
+    flex-direction: center;
+    flex-direction: column;
+  }
+}

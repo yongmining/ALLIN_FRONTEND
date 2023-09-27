@@ -9,7 +9,7 @@ import YouTubeList from './page/recommendContent/youtubeList'; // YouTubeList ì»
 import Consulting from './page/consulting';
 import MusicList from './page/recommendContent/musicList';
 import ExerciseList from './page/recommendContent/exerciseList';
-import Profile from './page/profile/profile';
+import Profil from './page/profile/profil';
 import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
 import Clinic from './page/recommendContent/clinic';
@@ -19,13 +19,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* <Route index element={<MainPage />} /> */}
           <Route path="takepicture" element={<TakePicture />} />
           <Route path="/" element={<Home />} />
           {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
-          <Route path="profile" element={<Profile />} />
+          <Route path="profil" element={<Profil />} />
 
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
