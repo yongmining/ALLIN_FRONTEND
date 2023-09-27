@@ -1,0 +1,103 @@
+.userInfo {
+  display: flex;
+}
+
+.putbtn {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10%;
+}
+
+.putbtn-change {
+  background-color: #ffe5d5;
+  width: 40%;
+  height: 30%;
+  border-color: white;
+  border-width: medium;
+  color: #e38981;
+}
+
+.chart {
+  width: 80%; /* 너비를 조절합니다. 원하는 크기로 변경하세요. */
+  max-width: 400px; /* 최대 너비를 설정할 수 있습니다. */
+  border: 1px solid #444444;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* 행 추가 버튼 스타일 */
+button {
+  margin-top: 10px;
+}
+
+th,
+td {
+  border: 2px solid #444444;
+}
+
+.mainprofil {
+  width: auto;
+  height: 667px;
+}
+
+.mainprofil-info {
+  width: 100%;
+  height: 35%;
+}
+
+.mainprofil-left {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.mainprofil-img {
+  width: 60%;
+  height: 100%;
+  margin-left: 3%;
+}
+
+@media (max-width: 769px) {
+  .mainprofil-img {
+    width: 90%;
+    height: 70%;
+  }
+
+  .mainprofil-left {
+    float: left;
+    width: 50%;
+    height: 100%;
+  }
+
+  .mainprofil-info-right {
+    float: right;
+    width: 50%;
+    height: 100%;
+    font-size: 50px;
+  }
+  .mainprofil-info {
+    width: 100%;
+    height: 35%;
+  }
+}
+@media (min-width: 1000px) {
+  .mainprofil-img {
+    width: 40%;
+    height: 60%;
+  }
+}
+
+.mainprofil-info-right {
+  float: right;
+  width: 50%;
+  height: 100%;
+  font-size: 16px;
+}
+
+.chart-main {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+}

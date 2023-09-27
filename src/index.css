@@ -22,3 +22,10 @@ code {
   align-items: center; /* 수직 중앙 정렬 */
   justify-content: center; /* 수평 중앙 정렬 */
 }
+
+footer {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}

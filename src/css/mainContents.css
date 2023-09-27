@@ -1,6 +1,5 @@
 .main {
   width: auto;
-  height: 667px;
 }
 
 .main-img {
@@ -9,55 +8,34 @@
   margin-left: 3%;
 }
 
+.today-comment {
+  width: 100%;
+  display: flex;
+  height: auto;
+  font-size: 23px;
+}
+
 .main-left {
   float: left;
   width: 50%;
-  height: 130%;
+  height: 90%;
 }
 
 .main-info-right {
   float: right;
   width: 50%;
-  height: 100%;
+  height: 90%;
   font-size: 25px;
 }
 .main-info {
+  display: flex;
   width: 100%;
   height: 35%;
 }
 
-@media (max-width: 769px) {
-  .main-img {
-    width: 90%;
-    height: 70%;
-  }
-
-  .main-left {
-    float: left;
-    width: 50%;
-    height: 100%;
-  }
-
-  .main-info-right {
-    float: right;
-    width: 50%;
-    height: 100%;
-    font-size: 16px;
-  }
-  .main-info {
-    width: 100%;
-    height: 35%;
-  }
-}
-
-.today-comment {
-  width: 100%;
-  height: 15%;
-}
-
 .choice-box {
   width: 80%;
-  height: 40%;
+  height: 100%;
   border: solid 2px black;
   display: flex;
   margin-left: 10%;
@@ -83,5 +61,55 @@
     width: 25%;
     height: 40%;
     background-color: gray;
+  }
+}
+
+@media (min-width: 1050px) {
+  .main-img {
+    width: 50%;
+    height: 100%;
+  }
+  .main-info-right {
+    float: right;
+    width: 50%;
+    height: 90%;
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-img {
+    width: 90%;
+    height: 70%;
+  }
+  .today-comment {
+    width: 100%;
+    display: flex;
+    height: auto;
+    font-size: 15px;
+  }
+
+  .main-left {
+    float: left;
+    width: 50%;
+    height: 100%;
+  }
+
+  .main-info-right {
+    float: right;
+    width: 50%;
+
+    font-size: 16px;
+  }
+  .main-info {
+    width: 100%;
+    height: 35%;
+  }
+
+  .main-info-right {
+    float: right;
+    width: 50%;
+    height: 90%;
+    font-size: 15px;
   }
 }

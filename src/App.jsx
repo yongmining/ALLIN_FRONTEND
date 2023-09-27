@@ -13,6 +13,7 @@ import Profil from './page/profile/profil';
 import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
 import Clinic from './page/recommendContent/clinic';
+import ProfilInfo from './page/profile/profilInfo';
 
 function App() {
   return (
@@ -24,7 +25,10 @@ function App() {
           {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
-          <Route path="profil" element={<Profil />} />
+          <Route path="profil">
+            <Route index element={<Profil />} />
+            <Route path="profilInfo" element={<ProfilInfo />} />
+          </Route>
 
           <Route path="choiceContents">
             <Route index element={<MainContents />} />

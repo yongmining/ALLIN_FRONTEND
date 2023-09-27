@@ -1,11 +1,7 @@
 import React from 'react';
 
 const Footer = () => {
-  return (
-    <footer>
-      &copy; 2023 | buid with <span>all-in</span>
-    </footer>
-  );
+  return <footer style={{ justifyContent: 'center' }}>2023 | buid with all-in</footer>;
 };
 
 export default Footer;
