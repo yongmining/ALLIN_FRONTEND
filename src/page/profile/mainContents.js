@@ -33,7 +33,12 @@ function MainContents() {
         </div>
       </div>
       <div className="today-comment">
-        <h3>오늘도 당신의 남은 인생 중, 첫 번쨰 날이다.</h3>
+        <h3>
+          오늘도 당신의 남은 인생 중, 첫 번쨰 날이다.오늘도 당신의 남은 인생 중,
+          첫 번쨰 날이다.오늘도 당신의 남은 인생 중, 첫 번쨰 날이다.오늘도
+          당신의 남은 인생 중, 첫 번쨰 날이다.오늘도 당신의 남은 인생 중, 첫
+          번쨰 날이다.오늘도 당신의 남은 인생 중, 첫 번쨰 날이다.
+        </h3>
       </div>
       <div className="choice-box">
         <div className="choice-btn">
