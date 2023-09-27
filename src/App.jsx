@@ -1,6 +1,6 @@
 import BookList from './page/recommendContent/bookList';
 import React from 'react';
-import TakePicture from './page/takePicture';
+import TakePicture from './page/takePicture1';
 import Home from './page/home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './layout/layout';

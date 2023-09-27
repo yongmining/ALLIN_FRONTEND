@@ -15,7 +15,7 @@ function TakePicture() {
         })
         .catch((err) => console.error("Error accessing camera:", err));
     }
-  }, []);
+  }, []);a
 
   return (
     <div className="video-container">
