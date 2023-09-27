@@ -1,0 +1,30 @@
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title > div {
+  font-size: 100px;
+}
+
+.title > p {
+  font-size: 30px;
+}
+@media (max-width: 768px) {
+  .title > div {
+    font-size: 70px;
+  }
+  .title > p {
+    font-size: 15px;
+  }
+}

@@ -7,9 +7,7 @@ function Layout() {
   return (
     <>
       <Header />
-      {/* <div className="content main-width"> */}
       <Outlet />
-      {/* </div> */}
       <Footer />
     </>
   );
