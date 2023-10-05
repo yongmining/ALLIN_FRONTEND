@@ -2,36 +2,29 @@ import { useEffect, useState } from "react";
 import "../../css/youtubeList.css";
 
 function YoutubeList() {
-  const videoIds = [
-    "6VEnTQ2rx_4",
-    "5V0LrWVmKRA",
-    "bTUKUB8CI_4",
-    "VuDY1PBAuWU",
-    "EOCZYxmi7ho",
-    "9avkrmhScQk",
-  ];
   const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
-
   const [videosData, setVideosData] = useState([]);
 
+  // 키워드를 "슬플 때 볼만한 영상"으로 고정
+  const keyword = "슬플 때 볼만한 영상";
+
   useEffect(() => {
-    Promise.all(
-      videoIds.map((videoId) =>
-        fetch(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            const snippet = data.items[0].snippet;
-            return {
-              title: snippet.title,
-              thumbnail: snippet.thumbnails.medium.url,
-              link: `https://www.youtube.com/watch?v=${videoId}`,
-            };
-          })
-      )
-    ).then((videos) => setVideosData(videos));
-  }, [apiKey]);
+    fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${keyword}&key=${apiKey}&maxResults=6`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const videos = data.items.map((item) => {
+          const snippet = item.snippet;
+          return {
+            title: snippet.title,
+            thumbnail: snippet.thumbnails.medium.url,
+            link: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+          };
+        });
+        setVideosData(videos);
+      });
+  }, [apiKey]); // keyword는 상수이므로 의존성 배열에 추가할 필요 없음
 
   if (videosData.length === 0) return null;
 

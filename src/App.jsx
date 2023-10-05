@@ -34,10 +34,7 @@ function App() {
           <Route path="choiceContents">
             <Route index element={<MainContents />} />
             <Route path="bookList" element={<BookList />} />
-            <Route
-              path="youtubeList"
-              element={<YouTubeList videoId="6VEnTQ2rx_4" />}
-            />
+            <Route path="youtubeList" element={<YouTubeList />} />
             <Route
               path="exerciseList"
               element={<ExerciseList videoId="6VEnTQ2rx_4" />}
