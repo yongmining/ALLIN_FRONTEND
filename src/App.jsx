@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './layout/layout';
 import MainContents from './page/profile/mainContents';
 import YouTubeList from './page/recommendContent/youtubeList'; // YouTubeList 컴포넌트 임포트
-// import Consulting from './page/consulting';
+//import Consulting from './page/consulting';
 import MusicList from './page/recommendContent/musicList';
 import ExerciseList from './page/recommendContent/exerciseList';
 import Profil from './page/profile/profil';
@@ -22,7 +22,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="takepicture" element={<TakePicture />} />
+          {/* <Route path="takepicture" element={<TakePicture />} /> */}
           <Route path="takepictureanalyze" element={<TakePictureanalyze />} />
           <Route path="/" element={<Home />} />
           <Route path="/kakao/callback" element={<KakaoPage />} />
