@@ -1,25 +1,47 @@
-import React, { useState } from 'react';
-import '../../css/profil.css'; // CSS 파일을 import
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+// import { IoIosFemale } from 'react-icons/io';
+// import { IoIosMale } from 'react-icons/io';
+import '../../css/profil.css';
+import { getCurrentMember, getUpdateMember } from '../../api/memberApi';
+import { callKakaoLogoutAPI } from '../../api/loginApi';
 
 function Profil() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const members = useSelector((store) => store.memberReducer);
 
   const [nickname, setNickname] = useState('');
-  const [age, setAge] = useState(null); // 나이 상태 (null로 초기화)
-  const [isMaleChecked, setIsMaleChecked] = useState(false); // 남자 체크 여부 상태
-  const [isFemaleChecked, setIsFemaleChecked] = useState(false); // 여자 체크 여부 상태
-  const [profilImageUrl, setprofilImageUrl] = useState(''); // 랜덤 이미지 URL 상태
+  const [age, setAge] = useState(null);
+  const [isMaleChecked, setIsMaleChecked] = useState(false);
+  const [isFemaleChecked, setIsFemaleChecked] = useState(false);
+  const [profilImageUrl, setprofilImageUrl] = useState('');
+
+  useEffect(() => {
+    dispatch(getCurrentMember());
+  }, []);
+
+  const [form, setForm] = useState({
+    memberNickname: '',
+    memberAge: '',
+    memberGender: '',
+  });
+
+  const logout = () => {
+    dispatch(callKakaoLogoutAPI());
+    navigate('/', { replace: true });
+  };
 
   const handleNicknameChange = (e) => {
-    // 닉네임 입력 시 최대 5자로 제한
     const input = e.target.value.substring(0, 5);
     setNickname(input);
   };
 
   const handleMaleCheckboxChange = () => {
     // 남자 체크박스 변경 시
-    setIsMaleChecked(!isMaleChecked); // 체크 상태를 반전
+    setIsMaleChecked(!isMaleChecked);
     // 여자 체크 해제
     if (!isMaleChecked) {
       setIsFemaleChecked(false);
@@ -28,7 +50,7 @@ function Profil() {
 
   const handleFemaleCheckboxChange = () => {
     // 여자 체크박스 변경 시
-    setIsFemaleChecked(!isFemaleChecked); // 체크 상태를 반전
+    setIsFemaleChecked(!isFemaleChecked);
     // 남자 체크 해제
     if (!isFemaleChecked) {
       setIsMaleChecked(false);
@@ -36,34 +58,37 @@ function Profil() {
   };
 
   const handleAgeInputChange = (e) => {
-    // 나이 입력 변경 시
     const input = e.target.value;
-    // 입력값이 비어 있으면 null로 설정
     if (input === '' || (parseInt(input, 10) >= 1 && parseInt(input, 10) <= 99)) {
       setAge(input === '' ? null : parseInt(input, 10));
     }
   };
 
-  const getProfilImage = () => {
-    // 백엔드에서 랜덤 이미지 URL을 가져와서 상태에 설정
-    // 예시: const randomImageUrl = 'https://example.com/random-image.jpg';
-    // 아래처럼 백엔드에서 이미지 URL을 가져오는 방식으로 수정하세요.
-    // axios 또는 fetch를 사용하여 백엔드 API에서 이미지 URL을 가져올 수 있습니다.
-    // 이 예제에서는 랜덤한 URL을 사용하므로 실제 백엔드 호출을 대체합니다.
-    const profilImageUrl = 'https://example.com/random-image.jpg';
-    setprofilImageUrl(profilImageUrl);
-  };
-
   const handleRegistration = () => {
-    // 사용자가 입력한 정보를 저장하거나 활용하는 코드를 작성하세요.
+    const memberNo = members.memberNo;
+    if (!nickname.trim()) {
+      alert('닉네임을 입력해주세요.');
+      return;
+    }
 
-    // 예를 들어, 다음 페이지로 이동하고 사용자 정보를 props로 전달할 수 있습니다.
-    navigate('/takepicture', { state: { nickname, age, isMaleChecked, isFemaleChecked, profilImageUrl } });
+    // FormData나 다른 방식으로 수정할 데이터 설정
+    const updatedData = {
+      memberNickname: nickname,
+      memberAge: age,
+      memberGender: isMaleChecked ? '남자' : '여자',
+      // 필요한 경우 다른 데이터도 포함
+    };
+
+    setForm(updatedData);
+    dispatch(getUpdateMember(memberNo, updatedData)); // API 호출
+
+    // 수정 후 페이지 이동 or 사용자에게 수정 성공 메시지 표시 등의 후속 처리
+    navigate('/');
   };
 
   return (
     <div className="profil">
-      <img className="profilImage" src={getProfilImage} alt="ProfilImage" />
+      <img className="profilImage" src={''} alt="ProfilImage" />
       <div className="profilText">
         <div>
           닉네임 : &nbsp;
@@ -106,7 +131,7 @@ function Profil() {
       </div>
       <div className="allmdBtn">
         <button onClick={handleRegistration}>등록</button>
-        <button onClick={() => navigate('/')}>취소</button>
+        <button onClick={logout}>취소</button>
       </div>
     </div>
   );
