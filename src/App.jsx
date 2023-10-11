@@ -1,6 +1,6 @@
 import BookList from './page/recommendContent/bookList';
 import React from 'react';
-//import TakePicture from './page/takePicture1';
+import TakePicture from './page/takePicture1';
 import TakePictureanalyze from './page/takePicture2';
 import Home from './page/home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,6 +15,7 @@ import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
 import Clinic from './page/recommendContent/clinic';
 import ProfilInfo from './page/profile/profilInfo';
+import KakaoPage from './page/login/kakaoPage';
 
 function App() {
   return (
@@ -24,13 +25,14 @@ function App() {
           {/* <Route path="takepicture" element={<TakePicture />} /> */}
           <Route path="takepictureanalyze" element={<TakePictureanalyze />} />
           <Route path="/" element={<Home />} />
+          <Route path="/kakao/callback" element={<KakaoPage />} />
           {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
           <Route path="profil">
             <Route index element={<Profil />} />
-            <Route path="profilInfo" element={<ProfilInfo />} />
           </Route>
+          <Route path="profilInfo" element={<ProfilInfo />} />
 
           <Route path="choiceContents">
             <Route index element={<MainContents />} />

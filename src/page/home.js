@@ -4,8 +4,8 @@ import UnloginModal from '../component/modal/unloginModal';
 import Modal from 'react-modal';
 // import { OPEN_MODAL, CLOSE_MODAL } from '../modules/modalModule';
 
-const KAKAO_REST_API_KEY = '96fc49ad6635ee98b7975b4e00cd5322';
-const KAKAO_REDIRECT_URI = `http://localhost:3000/auth`;
+const KAKAO_REST_API_KEY = '23a9d20514279e743aea8c6d1225c1b2';
+const KAKAO_REDIRECT_URI = `http://localhost:3000/kakao/callback`;
 const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
 const Home = () => {

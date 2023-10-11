@@ -4,6 +4,7 @@ const TakePictureanalyze = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const stripRef = useRef(null);
+  const photoRef = useRef(null);
 
   useEffect(() => {
     getVideo();
@@ -63,6 +64,40 @@ const TakePictureanalyze = () => {
 
         const data = await response.json();
 
+    let photo = photoRef.current;
+    let ctx = photo.getContext("2d");
+
+    const width = 320;
+    const height = 240;
+    photo.width = width;
+    photo.height = height;
+
+    return setInterval(() => {
+      ctx.drawImage(video, 0, 0, width, height);
+    }, 200);
+  };
+
+  const takePhoto = async () => {
+    let photo = photoRef.current;
+
+    // 촬영한 이미지를 데이터 URL로 가져옴
+    const dataURL = photo.toDataURL("image/jpeg");
+
+    const requestData = {
+      img_path: dataURL, // 데이터 URL로 설정
+      actions: ["age", "gender", "emotion", "race"]
+    };
+
+    // Send the image to the server
+    fetch("http://127.0.0.1:5000/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json" // JSON 데이터를 보낸다는 헤더 설정
+      },
+      body: JSON.stringify(requestData) // JSON 데이터로 변환하여 전송
+    })
+      .then(response => response.json())
+      .then(data => {
         const result = data.results[0];
         console.log({
           age: result.age,
@@ -84,6 +119,7 @@ const TakePictureanalyze = () => {
       <div>
         <div ref={stripRef} />
       </div>
+      <canvas ref={photoRef} />
     </div>
   );
 };
