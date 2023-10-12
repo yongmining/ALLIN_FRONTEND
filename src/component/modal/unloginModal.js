@@ -12,11 +12,8 @@ function UnloginModal() {
   };
 
   const onClickhandle = () => {
-    //백엔드에서 회원아이디를 생성 또는 찾아서 받는 법
     closeModal();
     navigate('/profil');
-    // navigate('/takepicture');
-    //IF 조건문을 써서 기존 회원일경우 촬영으로 아닐경우 프로필 정보 등록 쪽으로
   };
 
   return (

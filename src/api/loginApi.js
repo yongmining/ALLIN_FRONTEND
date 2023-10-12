@@ -41,3 +41,25 @@ export const callKakaoLogoutAPI = () => {
     }
   };
 };
+
+export const callGuestLoginAPI = (code) => {
+  const requestURL = `http://localhost:8080/api/v1/login/guest`;
+
+  return async (dispatch, getState) => {
+    let data = { code: code };
+
+    const result = await fetch(requestURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+
+    if (result.status === 200) {
+      window.localStorage.setItem('accessToken', JSON.stringify(result.data.token));
+      dispatch({ type: IS_LOGIN });
+    }
+  };
+};
