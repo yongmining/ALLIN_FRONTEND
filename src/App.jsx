@@ -16,16 +16,18 @@ import FbModal from './component/modal/fbModal';
 import Clinic from './page/recommendContent/clinic';
 import ProfilInfo from './page/profile/profilInfo';
 import KakaoPage from './page/login/kakaoPage';
+import UnloginPage from './page/login/unloginPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
           {/* <Route path="takepicture" element={<TakePicture />} /> */}
           <Route path="takepictureanalyze" element={<TakePictureanalyze />} />
-          <Route path="/" element={<Home />} />
           <Route path="/kakao/callback" element={<KakaoPage />} />
+          <Route path="/unlogin" element={<UnloginPage />} />
           {/* <Route path="MainContents" element={<MainContents />} /> */}
           {/* <Route path="choiceYoutube" element={/>} /> */}
           {/* <Route path="choiceBook" element={<Contents />} /> */}
@@ -43,8 +45,8 @@ function App() {
           </Route>
 
           {/* <Route path="/consulting" element={<Consulting />} /> */}
-          <Route path="/feedback" element={<FeedBack />} />
           <Route path="/fbmodal" element={<FbModal />} />
+          <Route path="/feedback" element={<FeedBack />} />
           <Route path="/clinic" element={<Clinic />} />
         </Route>
       </Routes>

@@ -1,28 +1,16 @@
+.common {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
+}
 .headerLogo {
   display: flex;
   align-items: center;
+  gap: 10px; /* 이미지와 링크 사이의 간격 */
 }
-
-.headerLogo img {
-  width: 4%;
-  margin-left: 1%;
-  margin-right: 1%;
-  margin-top: 1%;
-}
-
 .username {
   margin-left: auto;
   margin-right: 4%;
-}
-
-.kakaologin {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 50px;
-}
-
-.unlogin {
-  text-align: center;
 }
 
 .custom-link {
@@ -65,13 +53,52 @@
   text-decoration: none;
 }
 
-/* .main-width {
-  width: 60vw;
-  margin: auto;
+.back-color {
+  display: flex;
+  justify-content: space-between; /* 양쪽으로 요소를 떨어뜨립니다. */
+  align-items: center; /* 수직 중앙 정렬 */
+  padding: 10px; /* 위아래 패딩 10px, 좌우 패딩 20px */
+  width: 20%; /* 전체 너비 */
+  font-size: 15px;
 }
 
-@media (max-width: 960px) {
-  .main-width {
-    width: 90vw;
+/* 로고 및 링크 스타일 설정 */
+.headerLogo img {
+  height: 40px; /* 로고 높이 설정. 필요에 따라 조절하세요. */
+}
+
+.headerLogo .custom-link {
+  text-decoration: none; /* 링크 밑줄 제거 */
+  color: black; /* 링크 색상. 원하는 색상으로 변경하세요. */
+  font-weight: bold; /* 굵은 글꼴 */
+}
+
+/* 행 레이아웃 설정 */
+header span {
+  cursor: pointer; /* 마우스 오버 시 손 모양으로 변경 */
+  margin-right: 20px; /* 오른쪽 간격 추가 */
+}
+
+header span:last-child {
+  margin-right: 0; /* 마지막 span 요소의 오른쪽 간격 제거 */
+}
+@media (max-width: 773px) {
+  .back-color {
+    width: 25%; /* 전체 너비 */
+    font-size: 15px;
   }
-} */
+}
+
+@media (max-width: 625px) {
+  .back-color {
+    width: 30%; /* 전체 너비 */
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 460px) {
+  .back-color {
+    width: 35%; /* 전체 너비 */
+    font-size: 12px;
+  }
+}

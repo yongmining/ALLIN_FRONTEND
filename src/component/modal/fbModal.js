@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../css/allModal.css';
+import { useDispatch } from 'react-redux';
+import { CLOSE_MODAL } from '../../modules/modalModule';
+import { useNavigate } from 'react-router-dom';
+import FeedBack from '../../page/feedback';
+import Modal from 'react-modal';
 
 function FbModal() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [showFeedback, setShowFeedback] = useState(false);
+
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL });
+  };
+
+  const openFeedback = () => {
+    setShowFeedback(true);
+  };
+  const closeFeedback = () => {
+    setShowFeedback(false);
+  };
+
+  const onFbCloseClickhandle = () => {
+    closeModal();
+    navigate('/');
+  };
+
   return (
     <div className="allModal">
       <div className="fbmainContent">
@@ -10,9 +36,12 @@ function FbModal() {
       </div>
       <div className="fbsubContent">피드백은 저희에게 큰 힘이 됩니다</div>
       <div className="allmdBtn">
-        <button>닫기</button>
-        <button>작성</button>
+        <button onClick={onFbCloseClickhandle}>닫기</button>
+        <button onClick={openFeedback}>작성</button>
       </div>
+      <Modal className="modal-backdrop" isOpen={showFeedback} onRequestClose={closeFeedback}>
+        <FeedBack closeFeedback={closeFeedback} />
+      </Modal>
     </div>
   );
 }

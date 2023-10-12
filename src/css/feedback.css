@@ -7,7 +7,7 @@
 
 .fbContent {
   width: 95%;
-  height: 400px;
+  height: 350px;
   display: flex;
   align-items: center;
   background-color: #f6ecec;
@@ -43,6 +43,6 @@ input[type='radio'] {
 
 @media (min-width: 768px) {
   .fbContent {
-    height: 500px;
+    height: 480px;
   }
 }
