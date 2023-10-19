@@ -13,7 +13,7 @@ import ExerciseList from './page/recommendContent/exerciseList';
 import Profil from './page/profile/profil';
 import FeedBack from './page/feedback';
 import FbModal from './component/modal/fbModal';
-import Clinic from './page/recommendContent/clinic';
+import ClinicList from './page/recommendContent/clinic';
 import ProfilInfo from './page/profile/profilInfo';
 import KakaoPage from './page/login/kakaoPage';
 import UnloginPage from './page/login/unloginPage';
@@ -45,9 +45,9 @@ function App() {
           </Route>
 
           {/* <Route path="/consulting" element={<Consulting />} /> */}
+          <Route path="/clinicList" element={<ClinicList />} />
           <Route path="/fbmodal" element={<FbModal />} />
           <Route path="/feedback" element={<FeedBack />} />
-          <Route path="/clinic" element={<Clinic />} />
         </Route>
       </Routes>
     </BrowserRouter>

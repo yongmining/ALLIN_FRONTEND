@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-// import { IoIosFemale } from 'react-icons/io';
-// import { IoIosMale } from 'react-icons/io';
 import '../../css/profil.css';
 import { getCurrentMember, getUpdateMember } from '../../api/memberApi';
 import { callKakaoLogoutAPI } from '../../api/loginApi';
@@ -17,7 +15,6 @@ function Profil() {
   const [age, setAge] = useState(null);
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
-  const [profilImageUrl, setprofilImageUrl] = useState('');
 
   useEffect(() => {
     dispatch(getCurrentMember());
@@ -80,15 +77,13 @@ function Profil() {
     };
 
     setForm(updatedData);
-    dispatch(getUpdateMember(memberNo, updatedData)); // API 호출
-
-    // 수정 후 페이지 이동 or 사용자에게 수정 성공 메시지 표시 등의 후속 처리
-    navigate('/');
+    dispatch(getUpdateMember(memberNo, updatedData));
+    navigate('/takepictureanalyze');
   };
 
   return (
     <div className="profil">
-      <img className="profilImage" src={''} alt="ProfilImage" />
+      <img className="profilImage" src={members.memberImage} alt="ProfilImage" />
       <div className="profilText">
         <div>
           닉네임 : &nbsp;

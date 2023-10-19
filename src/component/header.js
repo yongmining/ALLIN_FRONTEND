@@ -31,7 +31,7 @@ function Header() {
       {token && !isProfilePage && !isMainPage && (
         <header className="back-color">
           <div>
-            <span onClick={() => navigate(`/profil/${token.memberNo}`)}>마이페이지</span>
+            <span onClick={() => navigate(`/profilInfo/${token.memberNo}`)}>마이페이지</span>
             <span onClick={logout}>로그아웃</span>
           </div>
         </header>
