@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { Await } from 'react-router-dom';
 
 const TakePictureanalyze = () => {
   const videoRef = useRef(null);
@@ -40,41 +39,17 @@ const TakePictureanalyze = () => {
       ctx.drawImage(video, 0, 0, width, height);
     }
   };
-  const saveImage = async (dataURL, directoryPath) => {
-    // 이미지 파일로 저장합니다.
-    const imageBlob = await fetch(dataURL).then((res) => res.blob());
 
-    // 이미지 파일을 지정된 폴더에 저장합니다.
-    const imagePath = `${directoryPath}/image.jpg`; // 경로를 조합하여 파일 이름을 포함해야 합니다.
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.style = 'display: none';
-    const url = window.URL.createObjectURL(imageBlob);
-    a.href = url;
-    a.download = 'image.jpg';
-    a.click();
-    window.URL.revokeObjectURL(url);
-
-    return imagePath;
-  };
   async function takePhoto() {
     let canvas = canvasRef.current;
     if (canvas) {
       let ctx = canvas.getContext('2d');
 
       // 이미지를 서버로 보냄
-      const directoryPath = 'http://localhost:8080/api/v1/pictures/'; // 이 경로를 정확하게 수정해야 합니다.
       const dataURL = canvas.toDataURL('image/jpeg');
 
-      // 이미지 파일을 저장할 경로를 지정합니다.
-
-      const imagePath = await saveImage(dataURL, directoryPath);
-
-      // 이미지 데이터를 JSON 형식으로 변환
-      const body = JSON.stringify({
-        img_path: dataURL,
-        actions: ['age', 'gender', 'emotion', 'race'],
-      });
+      // 이미지 저장
+      const imagePath = await saveImage(dataURL, './src/images');
 
       // Send the image to the server
       try {
@@ -83,7 +58,10 @@ const TakePictureanalyze = () => {
           headers: {
             'Content-Type': 'application/json', // JSON 데이터를 보낸다는 헤더 설정
           },
-          body,
+          body: JSON.stringify({
+            img_path: dataURL, // 이미지 경로로 설정
+            actions: ['age', 'gender', 'emotion', 'race'],
+          }), // JSON 데이터로 변환하여 전송
         });
 
         const data = await response.json();
@@ -101,10 +79,28 @@ const TakePictureanalyze = () => {
     }
   }
 
+  const saveImage = async (dataURL, directoryPath) => {
+    // 이미지 파일로 저장합니다.
+    const imageBlob = await fetch(dataURL).then((res) => res.blob());
+
+    // 이미지 파일을 지정된 폴더에 저장합니다.
+    const imagePath = 'C:/Users/hi/Downloads/frontend1 - 복사본 (3)/ALLIN_FRONTEND/src/images';
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    const url = window.URL.createObjectURL(imageBlob);
+    a.href = url;
+    a.download = 'image.jpg';
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    return imagePath;
+  };
+
   return (
     <div>
       <button onClick={() => takePhoto()}>Take a photo</button>
-      <video onCanPlay={() => paintToCanvas()} ref={videoRef}/>
+      <video onCanPlay={() => paintToCanvas()} ref={videoRef} autoPlay playsInline muted />
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <div>
         <div ref={stripRef} />
