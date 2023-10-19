@@ -1,34 +1,46 @@
-import React, { useRef, useEffect } from "react";
-import "../../css/mainContents.css";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import '../../css/mainContents.css';
+import { useNavigate } from 'react-router-dom';
+import { getCurrentMember } from '../../api/memberApi';
 
 function MainContents() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const members = useSelector((store) => store.memberReducer);
+
+  useEffect(() => {
+    dispatch(getCurrentMember());
+  }, []);
+
   const goToYoutube = () => {
-    navigate("/choicecontents/YouTubeList");
+    navigate('/choicecontents/YouTubeList');
   };
 
   const goToBook = () => {
-    navigate("/choicecontents/bookList");
+    navigate('/choicecontents/bookList');
   };
   const goToMusic = () => {
-    navigate("/choicecontents/musicList");
+    navigate('/choicecontents/musicList');
   };
   const goToExercise = () => {
-    navigate("/choicecontents/exerciseList");
+    navigate('/choicecontents/exerciseList');
+  };
+  const goToClinic = () => {
+    navigate('/clinicList');
   };
 
   return (
     <div className="main">
       <div className="main-info">
         <div className="main-left">
-          <img className="main-img" src="/img/exImg.png" alt="내 이미지" />
+          <img className="main-img" src={members.memberImage} alt="내 이미지" />
         </div>
         <div className="main-info-right">
-          <h5>닉네임 : 5글자 제한</h5>
-          <h5>나이 : 24살 </h5>
-          <h5>성별 : 남자</h5>
+          <h5>닉네임 : {members.memberNickname}</h5>
+          <h5>나이 : {members.memberAge} </h5>
+          <h5>성별 : {members.memberGender}</h5>
           <h5>감정 : 슬픔</h5>
         </div>
       </div>
@@ -37,21 +49,13 @@ function MainContents() {
       </div>
       <div className="choice-box">
         <div className="choice-btn">
-          <button className="choice-btns" onClick={goToYoutube}>
-            유튜브
-          </button>
-          <button className="choice-btns" onClick={goToBook}>
-            책
-          </button>
+          <img src={'./../img/youtubeLogo.png'} onClick={goToYoutube} alt="유튜브 로고" />
+          <img src={'./../img/bookLogo.png'} onClick={goToBook} alt="책 로고" />
         </div>
         <div className="choice-btn">
-          <button className="choice-btns" onClick={goToMusic}>
-            노래
-          </button>
-          <button className="choice-btns" onClick={goToExercise}>
-            운동
-          </button>
-          <button className="choice-btns">상담</button>
+          <img src={'./../img/musicLogo.png'} onClick={goToMusic} alt="음악 로고" />
+          <img src={'./../img/runLogo.png'} onClick={goToExercise} alt="운동 로고" />
+          <img src={'./../img/clinicLogo.png'} onClick={goToClinic} alt="상담 로고" />
         </div>
       </div>
     </div>

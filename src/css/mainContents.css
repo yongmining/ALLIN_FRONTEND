@@ -34,8 +34,9 @@
 }
 
 .choice-box {
+  display: flex;
   width: 80%;
-  height: 100%;
+  height: 450px;
   border: solid 2px black;
   display: flex;
   margin-left: 10%;
@@ -43,38 +44,15 @@
 }
 
 .choice-btn {
+  display: flex;
   width: 100%;
   height: 50%;
-  display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.choice-btns {
-  width: 17%;
-  height: 40%;
-  background-color: gray;
-  font-size: 16px;
-}
-
-@media (max-width: 767px) {
-  .choice-btns {
-    width: 25%;
-    height: 40%;
-    background-color: gray;
-  }
-}
-
-@media (min-width: 1050px) {
-  .main-img {
-    width: 50%;
-    height: 100%;
-  }
-  .main-info-right {
-    float: right;
-    width: 50%;
-    height: 90%;
-    font-size: 34px;
-  }
+.choice-btn > img {
+  width: 30%;
+  height: 60%;
 }
 
 @media (max-width: 767px) {
@@ -84,19 +62,15 @@
   }
   .today-comment {
     width: 100%;
-    display: flex;
-    height: auto;
     font-size: 15px;
   }
 
   .main-left {
-    float: left;
     width: 50%;
     height: 100%;
   }
 
   .main-info-right {
-    float: right;
     width: 50%;
 
     font-size: 16px;
@@ -107,9 +81,40 @@
   }
 
   .main-info-right {
-    float: right;
     width: 50%;
     height: 90%;
     font-size: 15px;
+  }
+}
+
+@media (min-width: 668px) and (max-width: 1179px) {
+  .choice-box {
+    width: 80%;
+    height: 500px;
+    margin-left: 10%;
+  }
+  .choice-btn > img {
+    width: 30%;
+    height: 60%;
+  }
+  .choice-btn {
+    width: 100%;
+    height: 50%;
+  }
+}
+
+@media (max-width: 667px) {
+  .choice-box {
+    width: 80%;
+    height: 280px;
+    margin-left: 10%;
+  }
+  .choice-btn > img {
+    width: 30%;
+    height: 60%;
+  }
+  .choice-btn {
+    width: 100%;
+    height: 50%;
   }
 }

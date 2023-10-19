@@ -80,15 +80,13 @@ function Profil() {
     };
 
     setForm(updatedData);
-    dispatch(getUpdateMember(memberNo, updatedData)); // API 호출
-
-    // 수정 후 페이지 이동 or 사용자에게 수정 성공 메시지 표시 등의 후속 처리
-    navigate('/');
+    dispatch(getUpdateMember(memberNo, updatedData));
+    navigate('/takepictureanalyze');
   };
 
   return (
     <div className="profil">
-      <img className="profilImage" src={''} alt="ProfilImage" />
+      <img className="profilImage" src={members.memberImage} alt="ProfilImage" />
       <div className="profilText">
         <div>
           닉네임 : &nbsp;
