@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-// import { IoIosFemale } from 'react-icons/io';
-// import { IoIosMale } from 'react-icons/io';
 import '../../css/profil.css';
 import { getCurrentMember, getUpdateMember } from '../../api/memberApi';
 import { callKakaoLogoutAPI } from '../../api/loginApi';
@@ -17,7 +15,6 @@ function Profil() {
   const [age, setAge] = useState(null);
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
-  const [profilImageUrl, setprofilImageUrl] = useState('');
 
   useEffect(() => {
     dispatch(getCurrentMember());
