@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
   memberReducer,
   feedbackReducer,
   phraseReducer,
+  //pictureReducer,
 });
 
 export default rootReducer;
