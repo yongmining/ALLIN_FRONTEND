@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../css/mainContents.css';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentMember } from '../../api/memberApi';
+import { phraseListAPI } from "../../api/phraseApi"; // API 파일의 경로를 적절하게 수정하세요.
+
 
 function MainContents() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const phrase = useSelector((state) => state.phrase); // Redux state의 구조에 따라 경로를 적절히 수정해야 합니다.
 
   const members = useSelector((store) => store.memberReducer);
 
@@ -31,6 +34,10 @@ function MainContents() {
     navigate('/clinicList');
   };
 
+  useEffect(() => {
+    dispatch(phraseListAPI({ currentPage: 1 })); // currentPage 값이 필요하다면 수정하세요.
+  }, [dispatch]);
+
   return (
     <div className="main">
       <div className="main-info">
@@ -45,8 +52,9 @@ function MainContents() {
         </div>
       </div>
       <div className="today-comment">
-        <h3>오늘도 당신의 남은 인생 중, 첫 번쨰 날이다.</h3>
+        <h3>{phrase ? phrase : "데이터 로딩 중..."}</h3>
       </div>
+
       <div className="choice-box">
         <div className="choice-btn">
           <img src={'./../img/youtubeLogo.png'} onClick={goToYoutube} alt="유튜브 로고" />
