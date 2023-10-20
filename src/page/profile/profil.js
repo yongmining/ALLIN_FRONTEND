@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import '../../css/profil.css';
-import { getCurrentMember, getUpdateMember } from '../../api/memberApi';
-import { callKakaoLogoutAPI } from '../../api/loginApi';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import "../../css/profil.css";
+import { getCurrentMember, getUpdateMember } from "../../api/memberApi";
+import { callKakaoLogoutAPI } from "../../api/loginApi";
 
 function Profil() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function Profil() {
 
   const members = useSelector((store) => store.memberReducer);
 
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState("");
   const [age, setAge] = useState(null);
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
@@ -21,14 +21,14 @@ function Profil() {
   }, []);
 
   const [form, setForm] = useState({
-    memberNickname: '',
-    memberAge: '',
-    memberGender: '',
+    memberNickname: "",
+    memberAge: "",
+    memberGender: "",
   });
 
   const logout = () => {
     dispatch(callKakaoLogoutAPI());
-    navigate('/', { replace: true });
+    navigate("/", { replace: true });
   };
 
   const handleNicknameChange = (e) => {
@@ -56,15 +56,18 @@ function Profil() {
 
   const handleAgeInputChange = (e) => {
     const input = e.target.value;
-    if (input === '' || (parseInt(input, 10) >= 1 && parseInt(input, 10) <= 99)) {
-      setAge(input === '' ? null : parseInt(input, 10));
+    if (
+      input === "" ||
+      (parseInt(input, 10) >= 1 && parseInt(input, 10) <= 99)
+    ) {
+      setAge(input === "" ? null : parseInt(input, 10));
     }
   };
 
   const handleRegistration = () => {
     const memberNo = members.memberNo;
     if (!nickname.trim()) {
-      alert('닉네임을 입력해주세요.');
+      alert("닉네임을 입력해주세요.");
       return;
     }
 
@@ -72,18 +75,22 @@ function Profil() {
     const updatedData = {
       memberNickname: nickname,
       memberAge: age,
-      memberGender: isMaleChecked ? '남자' : '여자',
+      memberGender: isMaleChecked ? "남자" : "여자",
       // 필요한 경우 다른 데이터도 포함
     };
 
     setForm(updatedData);
     dispatch(getUpdateMember(memberNo, updatedData));
-    navigate('/takepictureanalyze');
+    navigate("/takepictureanalyze");
   };
 
   return (
     <div className="profil">
-      <img className="profilImage" src={members.memberImage} alt="ProfilImage" />
+      <img
+        className="profilImage"
+        src={members.memberImage}
+        alt="ProfilImage"
+      />
       <div className="profilText">
         <div>
           닉네임 : &nbsp;
@@ -95,13 +102,14 @@ function Profil() {
             onChange={handleNicknameChange}
           />
         </div>
+
         <div>
           나 이 :&nbsp;&nbsp;&nbsp;&nbsp;
           <input
             type="text"
             name="age"
             placeholder="나이를 입력해주세요 (1~99)"
-            value={age === null ? '' : age} // null이면 빈 문자열로 표시
+            value={age === null ? "" : age} // null이면 빈 문자열로 표시
             onChange={handleAgeInputChange}
           />
         </div>
@@ -109,7 +117,12 @@ function Profil() {
           성 별 : &nbsp;&nbsp;&nbsp;
           <div>
             남자
-            <input type="checkbox" name="genderMale" checked={isMaleChecked} onChange={handleMaleCheckboxChange} />
+            <input
+              type="checkbox"
+              name="genderMale"
+              checked={isMaleChecked}
+              onChange={handleMaleCheckboxChange}
+            />
           </div>
           &nbsp;&nbsp;
           <div>
@@ -124,6 +137,7 @@ function Profil() {
           </div>
         </div>
       </div>
+
       <div className="allmdBtn">
         <button onClick={handleRegistration}>등록</button>
         <button onClick={logout}>취소</button>

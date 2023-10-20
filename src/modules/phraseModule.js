@@ -1,8 +1,7 @@
 import { createActions, handleActions } from "redux-actions";
 
 const initialState = [];
-
-export const GET_PHRASE = "phrase/GET_PHARASE";
+export const GET_PHRASE = "phrase/GET_PHRASE";
 
 const actions = createActions({
   [GET_PHRASE]: () => {},
@@ -11,7 +10,7 @@ const actions = createActions({
 const phraseReducer = handleActions(
   {
     [GET_PHRASE]: (state, { payload }) => {
-      return payload;
+      return { ...state, ...payload };
     },
   },
   initialState
