@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../css/home.css';
 import UnloginModal from '../component/modal/unloginModal';
 import Modal from 'react-modal';
-// import { OPEN_MODAL, CLOSE_MODAL } from '../modules/modalModule';
 
 const KAKAO_REST_API_KEY = '23a9d20514279e743aea8c6d1225c1b2';
 const KAKAO_REDIRECT_URI = `http://localhost:3000/kakao/callback`;
