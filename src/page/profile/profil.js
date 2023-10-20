@@ -8,17 +8,16 @@ import { callKakaoLogoutAPI } from "../../api/loginApi";
 function Profil() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const members = useSelector((store) => store.memberReducer);
-
-  const [nickname, setNickname] = useState("");
-  const [age, setAge] = useState(null);
-  const [isMaleChecked, setIsMaleChecked] = useState(false);
-  const [isFemaleChecked, setIsFemaleChecked] = useState(false);
 
   useEffect(() => {
     dispatch(getCurrentMember());
   }, []);
+
+  const [nickname, setNickname] = useState('');
+  const [age, setAge] = useState(null);
+  const [isMaleChecked, setIsMaleChecked] = useState(false);
+  const [isFemaleChecked, setIsFemaleChecked] = useState(false);
 
   const [form, setForm] = useState({
     memberNickname: "",

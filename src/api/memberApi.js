@@ -3,8 +3,7 @@ import { IS_LOGIN } from '../modules/loginModule';
 
 /* 현재 로그인 된 멤버 정보 가져오기 */
 export const getCurrentMember = (memberNo) => {
-  const token = JSON.parse(window.localStorage.getItem('accessToken'));
-  const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}`;
+  const requestURL = `http://localhost:8080/api/v1/member/${memberNo}`;
 
   return async (dispatch, getState) => {
     const result = await fetch(requestURL, {
@@ -28,8 +27,6 @@ export const getCurrentMember = (memberNo) => {
 /* 현재 로그인 된 멤버 정보 변경 */
 export const getUpdateMember = (memberNo, form) => {
   const token = JSON.parse(window.localStorage.getItem('accessToken'));
-  console.log('Sending form data:', form);
-  console.log(JSON.stringify(form));
   const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}/profile`;
   return async (dispatch, getState) => {
     const result = await fetch(requestURL, {
@@ -45,7 +42,7 @@ export const getUpdateMember = (memberNo, form) => {
     if (result.status === 201) {
       dispatch({ type: PUT_MEMBER, payload: result.data });
       alert(result.message);
-      window.location.href = `/profilInfo/${token.memberNo}`;
+      window.location.href = `/profilInfo/${memberNo}`;
     }
   };
 };
