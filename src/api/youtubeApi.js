@@ -1,8 +1,7 @@
-import { GET_PHRASE } from "../modules/phraseModule";
+import { GET_YOUTUBE } from "../modules/youtubeModule";
 
-export const phraseList = () => {
-  let URL = `http://localhost:8080/api/v1/phrase`;
-
+export const youtubeList = (currentPage) => {
+  let URL = `http://localhost:8080/api/v1/youtube?page=${currentPage}`;
   return async (dispatch, getState) => {
     const result = await fetch(URL, {
       method: "GET",
@@ -13,7 +12,7 @@ export const phraseList = () => {
     }).then((response) => response.json());
 
     if (result.status === 200) {
-      dispatch({ type: GET_PHRASE, payload: result.data });
+      dispatch({ type: GET_YOUTUBE, payload: result.data });
     }
   };
 };

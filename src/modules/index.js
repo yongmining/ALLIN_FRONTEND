@@ -4,6 +4,7 @@ import loginReducer from "./loginModule";
 import memberReducer from "./memberModule";
 import feedbackReducer from "./feedbackModule";
 import phraseReducer from "./phraseModule";
+import youtubeReducer from "./youtubeModule";
 
 const rootReducer = combineReducers({
   modalsReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   feedbackReducer,
   phraseReducer,
   //pictureReducer,
+  youtubeReducer,
 });
 
 export default rootReducer;
