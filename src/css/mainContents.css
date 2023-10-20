@@ -3,15 +3,17 @@
 }
 
 .main-img {
-  width: 60%;
-  height: 100%;
-  margin-left: 3%;
+  width: 70%;
+  height: 350px;
+  margin-left: 20%;
 }
 
 .today-comment {
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
   display: flex;
   height: auto;
+  justify-content: center;
   font-size: 23px;
 }
 
@@ -59,9 +61,11 @@
   .main-img {
     width: 90%;
     height: 70%;
+    margin: 3%;
   }
   .today-comment {
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
     font-size: 15px;
   }
 
@@ -88,6 +92,11 @@
 }
 
 @media (min-width: 668px) and (max-width: 1179px) {
+  .main-img {
+    width: 90%;
+    height: 70%;
+    margin: 3%;
+  }
   .choice-box {
     width: 80%;
     height: 500px;
