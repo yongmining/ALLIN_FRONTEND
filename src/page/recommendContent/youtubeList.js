@@ -1,39 +1,43 @@
 import { useEffect, useState } from "react";
 import "../../css/youtubeList.css";
+import { useDispatch, useSelector } from "react-redux";
+import { youtubeList } from "../../api/youtubeApi"; // getCurrentMember를 import
+import { getCurrentMember } from "../../api/memberApi";
 
 function YoutubeList() {
-  const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
-  const [videosData, setVideosData] = useState([]);
+  const videosData = useSelector((store) => store.youtubeReducer);
+  const dispatch = useDispatch();
 
-  const keyword = "슬플떄 보는 영상";
+  const [form, setForm] = useState({
+    youtubeTitle: "",
+    youtubeLink: "",
+    memberNo: "",
+  });
+  // YoutubeList 컴포넌트
+  const members = useSelector((store) => store.memberReducer);
 
   useEffect(() => {
-    fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${keyword}&key=${apiKey}&maxResults=6`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const videos = data.items.map((item) => {
-          const snippet = item.snippet;
-          return {
-            title: snippet.title,
-            thumbnail: snippet.thumbnails.medium.url,
-            link: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-          };
-        });
-        setVideosData(videos);
-      });
-  }, [apiKey]); // keyword는 상수이므로 의존성 배열에 추가할 필요 없음
+    // 첫 번째로 멤버 정보를 가져옵니다.
+    dispatch(getCurrentMember()).then(() => {
+      // 멤버 정보 가져오기가 완료되면 memberNo를 체크합니다.
+      if (members && members.memberNo) {
+        dispatch(youtubeList(members.memberNo));
+      } else {
+        console.error("memberNo가 없습니다");
+      }
+    });
+  }, []);
 
   if (videosData.length === 0) return null;
 
   return (
     <div className="videoContainer">
       {videosData.map((video) => (
-        <div className="videoItem" key={video.link}>
-          <a href={video.link} target="_blank" rel="noopener noreferrer">
-            <img src={video.thumbnail} alt={video.title} />
-            <h3>{video.title}</h3>
+        <div className="videoItem" key={video.youtubeLink}>
+          <a href={video.youtubeLink} target="_blank" rel="noopener noreferrer">
+            <img src={video.thumbnailUrl} alt={video.youtubeTitle} />
+            {/* 이미지 표시 */}
+            <h3>{video.youtubeTitle}</h3>
           </a>
         </div>
       ))}

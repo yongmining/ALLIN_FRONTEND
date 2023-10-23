@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../../css/mainContents.css";
 import { useNavigate } from "react-router-dom";
 import { getCurrentMember } from "../../api/memberApi";
+import { Link } from "react-router-dom"; // React Router의 Link를 사용
 import { phraseList } from "../../api/phraseApi";
 
 function MainContents() {
