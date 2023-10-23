@@ -1,47 +1,47 @@
 import { useEffect, useState } from "react";
 import "../../css/youtubeList.css";
+import { useDispatch, useSelector } from "react-redux";
+import { exerciseList } from "../../api/youtubeApi"; // getCurrentMember를 import
+import { getCurrentMember } from "../../api/memberApi";
 
 function ExerciseList() {
-  const videoIds = [
-    "6VEnTQ2rx_4",
-    "5V0LrWVmKRA",
-    "bTUKUB8CI_4",
-    "VuDY1PBAuWU",
-    "EOCZYxmi7ho",
-    "9avkrmhScQk",
-  ];
-  const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
+  const videosData = useSelector((store) => store.exerciseReducer);
+  const dispatch = useDispatch();
 
-  const [videosData, setVideosData] = useState([]);
+  const [form, setForm] = useState({
+    exerciseTitle: "",
+    exerciseLink: "",
+    memberNo: "",
+  });
+  // YoutubeList 컴포넌트
+  const members = useSelector((store) => store.memberReducer);
 
   useEffect(() => {
-    Promise.all(
-      videoIds.map((videoId) =>
-        fetch(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            const snippet = data.items[0].snippet;
-            return {
-              title: snippet.title,
-              thumbnail: snippet.thumbnails.medium.url,
-              link: `https://www.youtube.com/watch?v=${videoId}`,
-            };
-          })
-      )
-    ).then((videos) => setVideosData(videos));
-  }, [apiKey]);
+    // 첫 번째로 멤버 정보를 가져옵니다.
+    dispatch(getCurrentMember()).then(() => {
+      // 멤버 정보 가져오기가 완료되면 memberNo를 체크합니다.
+      if (members && members.memberNo) {
+        dispatch(exerciseList(members.memberNo));
+      } else {
+        console.error("memberNo가 없습니다");
+      }
+    });
+  }, []);
 
   if (videosData.length === 0) return null;
 
   return (
     <div className="videoContainer">
       {videosData.map((video) => (
-        <div className="videoItem" key={video.link}>
-          <a href={video.link} target="_blank" rel="noopener noreferrer">
-            <img src={video.thumbnail} alt={video.title} />
-            <h3>{video.title}</h3>
+        <div className="videoItem" key={video.exerciseLink}>
+          <a
+            href={video.exerciseLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={video.thumbnailUrl} alt={video.exerciseTitle} />
+            {/* 이미지 표시 */}
+            <h3>{video.exerciseTitle}</h3>
           </a>
         </div>
       ))}

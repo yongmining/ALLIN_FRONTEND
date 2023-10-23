@@ -14,7 +14,7 @@ function Profil() {
     dispatch(getCurrentMember());
   }, []);
 
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState("");
   const [age, setAge] = useState(null);
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);

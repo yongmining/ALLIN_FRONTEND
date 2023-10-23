@@ -5,6 +5,8 @@ import memberReducer from "./memberModule";
 import feedbackReducer from "./feedbackModule";
 import phraseReducer from "./phraseModule";
 import youtubeReducer from "./youtubeModule";
+import musicReducer from "./musicModule";
+import exerciseReducer from "./exerciseModule";
 
 const rootReducer = combineReducers({
   modalsReducer,
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   phraseReducer,
   //pictureReducer,
   youtubeReducer,
+  musicReducer,
+  exerciseReducer,
 });
 
 export default rootReducer;
