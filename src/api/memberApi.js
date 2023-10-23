@@ -2,8 +2,9 @@ import { GET_MEMBER, PUT_MEMBER, DELETE_MEMBER } from '../modules/memberModule';
 import { IS_LOGIN } from '../modules/loginModule';
 
 /* 현재 로그인 된 멤버 정보 가져오기 */
-export const getCurrentMember = (memberNo) => {
-  const requestURL = `http://localhost:8080/api/v1/member/${memberNo}`;
+export const getCurrentMember = () => {
+  const token = JSON.parse(window.localStorage.getItem('accessToken'));
+  const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}`;
 
   return async (dispatch, getState) => {
     const result = await fetch(requestURL, {

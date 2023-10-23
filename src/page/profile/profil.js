@@ -11,12 +11,9 @@ function Profil() {
   const members = useSelector((store) => store.memberReducer);
 
   useEffect(() => {
-    // 로그인 상태에 따라 액션 변경
     if (localStorage.getItem('accessToken')) {
-      // 게스트가 아닌 경우 현재 회원 정보 조회
       dispatch(getCurrentMember());
     } else {
-      // 게스트인 경우 게스트 회원 정보 조회
       dispatch(getGuestMembmer());
     }
   }, []);
