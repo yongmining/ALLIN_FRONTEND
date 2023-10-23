@@ -53,6 +53,7 @@ export const callGuestLoginAPI = (code) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: '*/*',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
       body: JSON.stringify(data),
     }).then((res) => res.json());
