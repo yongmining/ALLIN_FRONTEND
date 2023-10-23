@@ -61,6 +61,7 @@ export const callGuestLoginAPI = (code) => {
     if (result.status === 200) {
       window.localStorage.setItem('accessToken', JSON.stringify(result.data.token));
       dispatch({ type: IS_LOGIN });
+      console.log(result);
     }
   };
 };

@@ -71,3 +71,26 @@ export const deleteMember = (memberNo) => {
     }
   };
 };
+
+/* 현재 로그인 된 게스트 정보 가져오기 */
+export const getGuestMembmer = (token) => {
+  const requestURL = `http://localhost:8080/api/v1/member/guest/${token}`;
+
+  return async (dispatch, getState) => {
+    const result = await fetch(requestURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+      },
+    }).then((res) => res.json());
+
+    if (result.status === 200) {
+      dispatch({ type: GET_MEMBER, payload: result.data.guestMember });
+      console.log(result);
+      if (result.data.guestMember.memberNickname.startsWith('Guest')) {
+        return '새로운 회원';
+      }
+    }
+  };
+};
