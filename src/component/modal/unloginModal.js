@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { CLOSE_MODAL } from '../../modules/modalModule';
 import { useNavigate } from 'react-router-dom';
+import { callGuestLoginAPI } from '../../api/loginApi';
 
 function UnloginModal() {
   const dispatch = useDispatch();
@@ -11,9 +12,29 @@ function UnloginModal() {
     dispatch({ type: CLOSE_MODAL });
   };
 
-  const onClickhandle = () => {
+  function generateUniqueCode() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const codeLength = 8;
+    let code = '';
+
+    for (let i = 0; i < codeLength; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      code += characters.charAt(randomIndex);
+    }
+    return code;
+  }
+
+  const onClickhandle = async () => {
     closeModal();
-    navigate('/profil');
+    const code = generateUniqueCode(); // 이 부분에서 고유한 코드 생성 로직을 구현해야 합니다.
+
+    try {
+      await dispatch(callGuestLoginAPI(code));
+      console.log('비회원');
+      navigate('/profil');
+    } catch (error) {
+      console.log('오류남');
+    }
   };
 
   return (
