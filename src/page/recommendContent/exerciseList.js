@@ -40,13 +40,17 @@ function ExerciseList() {
             rel="noopener noreferrer"
           >
             <img src={video.thumbnailUrl} alt={video.exerciseTitle} />
-            {/* 이미지 표시 */}
-            <h3>{video.exerciseTitle}</h3>
           </a>
+          <div className="videoInfo">
+            <h3>{video.exerciseTitle}</h3>
+            <div className="likeButton">
+              {/* 좋아요 버튼 추가 */}
+              <button>좋아요</button>
+            </div>
+          </div>
         </div>
       ))}
     </div>
   );
 }
-
 export default ExerciseList;

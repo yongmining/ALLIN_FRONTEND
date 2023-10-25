@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentMember, getUpdateMember } from "../../api/memberApi";
 import "../../css/profilInfo.css";
+import { phraseList } from "../../api/phraseApi";
 
 const ProfilInfo = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,11 @@ const ProfilInfo = () => {
 
   useEffect(() => {
     dispatch(getCurrentMember());
+  }, []);
+
+  const phrase = useSelector((store) => store.phraseReducer);
+  useEffect(() => {
+    dispatch(phraseList());
   }, []);
 
   const addRow = () => {
@@ -147,6 +153,7 @@ const ProfilInfo = () => {
               </button>
             )}
           </div>
+          <h3>{phrase.phraseContent}</h3>
         </div>
       </div>
       <div className="chart-main">
