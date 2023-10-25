@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 const TakePictureanalyze = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-
+  const stripRef = useRef(null);
   useEffect(() => {
     getVideo();
   }, []);
@@ -42,60 +42,53 @@ const TakePictureanalyze = () => {
     const canvas = canvasRef.current;
     if (canvas) {
       const dataURL = canvas.toDataURL('image/jpeg');
-      const directoryPath = 'http://localhost:8080/api/v1/pictures/'; // Update the server URL
-
+      const directoryPath = 'http://127.0.0.1:8080/api/v1/pictures'; // Update the server URL
+  
       try {
         const imagePath = await saveImage(dataURL, directoryPath);
-
+  
         const body = JSON.stringify({
           img_path: imagePath,
           actions: ['age', 'gender', 'emotion', 'race'],
         });
-
-        // Send the image to the server
+  
+        // Send the image to the analysis server
         try {
-          const response = await fetch('http://localhost:5000/analyze', {
+          const response = await fetch('http://127.0.0.1:5000/analyze', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json', // JSON 데이터를 보낸다는 헤더 설정
+              'Content-Type': 'application/json',
             },
             body,
+            mode: 'cors',
           });
-
+  
           if (response.ok) {
-            const data = await response.json();
-            const result = data.results[0];
+            const result = await response.json();
             console.log({
-              age: result.age,
-              dominant_emotion: result.dominant_emotion,
-              dominant_gender: result.dominant_gender,
-              dominant_race: result.dominant_race,
+              emotionAge: result.age,
+              emotionResult: result.dominant_emotion,
+              emotionGender: result.dominant_gender,
             });
-
-            const newBody = JSON.stringify({
-              image_name: 'photo.jpg',
-              dominant_emotion: result.dominant_emotion,
-              dominant_gender: result.dominant_gender,
-              dominant_race: result.dominant_race,
-              age: result.age,
-            });
-
-            const newResponse = await fetch('http://localhost:8080/api/v1/emotion/analyze', {
+  
+            // Send the result directly to your Java backend
+            const newResponse = await fetch('http://127.0.0.1:8080/api/v1/emotion', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: newBody,
+              body: JSON.stringify(result), // Send the result directly
+              mode: 'cors',
             });
-
+  
             if (newResponse.ok) {
               const newData = await newResponse.json();
               console.log(newData);
             } else {
-              console.error('Error in second fetch:', newResponse.status);
+              console.error('Error in fetch to http://127.0.0.1:8080/api/v1/emotion:', newResponse.status);
             }
           } else {
-            console.error('Error in first fetch:', response.status);
+            console.error('Error in fetch to http://localhost:5000/analyze:', response.status);
           }
         } catch (error) {
           console.error('Error:', error);
@@ -131,5 +124,6 @@ const TakePictureanalyze = () => {
     </div>
   );
 };
+
 
 export default TakePictureanalyze;
