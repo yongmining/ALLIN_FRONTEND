@@ -98,7 +98,14 @@ header span:last-child {
 
 @media (max-width: 460px) {
   .back-color {
-    width: 35%; /* 전체 너비 */
+    width: 38%; /* 전체 너비 */
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 280px) {
+  .back-color {
+    width: 48%; /* 전체 너비 */
     font-size: 12px;
   }
 }
