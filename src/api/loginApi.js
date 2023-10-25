@@ -15,8 +15,9 @@ export const callKakaoLoginAPI = (code) => {
       body: JSON.stringify(data),
     }).then((res) => res.json());
 
-    if (result.status === 200) {
+    if (result.status === 201) {
       window.localStorage.setItem('accessToken', JSON.stringify(result.data.token));
+      console.log(result);
       dispatch({ type: IS_LOGIN });
     }
   };
@@ -46,22 +47,26 @@ export const callGuestLoginAPI = (code) => {
   const requestURL = `http://localhost:8080/api/v1/login/guest`;
 
   return async (dispatch, getState) => {
-    let data = { code: code };
+    try {
+      const response = await fetch(requestURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify({ code }), // 코드를 JSON 형태로 보냅니다.
+      });
 
-    const result = await fetch(requestURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: '*/*',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: JSON.stringify(data),
-    }).then((res) => res.json());
+      const result = await response.json();
 
-    if (result.status === 200) {
-      window.localStorage.setItem('accessToken', JSON.stringify(result.data.token));
-      dispatch({ type: IS_LOGIN });
-      console.log(result);
+      if (result.status === 201) {
+        window.localStorage.setItem('accessToken', JSON.stringify(result.data.token));
+        console.log(result);
+        dispatch({ type: IS_LOGIN });
+      }
+    } catch (error) {
+      console.log('오류남', error);
     }
   };
 };
