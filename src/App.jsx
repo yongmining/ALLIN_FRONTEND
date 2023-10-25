@@ -17,6 +17,7 @@ import ClinicList from './page/recommendContent/clinic';
 import ProfilInfo from './page/profile/profilInfo';
 import KakaoPage from './page/login/kakaoPage';
 import UnloginPage from './page/login/unloginPage';
+import Chat from './page/recommendContent/chat';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
 
           {/* <Route path="/consulting" element={<Consulting />} /> */}
           <Route path="/clinicList" element={<ClinicList />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/fbmodal" element={<FbModal />} />
           <Route path="/feedback" element={<FeedBack />} />
         </Route>

@@ -21,16 +21,16 @@ function UnloginModal() {
       const randomIndex = Math.floor(Math.random() * characters.length);
       code += characters.charAt(randomIndex);
     }
+    localStorage.setItem('guestCode', code);
     return code;
   }
 
   const onClickhandle = async () => {
     closeModal();
-    const code = generateUniqueCode(); // 이 부분에서 고유한 코드 생성 로직을 구현해야 합니다.
-
+    const code = generateUniqueCode();
+    console.log(code);
     try {
       await dispatch(callGuestLoginAPI(code));
-      console.log('비회원');
       navigate('/profil');
     } catch (error) {
       console.log('오류남');

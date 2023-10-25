@@ -2,21 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '../../css/profil.css';
-import { getCurrentMember, getUpdateMember, getGuestMembmer } from '../../api/memberApi';
+import { getCurrentMember, getUpdateMember, getGuestMember } from '../../api/memberApi';
 import { callKakaoLogoutAPI } from '../../api/loginApi';
 
 function Profil() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const members = useSelector((store) => store.memberReducer);
+  const guest = useSelector((store) => store.guestReducer);
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      dispatch(getCurrentMember());
-    } else {
-      dispatch(getGuestMembmer());
-    }
-  }, []);
+    dispatch(getGuestMember());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getCurrentMember());
+  }, [dispatch]);
 
   const [nickname, setNickname] = useState('');
   const [age, setAge] = useState(null);
@@ -27,6 +28,8 @@ function Profil() {
     memberNickname: '',
     memberAge: '',
     memberGender: '',
+    guestAge: '',
+    guestGender: '',
   });
 
   const logout = () => {
@@ -66,27 +69,36 @@ function Profil() {
 
   const handleRegistration = () => {
     const memberNo = members.memberNo;
+    // const guestNo = guest.socialCode;
     if (!nickname.trim()) {
       alert('닉네임을 입력해주세요.');
       return;
     }
 
-    // FormData나 다른 방식으로 수정할 데이터 설정
     const updatedData = {
       memberNickname: nickname,
       memberAge: age,
       memberGender: isMaleChecked ? '남자' : '여자',
-      // 필요한 경우 다른 데이터도 포함
+      guestAge: age,
+      guestGender: isMaleChecked ? '남자' : '여자',
     };
 
     setForm(updatedData);
+    // dispatch(getGuestMember(guestNo, updatedData));
     dispatch(getUpdateMember(memberNo, updatedData));
     navigate('/takepictureanalyze');
   };
 
   return (
     <div className="profil">
-      <img className="profilImage" src={members.memberImage} alt="ProfilImage" />
+      <br />
+      <br />
+
+      <img
+        className="profilImage"
+        src={members.memberImage ? members.memberImage : guest && guest.guestImage}
+        alt="ProfilImage"
+      />
       <div className="profilText">
         <div>
           닉네임 : &nbsp;
@@ -105,7 +117,7 @@ function Profil() {
             type="text"
             name="age"
             placeholder="나이를 입력해주세요 (1~99)"
-            value={age === null ? '' : age} // null이면 빈 문자열로 표시
+            value={age === null ? '' : age}
             onChange={handleAgeInputChange}
           />
         </div>

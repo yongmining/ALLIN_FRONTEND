@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../../css/mainContents.css';
 import { useNavigate } from 'react-router-dom';
-import { getCurrentMember, getGuestMembmer } from '../../api/memberApi';
-import { Link } from 'react-router-dom'; // React Router의 Link를 사용
+import { getCurrentMember, getGuestMember } from '../../api/memberApi';
 import { phraseList } from '../../api/phraseApi';
 
 function MainContents() {
@@ -11,19 +10,20 @@ function MainContents() {
   const navigate = useNavigate();
 
   const members = useSelector((store) => store.memberReducer);
+  const guest = useSelector((store) => store.guestReducer);
 
   const phrase = useSelector((store) => store.phraseReducer);
   useEffect(() => {
     dispatch(phraseList());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      dispatch(getCurrentMember());
-    } else {
-      dispatch(getGuestMembmer());
-    }
-  }, []);
+    dispatch(getGuestMember());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getCurrentMember());
+  }, [dispatch]);
 
   const goToYoutube = () => {
     navigate('/choicecontents/YouTubeList');
@@ -40,6 +40,9 @@ function MainContents() {
   };
   const goToClinic = () => {
     navigate('/clinicList');
+  };
+  const goToChat = () => {
+    navigate('/chat');
   };
 
   return (
@@ -63,6 +66,7 @@ function MainContents() {
         <div className="choice-btn">
           <img src={'./../img/youtubeLogo.png'} onClick={goToYoutube} alt="유튜브 로고" />
           <img src={'./../img/bookLogo.png'} onClick={goToBook} alt="책 로고" />
+          <img src={'./../img/chatLogo.png'} onClick={goToChat} alt="챗 로고" />
         </div>
         <div className="choice-btn">
           <img src={'./../img/musicLogo.png'} onClick={goToMusic} alt="음악 로고" />

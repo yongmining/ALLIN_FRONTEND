@@ -17,6 +17,13 @@
   color: #e38981;
 }
 
+.mainprofil-info-right {
+  float: right;
+  width: 50%;
+  height: 80%;
+  font-size: 30px;
+}
+
 .profilText {
   display: flex;
   margin-top: 30px;
@@ -33,10 +40,14 @@
   max-width: 400px; /* 최대 너비를 설정할 수 있습니다. */
   border: 1px solid #444444;
   border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 
+.chart-main {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
 /* 행 추가 버튼 스타일 */
 button {
   margin-top: 10px;
@@ -59,16 +70,21 @@ td {
 }
 
 .mainprofil {
+  display: flex;
+  flex-direction: column;
   width: auto;
   height: 667px;
 }
 
 .mainprofil-info {
   width: 100%;
-  height: 35%;
+  height: 40%;
 }
 
 .mainprofil-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   float: left;
   width: 50%;
   height: 100%;
@@ -77,17 +93,38 @@ td {
 .mainprofil-img {
   width: 60%;
   height: 100%;
-  margin-left: 3%;
 }
 
-@media (max-width: 769px) {
+@media (min-width: 421px) and (max-width: 1000px) {
   .mainprofil-img {
-    width: 90%;
+    width: 80%;
+    height: 80%;
+  }
+
+  .mainprofil-left {
+    width: 50%;
+    height: 100%;
+  }
+
+  .mainprofil-info-right {
+    float: right;
+    width: 50%;
+    height: 80%;
+    font-size: 30px;
+  }
+  .mainprofil-info {
+    width: 100%;
+    height: 50%;
+  }
+}
+
+@media (max-width: 420px) {
+  .mainprofil-img {
+    width: 80%;
     height: 70%;
   }
 
   .mainprofil-left {
-    float: left;
     width: 50%;
     height: 100%;
   }
@@ -96,30 +133,10 @@ td {
     float: right;
     width: 50%;
     height: 100%;
-    font-size: 50px;
+    font-size: 15px;
   }
   .mainprofil-info {
     width: 100%;
     height: 35%;
   }
-}
-@media (min-width: 1000px) {
-  .mainprofil-img {
-    width: 40%;
-    height: 60%;
-  }
-}
-
-.mainprofil-info-right {
-  float: right;
-  width: 50%;
-  height: 100%;
-  font-size: 16px;
-}
-
-.chart-main {
-  width: 100%;
-  height: 10%;
-  display: flex;
-  justify-content: center;
 }
