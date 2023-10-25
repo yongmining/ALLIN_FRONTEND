@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCurrentMember, getUpdateMember,  deleteMember} from "../../api/memberApi";
-import "../../css/profilInfo.css";
-import { phraseList } from "../../api/phraseApi";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentMember, getUpdateMember, deleteMember } from '../../api/memberApi';
+import '../../css/profilInfo.css';
+import { phraseList } from '../../api/phraseApi';
 import { callKakaoLogoutAPI } from '../../api/loginApi';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilInfo = () => {
   const dispatch = useDispatch();
