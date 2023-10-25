@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from 'react';
-import { Await } from 'react-router-dom';
+import React, { useEffect, useRef } from "react";
+import axios from "axios";
 
 const TakePictureanalyze = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const stripRef = useRef(null);
-
+  
   useEffect(() => {
     getVideo();
   }, []);
@@ -14,97 +14,67 @@ const TakePictureanalyze = () => {
     navigator.mediaDevices
       .getUserMedia({ video: { width: 300 } })
       .then((stream) => {
-        let video = videoRef.current;
+        const video = videoRef.current;
         video.srcObject = stream;
         video.play();
       })
       .catch((err) => {
-        console.error('error:', err);
+        console.error('Error:', err);
       });
   };
 
   const paintToCanvas = () => {
-    let video = videoRef.current;
-    let canvas = canvasRef.current;
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
 
     if (video && canvas) {
-      let ctx = canvas.getContext('2d');
-
+      const ctx = canvas.getContext('2d');
       const width = video.videoWidth;
       const height = video.videoHeight;
 
       canvas.width = width;
       canvas.height = height;
 
-      // 비디오 웹캠을 스크린샷으로 찍어서 이미지를 canvas 요소에 그립니다.
+      // Capture a screenshot from the webcam and draw it on the canvas.
       ctx.drawImage(video, 0, 0, width, height);
     }
   };
-  const saveImage = async (dataURL, directoryPath) => {
-    // 이미지 파일로 저장합니다.
-    const imageBlob = await fetch(dataURL).then((res) => res.blob());
 
-    // 이미지 파일을 지정된 폴더에 저장합니다.
-    const imagePath = `${directoryPath}/image.jpg`; // 경로를 조합하여 파일 이름을 포함해야 합니다.
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.style = 'display: none';
-    const url = window.URL.createObjectURL(imageBlob);
-    a.href = url;
-    a.download = 'image.jpg';
-    a.click();
-    window.URL.revokeObjectURL(url);
-
-    return imagePath;
-  };
   async function takePhoto() {
-    let canvas = canvasRef.current;
+    const canvas = canvasRef.current;
     if (canvas) {
-      let ctx = canvas.getContext('2d');
-
-      // 이미지를 서버로 보냄
-      const directoryPath = 'http://localhost:8080/api/v1/pictures/'; // 이 경로를 정확하게 수정해야 합니다.
       const dataURL = canvas.toDataURL('image/jpeg');
+      const blob = new Blob([dataURL], { type: 'image/jpeg' });
 
-      // 이미지 파일을 저장할 경로를 지정합니다.
-
-      const imagePath = await saveImage(dataURL, directoryPath);
-
-      // 이미지 데이터를 JSON 형식으로 변환
-      const body = JSON.stringify({
-        img_path: dataURL,
-        actions: ['age', 'gender', 'emotion', 'race'],
-      });
-
-      // Send the image to the server
       try {
-        const response = await fetch('http://localhost:5000/analyze', {
-          method: 'POST',
+        const formData = new FormData();
+        formData.append("file", blob);
+
+        // CORS 요청 헤더 설정
+        const config = {
           headers: {
-            'Content-Type': 'application/json', // JSON 데이터를 보낸다는 헤더 설정
+            'Content-Type': 'multipart/form-data', // 다른 형식의 데이터일 경우 변경
           },
-          body,
-        });
+          withCredentials: true, // 이 부분에서 수정이 필요합니다.
+        };
 
-        const data = await response.json();
+        const response = await axios.post("http://127.0.0.1:8080/api/v1/picture/upload", formData, config);
 
-        const result = data.results[0];
-        console.log({
-          age: result.age,
-          dominant_emotion: result.dominant_emotion,
-          dominant_gender: result.dominant_gender,
-          dominant_race: result.dominant_race,
-        });
+        if (response.status === 201) { // 상태 코드 변경
+          console.log('Photo uploaded successfully!');
+        } else {
+          console.error('Error uploading photo:', response.status);
+        }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error uploading photo:', error);
       }
     }
-  }
+  };
 
   return (
     <div>
-      <button onClick={() => takePhoto()}>Take a photo</button>
-      <video onCanPlay={() => paintToCanvas()} ref={videoRef}/>
+      <button onClick={takePhoto}>Take a photo</button>
+      <video onCanPlay={paintToCanvas} ref={videoRef} autoPlay playsInline muted />
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <div>
         <div ref={stripRef} />
