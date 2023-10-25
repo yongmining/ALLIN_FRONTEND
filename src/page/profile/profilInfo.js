@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getCurrentMember, getUpdateMember, deleteMember } from '../../api/memberApi';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentMember, getUpdateMember,  deleteMember} from "../../api/memberApi";
+import "../../css/profilInfo.css";
+import { phraseList } from "../../api/phraseApi";
 import { callKakaoLogoutAPI } from '../../api/loginApi';
-import '../../css/profilInfo.css';
 
 const ProfilInfo = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,11 @@ const ProfilInfo = () => {
   useEffect(() => {
     dispatch(getCurrentMember());
   }, [dispatch]);
+
+  const phrase = useSelector((store) => store.phraseReducer);
+  useEffect(() => {
+    dispatch(phraseList());
+  }, []);
 
   const addRow = () => {
     if (data.length < 7) {
@@ -145,6 +150,7 @@ const ProfilInfo = () => {
               </button>
             )}
           </div>
+          <h3>{phrase.phraseContent}</h3>
         </div>
       </div>
       <div className="chart-main">
