@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FeedBack from '../../page/feedback';
 import Modal from 'react-modal';
 
-function FbModal() {
+function FbModal({ closeshowFbModal }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,8 +24,7 @@ function FbModal() {
   };
 
   const onFbCloseClickhandle = () => {
-    closeModal();
-    navigate('/');
+    closeshowFbModal();
   };
 
   return (
@@ -39,7 +38,7 @@ function FbModal() {
         <button onClick={onFbCloseClickhandle}>닫기</button>
         <button onClick={openFeedback}>작성</button>
       </div>
-      <Modal className="modal-backdrop" isOpen={showFeedback} onRequestClose={closeFeedback}>
+      <Modal className="modal-backdrop" isOpen={showFeedback}>
         <FeedBack closeFeedback={closeFeedback} />
       </Modal>
     </div>

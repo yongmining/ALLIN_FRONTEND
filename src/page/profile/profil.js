@@ -11,12 +11,14 @@ function Profil() {
   const members = useSelector((store) => store.memberReducer);
   const guest = useSelector((store) => store.guestReducer);
 
-  useEffect(() => {
-    dispatch(getGuestMember());
-  }, [dispatch]);
+  const isGuest = localStorage.getItem('guestCode') !== null;
 
   useEffect(() => {
-    dispatch(getCurrentMember());
+    if (localStorage.getItem('accessToken')) {
+      dispatch(getCurrentMember());
+    } else if (localStorage.getItem('guestCode')) {
+      dispatch(getGuestMember());
+    }
   }, [dispatch]);
 
   const [nickname, setNickname] = useState('');
@@ -25,11 +27,9 @@ function Profil() {
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
 
   const [form, setForm] = useState({
-    memberNickname: '',
-    memberAge: '',
-    memberGender: '',
-    guestAge: '',
-    guestGender: '',
+    nickname: '',
+    age: '',
+    gender: '',
   });
 
   const logout = () => {
@@ -69,7 +69,6 @@ function Profil() {
 
   const handleRegistration = () => {
     const memberNo = members.memberNo;
-    // const guestNo = guest.socialCode;
     if (!nickname.trim()) {
       alert('닉네임을 입력해주세요.');
       return;
@@ -79,12 +78,9 @@ function Profil() {
       memberNickname: nickname,
       memberAge: age,
       memberGender: isMaleChecked ? '남자' : '여자',
-      guestAge: age,
-      guestGender: isMaleChecked ? '남자' : '여자',
     };
 
     setForm(updatedData);
-    // dispatch(getGuestMember(guestNo, updatedData));
     dispatch(getUpdateMember(memberNo, updatedData));
     navigate('/takepictureanalyze');
   };
@@ -106,7 +102,7 @@ function Profil() {
             type="text"
             name="nickname"
             placeholder="닉네임을 입력해주세요"
-            value={nickname}
+            value={isGuest ? 'GUEST' : nickname}
             onChange={handleNicknameChange}
           />
         </div>

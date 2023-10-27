@@ -53,16 +53,17 @@ export const callGuestLoginAPI = (code) => {
         headers: {
           'Content-Type': 'application/json',
           Accept: '*/*',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
         body: JSON.stringify({ code }), // 코드를 JSON 형태로 보냅니다.
       });
 
       const result = await response.json();
+      console.log(result);
 
       if (result.status === 201) {
-        window.localStorage.setItem('accessToken', JSON.stringify(result.data.token));
+        window.localStorage.setItem('guestCode', JSON.stringify(result.data.guestMember));
         console.log(result);
+
         dispatch({ type: IS_LOGIN });
       }
     } catch (error) {

@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,18 +8,21 @@ import { deleteGuest } from '../api/memberApi';
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const token = JSON.parse(window.localStorage.getItem('accessToken'));
+  const code = JSON.parse(window.localStorage.getItem('guestCode'));
 
   const logout = () => {
-    dispatch(callKakaoLogoutAPI());
-    dispatch(deleteGuest());
+    if (token) {
+      dispatch(callKakaoLogoutAPI());
+    } else if (code) {
+      dispatch(deleteGuest());
+    }
     navigate('/', { replace: true });
   };
 
-  const isProfilePage = location.pathname === '/profil';
-  const isMainPage = location.pathname === '/';
+  console.log(token);
+  console.log(code);
 
   return (
     <div className="common">
@@ -30,12 +32,10 @@ function Header() {
           All-in
         </div>
       </div>
-      {token && !isProfilePage && !isMainPage && (
-        <header className="back-color">
-          <div>
-            <span onClick={() => navigate(`/profilInfo`)}>마이페이지</span>
-            <span onClick={logout}>로그아웃</span>
-          </div>
+      {token && (
+        <header className="back-color dis-flex align-center">
+          <span onClick={() => navigate(`/profilInfo`)}>마이페이지</span>
+          <span onClick={logout}>로그아웃</span>
         </header>
       )}
     </div>

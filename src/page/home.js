@@ -22,7 +22,10 @@ const Home = () => {
         break;
     }
   };
-
+  if (window.localStorage.getItem('guestCode')) {
+    window.localStorage.removeItem('guestCode');
+    window.location.reload();
+  }
   const openUnloginModal = () => {
     setShowUnloginModal(true);
   };
