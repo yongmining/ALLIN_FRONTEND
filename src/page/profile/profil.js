@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '../../css/profil.css';
-import { getCurrentMember, getUpdateMember, getGuestMember } from '../../api/memberApi';
+import { getCurrentMember, getUpdateMember, getGuestMember, getUpdateGuest } from '../../api/memberApi';
 import { callKakaoLogoutAPI } from '../../api/loginApi';
 
 function Profil() {
@@ -11,26 +11,21 @@ function Profil() {
   const members = useSelector((store) => store.memberReducer);
   const guest = useSelector((store) => store.guestReducer);
 
+  const isMember = localStorage.getItem('accessToken') !== null;
   const isGuest = localStorage.getItem('guestCode') !== null;
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (isMember) {
       dispatch(getCurrentMember());
-    } else if (localStorage.getItem('guestCode')) {
+    } else if (isGuest) {
       dispatch(getGuestMember());
     }
-  }, [dispatch]);
+  }, [dispatch, isMember, isGuest]);
 
   const [nickname, setNickname] = useState('');
   const [age, setAge] = useState(null);
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
-
-  const [form, setForm] = useState({
-    nickname: '',
-    age: '',
-    gender: '',
-  });
 
   const logout = () => {
     dispatch(callKakaoLogoutAPI());
@@ -68,20 +63,31 @@ function Profil() {
   };
 
   const handleRegistration = () => {
-    const memberNo = members.memberNo;
-    if (!nickname.trim()) {
-      alert('닉네임을 입력해주세요.');
-      return;
+    if (isMember) {
+      // 멤버 업데이트 데이터 준비
+      if (!nickname.trim()) {
+        alert('닉네임을 입력해주세요.');
+        return;
+      }
+
+      const dataToUpdate = {
+        memberNickname: nickname,
+        memberAge: age,
+        memberGender: isMaleChecked ? '남자' : '여자',
+      };
+
+      dispatch(getUpdateMember(members.memberNo, dataToUpdate));
+    } else if (isGuest) {
+      // 게스트 업데이트 데이터 준비
+      const dataToUpdate = {
+        guestNickname: 'Guest', // 고정된 값 'Guest'
+        guestAge: age,
+        guestGender: isMaleChecked ? '남자' : '여자',
+      };
+
+      dispatch(getUpdateGuest(guest.socialCode, dataToUpdate));
     }
 
-    const updatedData = {
-      memberNickname: nickname,
-      memberAge: age,
-      memberGender: isMaleChecked ? '남자' : '여자',
-    };
-
-    setForm(updatedData);
-    dispatch(getUpdateMember(memberNo, updatedData));
     navigate('/takepictureanalyze');
   };
 
@@ -90,11 +96,7 @@ function Profil() {
       <br />
       <br />
 
-      <img
-        className="profilImage"
-        src={members.memberImage ? members.memberImage : guest && guest.guestImage}
-        alt="ProfilImage"
-      />
+      <img className="profilImage" src={isMember ? members.memberImage : guest && guest.guestImage} alt="ProfilImage" />
       <div className="profilText">
         <div>
           닉네임 : &nbsp;
@@ -102,7 +104,7 @@ function Profil() {
             type="text"
             name="nickname"
             placeholder="닉네임을 입력해주세요"
-            value={isGuest ? 'GUEST' : nickname}
+            value={nickname}
             onChange={handleNicknameChange}
           />
         </div>
