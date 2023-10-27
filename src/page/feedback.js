@@ -86,8 +86,8 @@ function FeedBack({ closeFeedback }) {
       </div>
       <br />
       <div className="fbBtn">
-        <button onClick={handlecloseModal}>닫기</button>
         <button onClick={handleSubmit}>제출</button>
+        <button onClick={handlecloseModal}>닫기</button>
       </div>
       <br />
     </div>

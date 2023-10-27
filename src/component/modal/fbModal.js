@@ -35,8 +35,8 @@ function FbModal({ closeshowFbModal }) {
       </div>
       <div className="fbsubContent">피드백은 저희에게 큰 힘이 됩니다</div>
       <div className="allmdBtn">
-        <button onClick={onFbCloseClickhandle}>닫기</button>
         <button onClick={openFeedback}>작성</button>
+        <button onClick={onFbCloseClickhandle}>닫기</button>
       </div>
       <Modal className="modal-backdrop" isOpen={showFeedback}>
         <FeedBack closeFeedback={closeFeedback} />
