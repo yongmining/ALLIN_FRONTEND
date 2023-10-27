@@ -27,7 +27,7 @@ export const getCurrentMember = () => {
 };
 
 /* 현재 로그인 된 멤버 정보 변경 */
-export const getUpdateMember = (memberNo, form) => {
+export const getUpdateMember = (form) => {
   const token = JSON.parse(window.localStorage.getItem('accessToken'));
   const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}/profile`;
   return async (dispatch) => {
@@ -43,8 +43,6 @@ export const getUpdateMember = (memberNo, form) => {
 
     if (result.status === 200) {
       dispatch({ type: PUT_MEMBER, payload: result.data });
-      alert(result.message);
-      window.location.href = `/profilInfo`;
     }
   };
 };
@@ -75,9 +73,9 @@ export const deleteMember = () => {
 
 /* 현재 로그인 된 게스트 정보 가져오기 */
 export const getGuestMember = () => {
-  const code = localStorage.getItem('guestCode');
-
-  const requestURL = `http://localhost:8080/api/v1/guest/${code}`;
+  const code = JSON.parse(window.localStorage.getItem('guestCode'));
+  console.log(code);
+  const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}`;
 
   return async (dispatch) => {
     const result = await fetch(requestURL, {
@@ -88,7 +86,7 @@ export const getGuestMember = () => {
       },
     }).then((res) => res.json());
     if (result.status === 200) {
-      dispatch({ type: GET_GUEST, payload: result.data.member });
+      dispatch({ type: GET_GUEST, payload: result.data.guestmember });
       console.log(result);
       return '게스트';
     }
@@ -97,8 +95,8 @@ export const getGuestMember = () => {
 
 /* 현재 로그인 된 게스트 정보 변경 */
 export const getUpdateGuest = (form) => {
-  const code = localStorage.getItem('guestCode');
-  const requestURL = `http://localhost:8080/api/v1/guest/${code}/profile`;
+  const code = JSON.parse(window.localStorage.getItem('guestCode'));
+  const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}/profile`;
   return async (dispatch) => {
     const result = await fetch(requestURL, {
       method: 'PUT',
@@ -119,8 +117,8 @@ export const getUpdateGuest = (form) => {
 
 /* 현재 로그인 된 멤버가 탈퇴 */
 export const deleteGuest = () => {
-  const code = localStorage.getItem('guestCode');
-  const requestURL = `http://localhost:8080/api/v1/guest/${code}`;
+  const code = JSON.parse(window.localStorage.getItem('guestCode'));
+  const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}/delete`;
 
   return async (dispatch) => {
     const result = await fetch(requestURL, {
@@ -132,9 +130,9 @@ export const deleteGuest = () => {
     });
 
     if (result.status === 200) {
+      window.localStorage.removeItem('guestCode');
       dispatch({ type: DELETE_GUEST, payload: result.data });
       dispatch({ type: IS_LOGIN });
-      window.localStorage.removeItem('guestCode');
       window.location.reload();
     }
   };

@@ -109,13 +109,16 @@
     justify-content: center;
     align-items: center;
   }
+
   .unloginsubContent {
     display: flex;
-    height: 70px;
+    height: 100px;
     font-size: 20px;
     align-items: center;
-    flex-direction: center;
+    justify-content: center;
     flex-direction: column;
+    border-top: 1px solid black; /* 위쪽에 흰색 선 추가 */
+    border-bottom: 1px solid black; /* 아래쪽에 흰색 선 추가 */
   }
 }
 

@@ -2,6 +2,21 @@
   width: auto;
 }
 
+.right-feedback {
+  display: flex;
+  justify-content: space-between;
+}
+.right-feedback > button {
+  background-color: #ffe5d5;
+  border-color: white;
+  border-width: medium;
+  color: #e38981;
+  margin-right: 20%;
+  width: 10%;
+  height: 30px;
+  font-size: 18px;
+}
+
 .main-img {
   width: 70%;
   height: 350px;
@@ -110,6 +125,12 @@
     width: 100%;
     height: 50%;
   }
+  .right-feedback > button {
+    margin-right: 5%;
+    width: 25%;
+    height: 30px;
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 667px) {
@@ -125,5 +146,16 @@
   .choice-btn {
     width: 100%;
     height: 50%;
+  }
+
+  .right-feedback {
+    display: flex;
+    justify-content: space-between;
+  }
+  .right-feedback > button {
+    margin-right: 2%;
+    width: 30%;
+    height: 20px;
+    font-size: 10px;
   }
 }
