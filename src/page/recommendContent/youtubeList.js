@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "../../css/youtubeList.css";
 import { useDispatch, useSelector } from "react-redux";
 import { youtubeList } from "../../api/youtubeApi";
@@ -6,19 +6,20 @@ import { getCurrentMember } from "../../api/memberApi";
 
 function YoutubeList() {
   const videosData = useSelector((store) => store.youtubeReducer);
+  const members = useSelector((store) => store.memberReducer);
   const dispatch = useDispatch();
 
-  const members = useSelector((store) => store.memberReducer);
-
+  // 첫 번째 useEffect: 컴포넌트가 마운트될 때 회원 정보를 가져옵니다.
   useEffect(() => {
-    dispatch(getCurrentMember()).then(() => {
-      if (members && members.memberNo) {
-        dispatch(youtubeList(members.memberNo));
-      } else {
-        console.error("memberNo가 없습니다");
-      }
-    });
-  }, []);
+    dispatch(getCurrentMember());
+  }, [dispatch]);
+
+  // 두 번째 useEffect: members가 변경될 때마다 YouTube 데이터를 가져옵니다.
+  useEffect(() => {
+    if (members && members.memberNo) {
+      dispatch(youtubeList(members.memberNo));
+    }
+  }, [dispatch, members]);
 
   if (videosData.length === 0) return null;
 
@@ -32,7 +33,6 @@ function YoutubeList() {
           <div className="videoInfo">
             <h3>{video.youtubeTitle}</h3>
             <div className="likeButton">
-              {/* 좋아요 버튼 추가 */}
               <button>좋아요</button>
             </div>
           </div>

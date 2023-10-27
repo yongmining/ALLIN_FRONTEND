@@ -8,18 +8,17 @@ function MusicList() {
   const videosData = useSelector((store) => store.musicReducer);
   const dispatch = useDispatch();
 
-  // YoutubeList 컴포넌트
   const members = useSelector((store) => store.memberReducer);
 
   useEffect(() => {
-    dispatch(getCurrentMember()).then(() => {
-      if (members && members.memberNo) {
-        dispatch(musicList(members.memberNo));
-      } else {
-        console.error("memberNo가 없습니다");
-      }
-    });
-  }, []);
+    dispatch(getCurrentMember());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (members && members.memberNo) {
+      dispatch(musicList(members.memberNo));
+    }
+  }, [dispatch, members]);
 
   if (videosData.length === 0) return null;
 

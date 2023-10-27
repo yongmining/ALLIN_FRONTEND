@@ -6,15 +6,22 @@
   display: flex;
   justify-content: flex-end;
   margin-right: 10%;
+  justify-content: center;
+  justify-content: space-around;
 }
 
 .putbtn-change {
   background-color: #ffe5d5;
-  width: 40%;
-  height: 30%;
+  width: 10%;
+  height: 30px;
   border-color: white;
   border-width: medium;
   color: #e38981;
+}
+.btn-under {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .mainprofil-info-right {

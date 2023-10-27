@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentMember, getUpdateMember, deleteMember } from '../../api/memberApi';
-import '../../css/profilInfo.css';
-import { phraseList } from '../../api/phraseApi';
-import { callKakaoLogoutAPI } from '../../api/loginApi';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrentMember,
+  getUpdateMember,
+  deleteMember,
+} from "../../api/memberApi";
+import "../../css/profilInfo.css";
+import { phraseList } from "../../api/phraseApi";
+import { callKakaoLogoutAPI } from "../../api/loginApi";
+import { useNavigate } from "react-router-dom";
+import { memberEmotion } from "../../api/emotionApi";
 
 const ProfilInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState([{ date: '', emotion: '' }]);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [nickname, setNickname] = useState('');
-  const [age, setAge] = useState('');
+  const [nickname, setNickname] = useState("");
+  const [age, setAge] = useState("");
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
 
@@ -28,16 +32,11 @@ const ProfilInfo = () => {
     dispatch(phraseList());
   }, []);
 
-  const addRow = () => {
-    if (data.length < 7) {
-      const newData = {
-        date: '2023.08.23',
-        emotion: '슬픔',
-      };
+  const allEmotion = useSelector((store) => store.memberEmotionReducer);
 
-      setData([...data, newData]);
-    }
-  };
+  useEffect(() => {
+    dispatch(memberEmotion(members.memberNo));
+  }, [members.memberNo, dispatch]);
 
   const handleMaleCheckboxChange = () => {
     // 남자 체크박스 변경 시
@@ -60,7 +59,7 @@ const ProfilInfo = () => {
   const handleDelete = () => {
     dispatch(deleteMember(members.memberNo));
     dispatch(callKakaoLogoutAPI());
-    navigate('/', { replace: true });
+    navigate("/", { replace: true });
   };
 
   const handleSave = () => {
@@ -68,7 +67,11 @@ const ProfilInfo = () => {
     const updatedData = {
       memberNickname: nickname || members.memberNickname,
       memberAge: age || members.memberAge,
-      memberGender: isMaleChecked ? '남자' : isFemaleChecked ? '여자' : members.memberGender,
+      memberGender: isMaleChecked
+        ? "남자"
+        : isFemaleChecked
+        ? "여자"
+        : members.memberGender,
     };
 
     dispatch(getUpdateMember(memberNo, updatedData));
@@ -77,13 +80,13 @@ const ProfilInfo = () => {
   };
 
   return (
-    <div className="mainprofil">
-      <div className="mainprofil-info">
-        <div className="mainprofil-left">
-          <img className="mainprofil-img" src={members.memberImage} alt="내 이미지" />
+    <div className="main">
+      <div className="main-info">
+        <div className="main-left">
+          <img className="main-img" src={members.memberImage} alt="내 이미지" />
         </div>
-        <div className="mainprofil-info-right">
-          <div className={isEditing ? 'editing-mode' : 'display-mode'}>
+        <div className="main-info-right">
+          <div className={isEditing ? "editing-mode" : "display-mode"}>
             {isEditing ? (
               <>
                 <br />
@@ -146,39 +149,43 @@ const ProfilInfo = () => {
                 저장
               </button>
             ) : (
-              <button className="putbtn-change" onClick={() => setIsEditing(true)}>
+              <button
+                className="putbtn-change"
+                onClick={() => setIsEditing(true)}
+              >
                 수정
               </button>
             )}
+            <button className="putbtn-change" onClick={handleDelete}>
+              탈퇴
+            </button>
           </div>
-          <h3>{phrase.phraseContent}</h3>
         </div>
+      </div>
+      <div className="today-comment">
+        <h3>{phrase.phraseContent}</h3>
       </div>
       <div className="chart-main">
         <table className="chart">
           <thead>
             <tr>
-              <th>날짜</th>
-              <th>감정</th>
+              <th>감정결과</th>
+              <th>추측나이</th>
+              <th>추측성별</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {allEmotion.map((emotion, index) => (
               <tr key={index}>
-                <td>{item.date}</td>
-                <td>{item.emotion}</td>
+                <td>{emotion.emotionResult}</td>
+                <td>{emotion.emotionAge}</td>
+                <td>{emotion.emotionGender}</td>
               </tr>
             ))}
           </tbody>
         </table>
-
-        <button onClick={addRow}>행 추가</button>
       </div>
-      <div>
-        <button className="putbtn-change" onClick={handleDelete}>
-          탈퇴
-        </button>
-      </div>
+      <div className="btn-under"></div>
     </div>
   );
 };
