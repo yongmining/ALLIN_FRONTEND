@@ -1,13 +1,24 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "../../css/mainContents.css";
-import { useNavigate } from "react-router-dom";
-import { getCurrentMember, getGuestMember } from "../../api/memberApi";
-import { emotionPhraseList } from "../../api/phraseApi";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import '../../css/mainContents.css';
+import { useNavigate } from 'react-router-dom';
+import { getCurrentMember, getGuestMember } from '../../api/memberApi';
+import { emotionPhraseList } from '../../api/phraseApi';
+import Modal from 'react-modal';
+import FbModal from '../../component/modal/fbModal';
 
 function MainContents() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [showFbModal, setshowFbModal] = useState(false);
+
+  const openshowFbModal = () => {
+    setshowFbModal(true);
+  };
+  const closeshowFbModal = () => {
+    setshowFbModal(false);
+  };
 
   const members = useSelector((store) => store.memberReducer);
   const guest = useSelector((store) => store.guestReducer);
@@ -15,15 +26,20 @@ function MainContents() {
   const emotionPhrase = useSelector((store) => store.phraseReducer);
   useEffect(() => {
     dispatch(emotionPhraseList());
-  }, []);
-
-  useEffect(() => {
-    dispatch(getGuestMember());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getCurrentMember());
+    if (localStorage.getItem('accessToken')) {
+      dispatch(getCurrentMember());
+    } else if (localStorage.getItem('guestCode')) {
+      dispatch(getGuestMember());
+    }
   }, [dispatch]);
+
+  const isGuest = localStorage.getItem('guestCode') !== null;
+  const nickname = isGuest ? guest.guestNickname : members.memberNickname;
+  const age = isGuest ? guest.guestAge : members.memberAge;
+  const gender = isGuest ? guest.guestGender : members.memberGender;
 
   const goToYoutube = () => {
     navigate("/choicecontents/YouTubeList");
@@ -49,14 +65,24 @@ function MainContents() {
     <div className="main">
       <div className="main-info">
         <div className="main-left">
-          <img className="main-img" src={members.memberImage} alt="내 이미지" />
+          <img
+            className="main-img"
+            src={members.memberImage ? members.memberImage : guest && guest.guestImage}
+            alt="내 이미지"
+          />
         </div>
         <div className="main-info-right">
-          <h5>닉네임 : {members.memberNickname}</h5>
-          <h5>나이 : {members.memberAge} </h5>
-          <h5>성별 : {members.memberGender}</h5>
+          <h5 className="right-feedback">
+            <div>닉네임 : {nickname}</div>
+            {!isGuest && <button onClick={openshowFbModal}>피드백</button>}
+          </h5>
+          <h5>나이 : {age} </h5>
+          <h5>성별 : {gender}</h5>
           <h5>감정 : 슬픔</h5>
         </div>
+        <Modal className="modal-backdrop" isOpen={showFbModal}>
+          <FbModal closeshowFbModal={closeshowFbModal} />
+        </Modal>
       </div>
       <div className="today-comment">
         <h3>{emotionPhrase.emotionPhraseContent}</h3>
