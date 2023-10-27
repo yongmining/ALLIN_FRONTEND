@@ -17,16 +17,14 @@ function ExerciseList() {
   const members = useSelector((store) => store.memberReducer);
 
   useEffect(() => {
-    // 첫 번째로 멤버 정보를 가져옵니다.
-    dispatch(getCurrentMember()).then(() => {
-      // 멤버 정보 가져오기가 완료되면 memberNo를 체크합니다.
-      if (members && members.memberNo) {
-        dispatch(exerciseList(members.memberNo));
-      } else {
-        console.error("memberNo가 없습니다");
-      }
-    });
-  }, []);
+    dispatch(getCurrentMember());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (members && members.memberNo) {
+      dispatch(exerciseList(members.memberNo));
+    }
+  }, [dispatch, members]);
 
   if (videosData.length === 0) return null;
 

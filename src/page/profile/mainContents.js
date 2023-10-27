@@ -42,23 +42,23 @@ function MainContents() {
   const gender = isGuest ? guest.guestGender : members.memberGender;
 
   const goToYoutube = () => {
-    navigate('/choicecontents/YouTubeList');
+    navigate("/choicecontents/YouTubeList");
   };
 
   const goToBook = () => {
-    navigate('/choicecontents/bookList');
+    navigate("/choicecontents/bookList");
   };
   const goToMusic = () => {
-    navigate('/choicecontents/musicList');
+    navigate("/choicecontents/musicList");
   };
   const goToExercise = () => {
-    navigate('/choicecontents/exerciseList');
+    navigate("/choicecontents/exerciseList");
   };
   const goToClinic = () => {
-    navigate('/clinicList');
+    navigate("/clinicList");
   };
   const goToChat = () => {
-    navigate('/chat');
+    navigate("/chat");
   };
 
   return (
@@ -90,14 +90,30 @@ function MainContents() {
 
       <div className="choice-box">
         <div className="choice-btn">
-          <img src={'./../img/youtubeLogo.png'} onClick={goToYoutube} alt="유튜브 로고" />
-          <img src={'./../img/bookLogo.png'} onClick={goToBook} alt="책 로고" />
-          <img src={'./../img/chatLogo.png'} onClick={goToChat} alt="챗 로고" />
+          <img
+            src={"./../img/youtubeLogo.png"}
+            onClick={goToYoutube}
+            alt="유튜브 로고"
+          />
+          <img src={"./../img/bookLogo.png"} onClick={goToBook} alt="책 로고" />
+          <img src={"./../img/chatLogo.png"} onClick={goToChat} alt="챗 로고" />
         </div>
         <div className="choice-btn">
-          <img src={'./../img/musicLogo.png'} onClick={goToMusic} alt="음악 로고" />
-          <img src={'./../img/runLogo.png'} onClick={goToExercise} alt="운동 로고" />
-          <img src={'./../img/clinicLogo.png'} onClick={goToClinic} alt="상담 로고" />
+          <img
+            src={"./../img/musicLogo.png"}
+            onClick={goToMusic}
+            alt="음악 로고"
+          />
+          <img
+            src={"./../img/runLogo.png"}
+            onClick={goToExercise}
+            alt="운동 로고"
+          />
+          <img
+            src={"./../img/clinicLogo.png"}
+            onClick={goToClinic}
+            alt="상담 로고"
+          />
         </div>
       </div>
     </div>
