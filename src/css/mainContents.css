@@ -1,5 +1,6 @@
 .main {
   width: auto;
+  height: 100vh;
 }
 
 .right-feedback {
@@ -18,7 +19,7 @@
 }
 
 .main-img {
-  width: 70%;
+  width: 400px;
   height: 350px;
   margin-left: 20%;
 }

@@ -107,3 +107,51 @@
     margin-top: 10px; /* 버튼 위 여백 추가 */
   }
 }
+
+/* .filterContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+select {
+  padding: 5px 10px;
+  border-radius: 5px;
+} */
+
+.filterContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+select {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* 작은 화면 (모바일) */
+@media only screen and (max-width: 768px) {
+  .filterContainer {
+    justify-content: center; /* 중앙 정렬 */
+  }
+
+  select {
+    padding: 4px 8px;
+    font-size: 14px;
+  }
+}
+
+/* 더 작은 화면 */
+@media only screen and (max-width: 480px) {
+  .filterContainer {
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+
+  select {
+    padding: 3px 6px;
+    font-size: 12px;
+    width: 100%; /* 전체 너비로 확장 */
+  }
+}
