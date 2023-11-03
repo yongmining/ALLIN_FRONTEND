@@ -35,7 +35,7 @@ function MusicList() {
               {/* 좋아요 버튼 추가 */}
               <button>좋아요</button>
             </div>
-          </div>
+          </div>  
         </div>
       ))}
     </div>
