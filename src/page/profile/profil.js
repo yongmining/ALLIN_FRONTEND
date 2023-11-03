@@ -22,7 +22,7 @@ function Profil() {
     }
   }, [dispatch, isMember, isGuest]);
 
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState(isGuest ? 'Guest' : '');
   const [age, setAge] = useState(null);
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
@@ -76,16 +76,16 @@ function Profil() {
         memberGender: isMaleChecked ? '남자' : '여자',
       };
 
-      dispatch(getUpdateMember(members.memberNo, dataToUpdate));
+      dispatch(getUpdateMember(dataToUpdate));
     } else if (isGuest) {
-      // 게스트 업데이트 데이터 준비
-      const dataToUpdate = {
+      const GuestdataToUpdate = {
         guestNickname: 'Guest', // 고정된 값 'Guest'
         guestAge: age,
         guestGender: isMaleChecked ? '남자' : '여자',
       };
 
-      dispatch(getUpdateGuest(guest.socialCode, dataToUpdate));
+      dispatch(getUpdateGuest(GuestdataToUpdate));
+      console.log(GuestdataToUpdate);
     }
 
     navigate('/takepictureanalyze');
@@ -106,6 +106,7 @@ function Profil() {
             placeholder="닉네임을 입력해주세요"
             value={nickname}
             onChange={handleNicknameChange}
+            readOnly={isGuest}
           />
         </div>
 

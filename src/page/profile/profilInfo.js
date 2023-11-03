@@ -59,16 +59,15 @@ const ProfilInfo = () => {
   };
 
   const handleSave = () => {
-    const memberNo = members.memberNo;
     const updatedData = {
       memberNickname: nickname || members.memberNickname,
       memberAge: age || members.memberAge,
       memberGender: isMaleChecked ? '남자' : isFemaleChecked ? '여자' : members.memberGender,
     };
 
-    dispatch(getUpdateMember(memberNo, updatedData));
+    dispatch(getUpdateMember(updatedData));
     setIsEditing(false);
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (
