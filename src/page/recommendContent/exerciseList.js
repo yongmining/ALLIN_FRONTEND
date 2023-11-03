@@ -1,32 +1,29 @@
 import { useEffect, useState } from "react";
 import "../../css/youtubeList.css";
 import { useDispatch, useSelector } from "react-redux";
-import { exerciseList } from "../../api/youtubeApi"; // getCurrentMember를 import
-import { getCurrentMember } from "../../api/memberApi";
+import { exerciseList, guestExerciseList } from "../../api/youtubeApi"; // getCurrentMember를 import
+import { useLocation } from "react-router-dom";
 
 function ExerciseList() {
   const videosData = useSelector((store) => store.exerciseReducer);
   const dispatch = useDispatch();
-
-  const [form, setForm] = useState({
-    exerciseTitle: "",
-    exerciseLink: "",
-    memberNo: "",
-  });
-  // YoutubeList 컴포넌트
+  const location = useLocation();
   const members = useSelector((store) => store.memberReducer);
-
+  const { memberNo, guestNo } = location.state || {};
   useEffect(() => {
-    dispatch(getCurrentMember());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (members && members.memberNo) {
-      dispatch(exerciseList(members.memberNo));
+    if (memberNo) {
+      // 회원의 감정분석 결과를 기반으로 youtubeList API를 호출
+      dispatch(exerciseList(memberNo));
+    } else if (guestNo) {
+      // 비회원의 감정분석 결과를 기반으로 guestYoutubeList API를 호출
+      dispatch(guestExerciseList(guestNo));
     }
-  }, [dispatch, members]);
+  }, [dispatch, memberNo, guestNo]);
 
   if (videosData.length === 0) return null;
+
+  console.log(memberNo);
+  console.log(guestNo);
 
   return (
     <div className="videoContainer">
