@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getCurrentMember,
-  getUpdateMember,
-  deleteMember,
-} from "../../api/memberApi";
-import "../../css/profilInfo.css";
-import { phraseList } from "../../api/phraseApi";
-import { callKakaoLogoutAPI } from "../../api/loginApi";
-import { useNavigate } from "react-router-dom";
-import { memberEmotion } from "../../api/emotionApi";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentMember, getUpdateMember, deleteMember } from '../../api/memberApi';
+import '../../css/profilInfo.css';
+import { phraseList } from '../../api/phraseApi';
+import { callKakaoLogoutAPI } from '../../api/loginApi';
+import { useNavigate } from 'react-router-dom';
+import { memberEmotion } from '../../api/emotionApi';
 
 const ProfilInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
 
-  const [nickname, setNickname] = useState("");
-  const [age, setAge] = useState("");
+  const [nickname, setNickname] = useState('');
+  const [age, setAge] = useState('');
   const [isMaleChecked, setIsMaleChecked] = useState(false);
   const [isFemaleChecked, setIsFemaleChecked] = useState(false);
 
@@ -59,7 +55,7 @@ const ProfilInfo = () => {
   const handleDelete = () => {
     dispatch(deleteMember(members.memberNo));
     dispatch(callKakaoLogoutAPI());
-    navigate("/", { replace: true });
+    navigate('/', { replace: true });
   };
 
   const handleSave = () => {
@@ -67,16 +63,12 @@ const ProfilInfo = () => {
     const updatedData = {
       memberNickname: nickname || members.memberNickname,
       memberAge: age || members.memberAge,
-      memberGender: isMaleChecked
-        ? "남자"
-        : isFemaleChecked
-        ? "여자"
-        : members.memberGender,
+      memberGender: isMaleChecked ? '남자' : isFemaleChecked ? '여자' : members.memberGender,
     };
 
     dispatch(getUpdateMember(memberNo, updatedData));
     setIsEditing(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -86,7 +78,7 @@ const ProfilInfo = () => {
           <img className="main-img" src={members.memberImage} alt="내 이미지" />
         </div>
         <div className="main-info-right">
-          <div className={isEditing ? "editing-mode" : "display-mode"}>
+          <div className={isEditing ? 'editing-mode' : 'display-mode'}>
             {isEditing ? (
               <>
                 <br />
@@ -149,10 +141,7 @@ const ProfilInfo = () => {
                 저장
               </button>
             ) : (
-              <button
-                className="putbtn-change"
-                onClick={() => setIsEditing(true)}
-              >
+              <button className="putbtn-change" onClick={() => setIsEditing(true)}>
                 수정
               </button>
             )}
