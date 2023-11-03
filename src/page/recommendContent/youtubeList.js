@@ -1,7 +1,9 @@
+
 import React, { useEffect, useState } from 'react';
 import '../../css/youtubeList.css';
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { youtubeList } from '../../api/youtubeApi';
+import { youtubeList, guestYoutubeList } from '../../api/youtubeApi';
 import { getCurrentMember } from '../../api/memberApi';
 import { postYoutubeNice, getYoutubeNice } from '../../api/niceAPI'; // getYoutubeNice 함수 추가
 
@@ -10,16 +12,24 @@ function YoutubeList() {
   const members = useSelector((store) => store.memberReducer);
   const isLiked = useSelector((store) => store.niceReducer.isLiked);
   const dispatch = useDispatch();
+
+
   const [filter, setFilter] = useState('all');
   const [extraVideos, setExtraVideos] = useState([]); // 추가로 가져온 비디오 데이터를 저장할 상태 추가
 
-  useEffect(() => {
-    dispatch(getCurrentMember());
-  }, [dispatch]);
+const location = useLocation();
+
+  const { memberNo, guestNo } = location.state || {};
 
   useEffect(() => {
-    if (members && members.memberNo) {
-      dispatch(youtubeList(members.memberNo));
+    if (memberNo) {
+      // 회원의 감정분석 결과를 기반으로 youtubeList API를 호출
+      dispatch(youtubeList(memberNo));
+    } else if (guestNo) {
+      // 비회원의 감정분석 결과를 기반으로 guestYoutubeList API를 호출
+      dispatch(guestYoutubeList(guestNo));
+    }
+  }, [dispatch, memberNo, guestNo]);
 
       // 추가로 가져온 비디오 데이터를 불러옴
       const loadExtraVideos = async () => {
@@ -43,7 +53,6 @@ function YoutubeList() {
           memberNo: members.memberNo,
         },
       };
-
       // 좋아요 버튼을 클릭할 때 API 호출
       dispatch(postYoutubeNice(niceData));
     }

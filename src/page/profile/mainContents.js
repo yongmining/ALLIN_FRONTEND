@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import '../../css/mainContents.css';
-import { useNavigate } from 'react-router-dom';
-import { getCurrentMember, getGuestMember } from '../../api/memberApi';
-import { emotionPhraseList } from '../../api/phraseApi';
-import Modal from 'react-modal';
-import FbModal from '../../component/modal/fbModal';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "../../css/mainContents.css";
+import { useNavigate } from "react-router-dom";
+import { getCurrentMember, getGuestMember } from "../../api/memberApi";
+import { emotionPhraseList } from "../../api/phraseApi";
+import Modal from "react-modal";
+import FbModal from "../../component/modal/fbModal";
 
 function MainContents() {
   const dispatch = useDispatch();
@@ -29,24 +29,30 @@ function MainContents() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (localStorage.getItem("accessToken")) {
       dispatch(getCurrentMember());
-    } else if (localStorage.getItem('guestCode')) {
+    } else if (localStorage.getItem("guestCode")) {
       dispatch(getGuestMember());
     }
   }, [dispatch]);
 
-  const isGuest = localStorage.getItem('guestCode') !== null;
+  const isGuest = localStorage.getItem("guestCode") !== null;
   const nickname = isGuest ? guest.guestNickname : members.memberNickname;
   const age = isGuest ? guest.guestAge : members.memberAge;
   const gender = isGuest ? guest.guestGender : members.memberGender;
 
   const goToYoutube = () => {
-    navigate("/choicecontents/YouTubeList");
+    const userIdentifier = isGuest
+      ? { guestNo: guest.guestNo }
+      : { memberNo: members.memberNo };
+    navigate("youtubeList", { state: userIdentifier });
   };
 
   const goToBook = () => {
-    navigate("/choicecontents/bookList");
+    const userIdentifier = isGuest
+      ? { guestNo: guest.guestNo }
+      : { memberNo: members.memberNo };
+    navigate("bookList", { state: userIdentifier });
   };
   const goToMusic = () => {
     navigate("/choicecontents/musicList");
@@ -67,7 +73,11 @@ function MainContents() {
         <div className="main-left">
           <img
             className="main-img"
-            src={members.memberImage ? members.memberImage : guest && guest.guestImage}
+            src={
+              members.memberImage
+                ? members.memberImage
+                : guest && guest.guestImage
+            }
             alt="내 이미지"
           />
         </div>
