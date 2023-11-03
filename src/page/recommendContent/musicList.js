@@ -1,27 +1,27 @@
 import { useEffect } from "react";
 import "../../css/youtubeList.css";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { musicList } from "../../api/youtubeApi"; // getCurrentMember를 import
-import { getCurrentMember } from "../../api/memberApi";
+import { musicList, guestMusicList } from "../../api/youtubeApi"; // getCurrentMember를 import
 
 function MusicList() {
   const videosData = useSelector((store) => store.musicReducer);
   const dispatch = useDispatch();
-
   const members = useSelector((store) => store.memberReducer);
+  const location = useLocation();
+  const { memberNo, guestNo } = location.state || {};
 
   useEffect(() => {
-    dispatch(getCurrentMember());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (members && members.memberNo) {
-      dispatch(musicList(members.memberNo));
+    if (memberNo) {
+      // 회원의 감정분석 결과를 기반으로 youtubeList API를 호출
+      dispatch(musicList(memberNo));
+    } else if (guestNo) {
+      // 비회원의 감정분석 결과를 기반으로 guestYoutubeList API를 호출
+      dispatch(guestMusicList(guestNo));
     }
-  }, [dispatch, members]);
+  }, [dispatch, memberNo, guestNo]);
 
   if (videosData.length === 0) return null;
-
   return (
     <div className="videoContainer">
       {videosData.map((video) => (
@@ -35,7 +35,7 @@ function MusicList() {
               {/* 좋아요 버튼 추가 */}
               <button>좋아요</button>
             </div>
-          </div>  
+          </div>
         </div>
       ))}
     </div>

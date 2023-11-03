@@ -55,10 +55,16 @@ function MainContents() {
     navigate("bookList", { state: userIdentifier });
   };
   const goToMusic = () => {
-    navigate("/choicecontents/musicList");
+    const userIdentifier = isGuest
+      ? { guestNo: guest.guestNo }
+      : { memberNo: members.memberNo };
+    navigate("musicList", { state: userIdentifier });
   };
   const goToExercise = () => {
-    navigate("/choicecontents/exerciseList");
+    const userIdentifier = isGuest
+      ? { guestNo: guest.guestNo }
+      : { memberNo: members.memberNo };
+    navigate("exerciseList", { state: userIdentifier });
   };
   const goToClinic = () => {
     navigate("/clinicList");

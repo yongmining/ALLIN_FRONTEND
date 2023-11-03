@@ -1,11 +1,9 @@
-
-import React, { useEffect, useState } from 'react';
-import '../../css/youtubeList.css';
+import React, { useEffect, useState } from "react";
+import "../../css/youtubeList.css";
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { youtubeList, guestYoutubeList } from '../../api/youtubeApi';
-import { getCurrentMember } from '../../api/memberApi';
-import { postYoutubeNice, getYoutubeNice } from '../../api/niceAPI'; // getYoutubeNice 함수 추가
+import { useDispatch, useSelector } from "react-redux";
+import { youtubeList, guestYoutubeList } from "../../api/youtubeApi";
+import { postYoutubeNice, getYoutubeNice } from "../../api/niceAPI"; // getYoutubeNice 함수 추가
 
 function YoutubeList() {
   const videosData = useSelector((store) => store.youtubeReducer);
@@ -13,38 +11,32 @@ function YoutubeList() {
   const isLiked = useSelector((store) => store.niceReducer.isLiked);
   const dispatch = useDispatch();
 
-
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
   const [extraVideos, setExtraVideos] = useState([]); // 추가로 가져온 비디오 데이터를 저장할 상태 추가
 
-const location = useLocation();
+  const location = useLocation();
 
   const { memberNo, guestNo } = location.state || {};
 
   useEffect(() => {
-    if (memberNo) {
-      // 회원의 감정분석 결과를 기반으로 youtubeList API를 호출
-      dispatch(youtubeList(memberNo));
-    } else if (guestNo) {
-      // 비회원의 감정분석 결과를 기반으로 guestYoutubeList API를 호출
-      dispatch(guestYoutubeList(guestNo));
-    }
-  }, [dispatch, memberNo, guestNo]);
+    const fetchData = async () => {
+      if (memberNo) {
+        dispatch(youtubeList(memberNo));
+      } else if (guestNo) {
+        dispatch(guestYoutubeList(guestNo));
+      }
+      try {
+        const extraData = await dispatch(getYoutubeNice(members.memberNo));
+        console.log("Extra Videos in fetchData:", extraData);
+        setExtraVideos(extraData);
+      } catch (error) {
+        console.error("Error loading extra videos in fetchData:", error);
+      }
+    };
 
-      // 추가로 가져온 비디오 데이터를 불러옴
-      const loadExtraVideos = async () => {
-        try {
-          const extraData = await dispatch(getYoutubeNice(members.memberNo));
-          console.log('Extra Videos in loadExtraVideos:', extraData);
-          setExtraVideos(extraData); // 데이터를 상태에 설정
-        } catch (error) {
-          console.error('Error loading extra videos:', error);
-        }
-      };
+    fetchData();
+  }, [dispatch, members, memberNo, guestNo]);
 
-      loadExtraVideos();
-    }
-  }, [dispatch, members]);
   const handleLikeClick = (videoLink) => {
     if (members.memberNo) {
       const niceData = {
@@ -60,26 +52,29 @@ const location = useLocation();
   const handleFilterChange = async (e) => {
     setFilter(e.target.value);
 
-    if (e.target.value === 'liked' && members && members.memberNo) {
+    if (e.target.value === "liked" && members && members.memberNo) {
       try {
         const extraData = await dispatch(getYoutubeNice(members.memberNo));
-        console.log('Extra Videos on filter change:', extraData);
+        console.log("Extra Videos on filter change:", extraData);
         setExtraVideos(extraData);
       } catch (error) {
-        console.error('Error loading extra videos on filter change:', error);
+        console.error("Error loading extra videos on filter change:", error);
       }
     }
   };
 
   const filteredVideos = videosData.concat(extraVideos).filter((video) => {
-    if (filter === 'liked' && isLiked) {
+    if (filter === "liked" && isLiked) {
       return isLiked.includes(video.youtubeLink);
     }
     return true;
   });
 
   //  niceCount를 기준으로 정렬하는 코드
-  const sortedVideos = filter === 'liked' ? filteredVideos.sort((a, b) => b.niceCount - a.niceCount) : filteredVideos;
+  const sortedVideos =
+    filter === "liked"
+      ? filteredVideos.sort((a, b) => b.niceCount - a.niceCount)
+      : filteredVideos;
   if (videosData.length === 0) return null;
 
   return (
@@ -94,13 +89,19 @@ const location = useLocation();
       <div className="videoContainer">
         {sortedVideos.map((video, index) => (
           <div className="videoItem" key={index}>
-            <a href={video.youtubeLink} target="_blank" rel="noopener noreferrer">
+            <a
+              href={video.youtubeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={video.thumbnailUrl} alt={video.youtubeTitle} />
             </a>
             <div className="videoInfo">
               <h3>{video.youtubeTitle}</h3>
               <div className="likeButton">
-                <button onClick={() => handleLikeClick(video.youtubeLink)}>좋아요</button>
+                <button onClick={() => handleLikeClick(video.youtubeLink)}>
+                  좋아요
+                </button>
               </div>
             </div>
           </div>
