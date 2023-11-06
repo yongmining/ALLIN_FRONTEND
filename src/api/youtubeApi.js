@@ -1,6 +1,6 @@
-import { GET_YOUTUBE } from "../modules/youtubeModule";
-import { GET_MUSIC } from "../modules/musicModule";
-import { GET_EXERCISE } from "../modules/exerciseModule";
+import { GET_YOUTUBE, GET_GUEST_YOUTUBE } from "../modules/youtubeModule";
+import { GET_MUSIC, GET_GUEST_MUSIC } from "../modules/musicModule";
+import { GET_EXERCISE, GET_GUEST_EXERCISE } from "../modules/exerciseModule";
 
 export const youtubeList = (memberNo) => {
   let URL = `http://localhost:8080/api/v1/youtube/emotion?memberNo=${memberNo}`;
@@ -57,7 +57,7 @@ export const exerciseList = (memberNo) => {
 };
 
 export const guestYoutubeList = (guestNo) => {
-  let URL = `http://localhost:8080/api/v1/youtube/emotion?guestNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/guestYoutube/emotion?guestNo=${guestNo}`;
   return async (dispatch) => {
     const result = await fetch(URL, {
       method: "GET",
@@ -68,14 +68,14 @@ export const guestYoutubeList = (guestNo) => {
     }).then((response) => response.json());
 
     if (result.status === 200) {
-      dispatch({ type: GET_YOUTUBE, payload: result.data });
-      localStorage.setItem("youtubeData", JSON.stringify(result.data));
+      dispatch({ type: GET_GUEST_YOUTUBE, payload: result.data });
+      localStorage.setItem("guestYoutubeData", JSON.stringify(result.data));
     }
   };
 };
 
 export const guestMusicList = (guestNo) => {
-  let URL = `http://localhost:8080/api/v1/Music/emotion?guestNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/guestMusic/emotion?guestNo=${guestNo}`;
   return async (dispatch) => {
     const result = await fetch(URL, {
       method: "GET",
@@ -86,13 +86,13 @@ export const guestMusicList = (guestNo) => {
     }).then((response) => response.json());
 
     if (result.status === 200) {
-      dispatch({ type: GET_YOUTUBE, payload: result.data });
-      localStorage.setItem("youtubeData", JSON.stringify(result.data));
+      dispatch({ type: GET_GUEST_MUSIC, payload: result.data });
+      localStorage.setItem("guestMusicData", JSON.stringify(result.data));
     }
   };
 };
 export const guestExerciseList = (guestNo) => {
-  let URL = `http://localhost:8080/api/v1/Exercise/emotion?guestNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/guestExercise/emotion?guestNo=${guestNo}`;
   return async (dispatch) => {
     const result = await fetch(URL, {
       method: "GET",
@@ -103,8 +103,8 @@ export const guestExerciseList = (guestNo) => {
     }).then((response) => response.json());
 
     if (result.status === 200) {
-      dispatch({ type: GET_YOUTUBE, payload: result.data });
-      localStorage.setItem("youtubeData", JSON.stringify(result.data));
+      dispatch({ type: GET_GUEST_EXERCISE, payload: result.data });
+      localStorage.setItem("guestExerciseData", JSON.stringify(result.data));
     }
   };
 };
