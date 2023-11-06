@@ -27,8 +27,13 @@
   background-color: #ffe5d5;
   border: solid 1.5px white;
   color: #e38981;
+  cursor: pointer;
 }
 
+.fbBtn > button:hover {
+  background-color: #e38981; /* 호버 상태의 배경색 */
+  color: white; /* 호버 상태의 글자색 */
+}
 .star {
   color: gray; /* 기본 별 색상 */
 }

@@ -38,6 +38,12 @@
   background-color: #ffe5d5;
   border: solid 2px white;
   color: #e38981;
+  cursor: pointer;
+}
+
+.allmdBtn > button:hover {
+  background-color: #e38981; /* 호버 상태의 배경색 */
+  color: white; /* 호버 상태의 글자색 */
 }
 
 .fbmainContent {
