@@ -40,6 +40,8 @@ const TakePictureAnalyze = () => {
   };
 
   async function takePhoto() {
+    paintToCanvas(); // 새로운 기능: 현재 영상 프레임을 캡처
+
     const canvas = canvasRef.current;
     if (canvas) {
       const dataURL = canvas.toDataURL("image/jpeg");
