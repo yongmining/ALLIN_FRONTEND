@@ -28,8 +28,20 @@ export const callTalkAddAPI = async (postData) => {
 };
 
 // 모든 톡 조회
-export const callHistoryAPI = (userNo) => {
-  const URL = `http://localhost:8080/api/v1/history/${userNo}`;
+export const callHistoryAPI = () => {
+  const code = JSON.parse(window.localStorage.getItem('guestCode'));
+  const token = JSON.parse(window.localStorage.getItem('accessToken'));
+  let userNo;
+
+  if (code) {
+    userNo = code.guestNo;
+  } else if (token) {
+    userNo = token.memberNo;
+  } else {
+    console.error('유효한 게스트 코드 또는 회원 토큰이 없습니다.');
+    return;
+  }
+  const URL = `http://localhost:8080/api/v1/talk/history/${userNo}`;
 
   return async (dispatch, getState) => {
     try {
@@ -42,7 +54,7 @@ export const callHistoryAPI = (userNo) => {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
+
         dispatch({ type: GET_TALKLIST, payload: data });
       } else {
         console.error('오류 발생:', response.statusText);

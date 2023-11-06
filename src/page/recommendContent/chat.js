@@ -8,9 +8,7 @@ function Chat() {
   const dispatch = useDispatch();
   const members = useSelector((store) => store.memberReducer);
   const guest = useSelector((store) => store.guestReducer);
-  const talkList = useSelector((state) => state.talkReducer.talkList);
-
-  console.log(talkList);
+  const talkList = useSelector((store) => store.talkReducer);
 
   const isMember = localStorage.getItem('accessToken') !== null;
   const isGuest = localStorage.getItem('guestCode') !== null;
@@ -24,26 +22,18 @@ function Chat() {
   }, [dispatch, isMember, isGuest]);
 
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
-  const [chatRequestCount, setChatRequestCount] = useState(null);
+  const [chatHistory, setChatHistory] = useState(talkList || []);
 
   useEffect(() => {
-    // Chat 컴포넌트가 마운트될 때 톡 데이터를 가져오기 위해 callHistoryAPI를 호출
     if (isMember || isGuest) {
-      callHistoryAPI(isMember ? members.memberNo : guest.guestNo)(dispatch)
-        .then(() => {
-          // 톡 데이터를 가져오고 Redux store에 dispatch
-        })
-        .catch((error) => {
-          console.error('톡 데이터 가져오기 실패:', error);
-        });
+      dispatch(callHistoryAPI(isMember ? members.memberNo : guest.guestNo));
     }
   }, [dispatch, isMember, isGuest, members.memberNo, guest.guestNo]);
 
   const handleSendMessage = async () => {
     if (message.trim() !== '') {
-      if (chatRequestCount >= 5) {
-        alert('채팅 요청 제한에 도달했습니다.');
+      if (isGuest && talkList.length >= 5) {
+        alert('게스트는 5회 이상 메시지를 보낼 수 없습니다.');
         return;
       }
 
@@ -53,14 +43,11 @@ function Chat() {
       const userMessage = { sender: userNickname, text: message };
       setChatHistory([...chatHistory, userMessage]);
 
-      setChatRequestCount(chatRequestCount + 1);
-
       const responseData = await callTalkAddAPI({
         userNickname: userNickname,
         userType: userType,
         userNo: userNo,
         userMessage: message,
-        chatRequestCount: chatRequestCount,
       });
 
       if (responseData && responseData.botMessage) {
@@ -68,11 +55,8 @@ function Chat() {
       }
       setMessage('');
     }
+    window.location.reload();
   };
-
-  useEffect(() => {
-    // 채팅 히스토리를 백엔드로부터 가져오는 로직 추가
-  }, []);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -83,9 +67,11 @@ function Chat() {
   return (
     <div className="chat-container">
       <div className="chat-history">
-        {chatHistory.map((msg, index) => (
+        {talkList.map((talk, index) => (
           <div key={index} className="message">
-            <strong>{msg.sender}:</strong> {msg.text}
+            <strong>{talk.userNickname}:</strong> {talk.userMessage}
+            <br />
+            <strong>Chatbot:</strong> {talk.responseNo.botMessage}
           </div>
         ))}
       </div>
