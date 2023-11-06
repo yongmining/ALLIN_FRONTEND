@@ -1,55 +1,54 @@
-import "../../css/booklist.css";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { bookList } from "../../api/bookApi";
-import { getCurrentMember } from "../../api/memberApi";
+import '../../css/booklist.css';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { bookList, guestBookList } from '../../api/bookApi';
+import { useLocation } from 'react-router-dom';
 
 function mapEmotionToImage(emotionResult, index) {
-  const imagePath = `/img/${emotionResult}${(index % 10) + 1}.jpg`; // 이미지 파일 경로 수정
-
-  return imagePath; // 이미지 파일 경로 반환
+  const imagePath = `/img/${emotionResult}${(index % 10) + 1}.jpg`;
+  return imagePath;
 }
 
 function BookList() {
   const books = useSelector((store) => store.bookReducer);
-  const members = useSelector((store) => store.memberReducer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCurrentMember()).then(() => {
-      if (members && members.memberNo) {
-        dispatch(bookList(members.memberNo)).then(() => {
-          // bookList 액션이 완료된 후 books를 확인
-          console.log("Redux 상태 (books):", books);
-        });
-      } else {
-        console.error("memberNo가 없습니다");
-      }
-    });
-  }, []);
+  const location = useLocation(); // 이 위치로 이동
+  const { memberNo, guestNo } = location.state || {};
 
-  console.log("Redux 상태 (books):", books);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (memberNo) {
+        dispatch(bookList(memberNo));
+      } else if (guestNo) {
+        dispatch(guestBookList(guestNo));
+      }
+    };
+    fetchData();
+  }, [dispatch, memberNo, guestNo]); // `members` 제거
 
   return (
-    <div className="booklist-box">
-      {books &&
-        books.map((book, index) => (
-          <div className="book-item" key={index}>
-            <div className="book-img">
-              {/* emotionResult에 따라 이미지를 매핑하여 표시 */}
-              <img
-                className="book-img-size"
-                src={mapEmotionToImage(book.emotionResult, index)}
-                alt="책 이미지"
-              />
+    <div className="bookcontainer">
+      <div className="booklist-box">
+        {books &&
+          books.map((book, index) => (
+            <div className="book-item" key={index}>
+              <div className="book-img">
+                {/* 회원 여부에 따라 emotionResult 또는 guestEmotionResult에 따라 이미지를 매핑하여 표시 */}
+                <img
+                  className="book-img-size"
+                  src={mapEmotionToImage(memberNo ? book.emotionResult : book.guestEmotionResult, index)}
+                  alt="책 이미지"
+                />
+              </div>
+              <div className="book-text">
+                <h4>{book.title}</h4>
+                <h4>{book.subTitle}</h4>
+                <h6>{book.author}</h6>
+              </div>
             </div>
-            <div className="book-text">
-              <h4>{book.title}</h4>
-              <h4>{book.subTitle}</h4>
-              <h6>{book.author}</h6>
-            </div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 }

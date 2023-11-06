@@ -16,6 +16,7 @@
   width: 10%;
   height: 30px;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .main-img {
@@ -158,5 +159,10 @@
     width: 30%;
     height: 20px;
     font-size: 10px;
+  }
+
+  .right-feedback > button:hover {
+    background-color: black; /* 호버 상태의 배경색 */
+    color: white; /* 호버 상태의 글자색 */
   }
 }
