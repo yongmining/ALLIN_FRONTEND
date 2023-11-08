@@ -7,14 +7,13 @@ import { postMusicNice, getMusicNice } from '../../api/niceAPI';
 
 function MusicList() {
   const videosData = useSelector((store) => store.musicReducer);
-  const members = useSelector((store) => store.memberReducer);
-  const isLiked = useSelector((store) => store.niceReducer.isLiked);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const members = useSelector((store) => store.memberReducer);
+  const { memberNo, guestNo } = location.state || {};
   const [filter, setFilter] = useState('all');
   const [extraVideos, setExtraVideos] = useState([]);
-
-  const location = useLocation();
-  const { memberNo, guestNo } = location.state || {};
+  const isLiked = useSelector((store) => store.niceReducer.isLiked);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +25,6 @@ function MusicList() {
       try {
         const extraData = await dispatch(getMusicNice(memberNo));
         console.log('Extra Videos in fetchData:', extraData);
-
         setExtraVideos(extraData);
       } catch (error) {
         console.error('Error loading extra videos in fetchData:', error);
@@ -44,21 +42,22 @@ function MusicList() {
           memberNo: memberNo,
         },
       };
-      // 좋아요 버튼을 클릭할 때 API 호출
       dispatch(postMusicNice(niceData));
     }
   };
 
-  const removeDuplicates = (videos) => {
+  const removeDuplicates = (videos, memberCheck) => {
     const uniqueVideos = [];
     const seenLinks = new Set();
 
-    for (const video of videos) {
-      if (video && !seenLinks.has(video.musicLink)) {
-        seenLinks.add(video.musicLink);
+    videos.forEach((video) => {
+      if (!video) return;
+      const link = memberCheck ? video.musicLink : video.guestMusicLink;
+      if (link && !seenLinks.has(link)) {
+        seenLinks.add(link);
         uniqueVideos.push(video);
       }
-    }
+    });
 
     return uniqueVideos;
   };
@@ -83,13 +82,13 @@ function MusicList() {
     }
     return true;
   });
-  const noDuplicateVideos = removeDuplicates(filteredVideos);
+  const noDuplicateVideos = removeDuplicates(filteredVideos, Boolean(memberNo));
 
   const RECOMMENDED_VIDEO_COUNT = 6;
   const sortedVideos = (() => {
     if (filter === 'liked') {
       return noDuplicateVideos
-        .filter((video) => video.niceCount > 0) // niceCount가 0 이상인 동영상만 필터링
+        .filter((video) => video.niceCount > 0)
         .sort((a, b) => b.niceCount - a.niceCount)
         .slice(0, RECOMMENDED_VIDEO_COUNT);
     }
@@ -106,6 +105,7 @@ function MusicList() {
           </select>
         </div>
       )}
+
       <div className="videoContainer">
         {sortedVideos.map(
           (video, index) =>

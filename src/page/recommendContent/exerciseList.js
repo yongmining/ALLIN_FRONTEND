@@ -47,16 +47,18 @@ function ExerciseList() {
     }
   };
 
-  const removeDuplicates = (videos) => {
+  const removeDuplicates = (videos, memberCheck) => {
     const uniqueVideos = [];
     const seenLinks = new Set();
 
-    for (const video of videos) {
-      if (video && !seenLinks.has(video.exerciseLink)) {
-        seenLinks.add(video.exerciseLink);
+    videos.forEach((video) => {
+      if (!video) return;
+      const link = memberCheck ? video.exerciseLink : video.guestExerciseLink;
+      if (link && !seenLinks.has(link)) {
+        seenLinks.add(link);
         uniqueVideos.push(video);
       }
-    }
+    });
 
     return uniqueVideos;
   };

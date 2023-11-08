@@ -48,16 +48,18 @@ function YoutubeList() {
     }
   };
 
-  const removeDuplicates = (videos) => {
+  const removeDuplicates = (videos, memberCheck) => {
     const uniqueVideos = [];
     const seenLinks = new Set();
 
-    for (const video of videos) {
-      if (video && !seenLinks.has(video.youtubeLink)) {
-        seenLinks.add(video.youtubeLink);
+    videos.forEach((video) => {
+      if (!video) return;
+      const link = memberCheck ? video.youtubeLink : video.guestYoutubeLink;
+      if (link && !seenLinks.has(link)) {
+        seenLinks.add(link);
         uniqueVideos.push(video);
       }
-    }
+    });
 
     return uniqueVideos;
   };
@@ -65,7 +67,7 @@ function YoutubeList() {
   const handleFilterChange = async (e) => {
     setFilter(e.target.value);
 
-    if (e.target.value === 'liked' && members && memberNo) {
+    if (e.target.value === 'liked' && memberNo) {
       try {
         const extraData = await dispatch(getYoutubeNice(memberNo));
         console.log('Extra Videos on filter change:', extraData);
@@ -83,13 +85,14 @@ function YoutubeList() {
     }
     return true;
   });
-  const noDuplicateVideos = removeDuplicates(filteredVideos);
+
+  const noDuplicateVideos = removeDuplicates(filteredVideos, Boolean(memberNo));
 
   const RECOMMENDED_VIDEO_COUNT = 6;
   const sortedVideos = (() => {
     if (filter === 'liked') {
       return noDuplicateVideos
-        .filter((video) => video.niceCount > 0) // niceCount가 0 이상인 동영상만 필터링
+        .filter((video) => video.niceCount > 0)
         .sort((a, b) => b.niceCount - a.niceCount)
         .slice(0, RECOMMENDED_VIDEO_COUNT);
     }
@@ -108,28 +111,21 @@ function YoutubeList() {
       )}
 
       <div className="videoContainer">
-        {sortedVideos.map(
-          (video, index) =>
-            video && (
-              <div className="videoItem" key={index}>
-                <a
-                  href={memberNo ? video.youtubeLink : video.guestYoutubeLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={video.thumbnailUrl} alt={memberNo ? video.youtubeTitle : video.guestYoutubeTitle} />
-                </a>
-                <div className="videoInfo">
-                  <h3>{memberNo ? video.youtubeTitle : video.guestYoutubeTitle}</h3>
-                  {memberNo && (
-                    <div className="likeButton">
-                      <button onClick={() => handleLikeClick(video.youtubeLink)}>좋아요</button>
-                    </div>
-                  )}
+        {sortedVideos.map((video, index) => (
+          <div className="videoItem" key={video.youtubeLink || video.guestYoutubeLink}>
+            <a href={memberNo ? video.youtubeLink : video.guestYoutubeLink} target="_blank" rel="noopener noreferrer">
+              <img src={video.thumbnailUrl} alt={video.youtubeTitle || video.guestYoutubeTitle} />
+            </a>
+            <div className="videoInfo">
+              <h3>{video.youtubeTitle || video.guestYoutubeTitle}</h3>
+              {memberNo && (
+                <div className="likeButton">
+                  <button onClick={() => handleLikeClick(video.youtubeLink)}>좋아요 {video.niceCount}</button>
                 </div>
-              </div>
-            )
-        )}
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
