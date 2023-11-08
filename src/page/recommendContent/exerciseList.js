@@ -83,7 +83,7 @@ function ExerciseList() {
     }
     return true;
   });
-  const noDuplicateVideos = removeDuplicates(filteredVideos);
+  const noDuplicateVideos = removeDuplicates(filteredVideos, Boolean(memberNo));
 
   const RECOMMENDED_VIDEO_COUNT = 6;
   const sortedVideos = (() => {
