@@ -1,9 +1,8 @@
 import { GET_YOUTUBENICE, GET_EXERCISENICE, GET_MUSICNICE } from '../modules/niceModule';
-import { useDispatch } from 'react-redux';
 
 export const postYoutubeNice = (niceData) => {
-  // 파라미터로 객체를 받도록 수정
-  let URL = `http://localhost:8080/api/v1/createOrCancelNice`;
+  // let URL = `http://localhost:8080/api/v1/createOrCancelNice`;
+  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelNice`;
 
   return async function (dispatch, getState) {
     const result = await fetch(URL, {
@@ -22,7 +21,8 @@ export const postYoutubeNice = (niceData) => {
 };
 
 export const getYoutubeNice = (memberNo) => {
-  let URL = `http://localhost:8080/api/v1/recommendations/emotion-age/${memberNo}`;
+  // let URL = `http://localhost:8080/api/v1/recommendations/emotion-age/${memberNo}`;
+  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/recommendations/emotion-age/${memberNo}`;
 
   return async (dispatch, getState) => {
     try {
@@ -38,7 +38,7 @@ export const getYoutubeNice = (memberNo) => {
         const data = await response.json();
         console.log('Data from getYoutubeNice:', data);
         dispatch({ type: GET_YOUTUBENICE, payload: data });
-        return data; // 추가된 부분: 데이터 반환
+        return data;
       } else {
         throw new Error('Failed to fetch data');
       }
@@ -48,8 +48,8 @@ export const getYoutubeNice = (memberNo) => {
   };
 };
 export const postMusicNice = (niceData) => {
-  // 파라미터로 객체를 받도록 수정
-  let URL = `http://localhost:8080/api/v1/createOrCancelMusicNice`;
+  // let URL = `http://localhost:8080/api/v1/createOrCancelMusicNice`;
+  let URL = `http:// ${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelMusicNice`;
 
   return async function (dispatch, getState) {
     const result = await fetch(URL, {
@@ -68,7 +68,8 @@ export const postMusicNice = (niceData) => {
 };
 
 export const getMusicNice = (memberNo) => {
-  let URL = `http://localhost:8080/api/v1/musicrecommendations/emotion-age/${memberNo}`;
+  // let URL = `http://localhost:8080/api/v1/musicrecommendations/emotion-age/${memberNo}`;
+  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/musicrecommendations/emotion-age/${memberNo}`;
 
   return async (dispatch, getState) => {
     try {
@@ -83,7 +84,7 @@ export const getMusicNice = (memberNo) => {
       if (response.status === 200) {
         const data = await response.json();
         dispatch({ type: GET_MUSICNICE, payload: data });
-        return data; // 추가된 부분: 데이터 반환
+        return data;
       } else {
         throw new Error('Failed to fetch data');
       }
@@ -93,8 +94,8 @@ export const getMusicNice = (memberNo) => {
   };
 };
 export const postExerciseNice = (niceData) => {
-  // 파라미터로 객체를 받도록 수정
-  let URL = `http://localhost:8080/api/v1/createOrCancelExerciseNice`;
+  // let URL = `http://localhost:8080/api/v1/createOrCancelExerciseNice`;
+  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelExerciseNice`;
 
   return async function (dispatch, getState) {
     const result = await fetch(URL, {
@@ -113,7 +114,8 @@ export const postExerciseNice = (niceData) => {
 };
 
 export const getExerciseNice = (memberNo) => {
-  let URL = `http://localhost:8080/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
+  // let URL = `http://localhost:8080/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
+  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
 
   return async (dispatch, getState) => {
     try {
@@ -128,7 +130,7 @@ export const getExerciseNice = (memberNo) => {
       if (response.status === 200) {
         const data = await response.json();
         dispatch({ type: GET_EXERCISENICE, payload: data });
-        return data; // 추가된 부분: 데이터 반환
+        return data;
       } else {
         throw new Error('Failed to fetch data');
       }

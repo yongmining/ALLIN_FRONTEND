@@ -5,7 +5,8 @@ import { IS_LOGIN } from '../modules/loginModule';
 /* 현재 로그인 된 멤버 정보 가져오기 */
 export const getCurrentMember = () => {
   const token = JSON.parse(window.localStorage.getItem('accessToken'));
-  const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}`;
+  // const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/member/${token.memberNo}`;
 
   return async (dispatch) => {
     const result = await fetch(requestURL, {
@@ -18,7 +19,6 @@ export const getCurrentMember = () => {
 
     if (result.status === 200) {
       dispatch({ type: GET_MEMBER, payload: result.data.members });
-      console.log(result);
       if (result.data.members.memberNickname.startsWith('새로운 회원')) {
         return '새로운 회원';
       }
@@ -29,7 +29,9 @@ export const getCurrentMember = () => {
 /* 현재 로그인 된 멤버 정보 변경 */
 export const getUpdateMember = (form) => {
   const token = JSON.parse(window.localStorage.getItem('accessToken'));
-  const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}/profile`;
+  // const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}/profile`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/member/${token.memberNo}/profile`;
+
   return async (dispatch) => {
     const result = await fetch(requestURL, {
       method: 'PUT',
@@ -50,7 +52,8 @@ export const getUpdateMember = (form) => {
 /* 현재 로그인 된 멤버가 탈퇴 */
 export const deleteMember = () => {
   const token = JSON.parse(window.localStorage.getItem('accessToken'));
-  const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}`;
+  // const requestURL = `http://localhost:8080/api/v1/member/${token.memberNo}`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/member/${token.memberNo}`;
 
   return async (dispatch) => {
     const result = await fetch(requestURL, {
@@ -74,8 +77,9 @@ export const deleteMember = () => {
 /* 현재 로그인 된 게스트 정보 가져오기 */
 export const getGuestMember = () => {
   const code = JSON.parse(window.localStorage.getItem('guestCode'));
-  console.log(code);
-  const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}`;
+
+  // const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guest/${code.guestNo}`;
 
   return async (dispatch) => {
     const result = await fetch(requestURL, {
@@ -87,7 +91,6 @@ export const getGuestMember = () => {
     }).then((res) => res.json());
     if (result.status === 200) {
       dispatch({ type: GET_GUEST, payload: result.data.guestmember });
-      console.log(result);
       return '게스트';
     }
   };
@@ -96,7 +99,9 @@ export const getGuestMember = () => {
 /* 현재 로그인 된 게스트 정보 변경 */
 export const getUpdateGuest = (form) => {
   const code = JSON.parse(window.localStorage.getItem('guestCode'));
-  const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}/profile`;
+  // const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}/profile`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guest/${code.guestNo}/profile`;
+
   return async (dispatch) => {
     const result = await fetch(requestURL, {
       method: 'PUT',
@@ -110,7 +115,6 @@ export const getUpdateGuest = (form) => {
     if (result.status === 200) {
       dispatch({ type: PUT_GUEST, payload: result.data });
       alert(result.message);
-      console.log(result);
     }
   };
 };
@@ -118,7 +122,8 @@ export const getUpdateGuest = (form) => {
 /* 현재 로그인 된 멤버가 탈퇴 */
 export const deleteGuest = () => {
   const code = JSON.parse(window.localStorage.getItem('guestCode'));
-  const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}/delete`;
+  // const requestURL = `http://localhost:8080/api/v1/guest/${code.guestNo}/delete`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guest/${code.guestNo}/delete`;
 
   return async (dispatch) => {
     const result = await fetch(requestURL, {
