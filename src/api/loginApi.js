@@ -1,7 +1,8 @@
 import { IS_LOGIN } from '../modules/loginModule';
 
 export const callKakaoLoginAPI = (code) => {
-  const requestURL = `http://localhost:8080/api/v1/login/kakaocode`;
+  // const requestURL = `http://localhost:8080/api/v1/login/kakaocode`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/login/kakaocode`;
 
   return async (dispatch, getState) => {
     let data = { code: code };
@@ -24,7 +25,8 @@ export const callKakaoLoginAPI = (code) => {
 };
 
 export const callKakaoLogoutAPI = () => {
-  const requestURL = `http://localhost:8080/api/v1/login/kakaologout`;
+  // const requestURL = `http://localhost:8080/api/v1/login/kakaologout`;
+  const requestURL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/login/kakaologout`;
 
   return async (dispatch, getState) => {
     const accessToken = JSON.parse(window.localStorage.getItem('accessToken'));
@@ -44,7 +46,8 @@ export const callKakaoLogoutAPI = () => {
 };
 
 export const callGuestLoginAPI = (code) => {
-  const requestURL = `http://localhost:8080/api/v1/login/guest`;
+  // const requestURL = `http://localhost:8080/api/v1/login/guest`;
+  const requestURL = `http:// ${process.env.REACT_APP_RESTAPI_URL}/api/v1/login/guest`;
 
   return async (dispatch, getState) => {
     try {
@@ -58,11 +61,9 @@ export const callGuestLoginAPI = (code) => {
       });
 
       const result = await response.json();
-      console.log(result);
 
       if (result.status === 201) {
         window.localStorage.setItem('guestCode', JSON.stringify(result.data.guestMember));
-        console.log(result);
 
         dispatch({ type: IS_LOGIN });
       }

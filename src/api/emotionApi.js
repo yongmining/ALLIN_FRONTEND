@@ -1,14 +1,15 @@
-import { GET_MEMBER_EMOTION } from "../modules/emotionModule";
+import { GET_MEMBER_EMOTION } from '../modules/emotionModule';
 
 export const memberEmotion = (memberNo) => {
-  let URL = `http://localhost:8080/api/v1/emotion/member/${memberNo}`;
+  // let URL = `http://localhost:8080/api/v1/emotion/member/${memberNo}`;
+  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/emotion/member/${memberNo}`;
 
   return async (dispatch) => {
     const response = await fetch(URL, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-type": "application/json",
-        Accept: "*/*",
+        'Content-type': 'application/json',
+        Accept: '*/*',
       },
     });
     const result = await response.json();
