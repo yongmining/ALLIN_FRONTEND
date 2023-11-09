@@ -20,23 +20,23 @@ function YoutubeList() {
     const fetchData = async () => {
       if (memberNo) {
         dispatch(youtubeList(memberNo));
+        try {
+          const extraData = await dispatch(getYoutubeNice(memberNo));
+          setExtraVideos(extraData);
+        } catch (error) {
+          console.error('Error loading extra videos in fetchData:', error);
+        }
       } else if (guestNo) {
         dispatch(guestYoutubeList(guestNo));
-      }
-      try {
-        const extraData = await dispatch(getYoutubeNice(memberNo));
-        console.log('Extra Videos in fetchData:', extraData);
-
-        setExtraVideos(extraData);
-      } catch (error) {
-        console.error('Error loading extra videos in fetchData:', error);
       }
     };
 
     fetchData();
-  }, [dispatch, members, memberNo, guestNo]);
+  }, [dispatch, memberNo, guestNo]);
 
-  const handleLikeClick = (videoLink) => {
+  const handleLikeClick = async (videoLink, currentNiceCount) => {
+    console.log('Like button clicked', videoLink);
+
     if (memberNo) {
       const niceData = {
         youtubeLink: videoLink,
@@ -44,7 +44,19 @@ function YoutubeList() {
           memberNo: memberNo,
         },
       };
-      dispatch(postYoutubeNice(niceData));
+      // 여기서 좋아요 API 호출 결과를 기다린 후 niceCount를 업데이트합니다.
+      const response = await dispatch(postYoutubeNice(niceData));
+      if (response.payload && response.payload.success) {
+        // 해당 비디오의 niceCount를 업데이트합니다.
+        setExtraVideos(
+          extraVideos.map((video) => {
+            if (video.youtubeLink === videoLink) {
+              return { ...video, niceCount: currentNiceCount + 1 };
+            }
+            return video;
+          })
+        );
+      }
     }
   };
 
@@ -120,7 +132,9 @@ function YoutubeList() {
               <h3>{video.youtubeTitle || video.guestYoutubeTitle}</h3>
               {memberNo && (
                 <div className="likeButton">
-                  <button onClick={() => handleLikeClick(video.youtubeLink)}>좋아요 {video.niceCount}</button>
+                  <button onClick={() => handleLikeClick(video.youtubeLink, video.niceCount)}>
+                    좋아요 {video.niceCount}
+                  </button>
                 </div>
               )}
             </div>

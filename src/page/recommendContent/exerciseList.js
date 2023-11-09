@@ -19,22 +19,23 @@ function ExerciseList() {
     const fetchData = async () => {
       if (memberNo) {
         dispatch(exerciseList(memberNo));
+        try {
+          const extraData = await dispatch(getExerciseNice(memberNo));
+          setExtraVideos(extraData);
+        } catch (error) {
+          console.error('Error loading extra videos in fetchData:', error);
+        }
       } else if (guestNo) {
         dispatch(guestExerciseList(guestNo));
-      }
-      try {
-        const extraData = await dispatch(getExerciseNice(memberNo));
-        console.log('Extra Videos in fetchData:', extraData);
-        setExtraVideos(extraData);
-      } catch (error) {
-        console.error('Error loading extra videos in fetchData:', error);
       }
     };
 
     fetchData();
-  }, [dispatch, members, memberNo, guestNo]);
+  }, [dispatch, memberNo, guestNo]);
 
-  const handleLikeClick = (videoLink) => {
+  const handleLikeClick = async (videoLink, currentNiceCount) => {
+    console.log('Like button clicked', videoLink);
+
     if (memberNo) {
       const niceData = {
         exerciseLink: videoLink,
@@ -42,8 +43,19 @@ function ExerciseList() {
           memberNo: memberNo,
         },
       };
-      // 좋아요 버튼을 클릭할 때 API 호출
-      dispatch(postExerciseNice(niceData));
+      // 여기서 좋아요 API 호출 결과를 기다린 후 niceCount를 업데이트합니다.
+      const response = await dispatch(postExerciseNice(niceData));
+      if (response.payload && response.payload.success) {
+        // 해당 비디오의 niceCount를 업데이트합니다.
+        setExtraVideos(
+          extraVideos.map((video) => {
+            if (video.exerciseLink === videoLink) {
+              return { ...video, niceCount: currentNiceCount + 1 };
+            }
+            return video;
+          })
+        );
+      }
     }
   };
 
@@ -66,7 +78,7 @@ function ExerciseList() {
   const handleFilterChange = async (e) => {
     setFilter(e.target.value);
 
-    if (e.target.value === 'liked' && members && memberNo) {
+    if (e.target.value === 'liked' && memberNo) {
       try {
         const extraData = await dispatch(getExerciseNice(memberNo));
         console.log('Extra Videos on filter change:', extraData);
@@ -110,28 +122,23 @@ function ExerciseList() {
       )}
 
       <div className="videoContainer">
-        {sortedVideos.map(
-          (video, index) =>
-            video && (
-              <div className="videoItem" key={index}>
-                <a
-                  href={memberNo ? video.exerciseLink : video.guestExerciseLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={video.thumbnailUrl} alt={memberNo ? video.exerciseTitle : video.guestExerciseTitle} />
-                </a>
-                <div className="videoInfo">
-                  <h3>{memberNo ? video.exerciseTitle : video.guestExerciseTitle}</h3>
-                  {memberNo && (
-                    <div className="likeButton">
-                      <button onClick={() => handleLikeClick(video.exerciseLink)}>좋아요</button>
-                    </div>
-                  )}
+        {sortedVideos.map((video, index) => (
+          <div className="videoItem" key={video.exerciseLink || video.guestExerciseLink}>
+            <a href={memberNo ? video.exerciseLink : video.guestExerciseLink} target="_blank" rel="noopener noreferrer">
+              <img src={video.thumbnailUrl} alt={video.ExerciseTitle || video.guestExerciseTitle} />
+            </a>
+            <div className="videoInfo">
+              <h3>{video.exerciseTitle || video.guestExerciseTitle}</h3>
+              {memberNo && (
+                <div className="likeButton">
+                  <button onClick={() => handleLikeClick(video.exerciseLink, video.niceCount)}>
+                    좋아요 {video.niceCount}
+                  </button>
                 </div>
-              </div>
-            )
-        )}
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
