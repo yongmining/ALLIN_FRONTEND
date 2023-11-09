@@ -6,6 +6,7 @@ import { getCurrentMember, getGuestMember } from "../../api/memberApi";
 import { emotionPhraseList } from "../../api/phraseApi";
 import Modal from "react-modal";
 import FbModal from "../../component/modal/fbModal";
+import { memberEmotionCount } from "../../api/emotionApi";
 
 function MainContents() {
   const dispatch = useDispatch();
@@ -22,8 +23,10 @@ function MainContents() {
 
   const members = useSelector((store) => store.memberReducer);
   const guest = useSelector((store) => store.guestReducer);
-
   const emotionPhrase = useSelector((store) => store.phraseReducer);
+
+  const [emotionResults, setEmotionResults] = useState([]);
+  const [showCounselingButton, setShowCounselingButton] = useState(false);
   useEffect(() => {
     dispatch(emotionPhraseList());
   }, [dispatch]);
@@ -35,6 +38,26 @@ function MainContents() {
       dispatch(getGuestMember());
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (members.memberNo) {
+      dispatch(memberEmotionCount(members.memberNo))
+        .then((fetchedEmotions) => {
+          setEmotionResults(fetchedEmotions);
+          const sadCount = fetchedEmotions.filter(
+            (e) => e.emotionResult === "Sad"
+          ).length;
+          if (sadCount >= 5) {
+            setShowCounselingButton(true);
+          } else {
+            setShowCounselingButton(false); // Sad가 5개 미만이면 버튼 숨기기
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching emotion data:", error);
+        });
+    }
+  }, [dispatch, members.memberNo]);
 
   const isGuest = localStorage.getItem("guestCode") !== null;
   const nickname = isGuest ? guest.guestNickname : members.memberNickname;
@@ -125,11 +148,13 @@ function MainContents() {
             onClick={goToExercise}
             alt="운동 로고"
           />
-          <img
-            src={"./../img/clinicLogo.png"}
-            onClick={goToClinic}
-            alt="상담 로고"
-          />
+          {showCounselingButton && (
+            <img
+              src={"./../img/clinicLogo.png"}
+              onClick={goToClinic}
+              alt="상담 로고"
+            />
+          )}
         </div>
       </div>
     </div>
