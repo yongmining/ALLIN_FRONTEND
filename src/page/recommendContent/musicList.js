@@ -19,22 +19,23 @@ function MusicList() {
     const fetchData = async () => {
       if (memberNo) {
         dispatch(musicList(memberNo));
+        try {
+          const extraData = await dispatch(getMusicNice(memberNo));
+          setExtraVideos(extraData);
+        } catch (error) {
+          console.error('Error loading extra videos in fetchData:', error);
+        }
       } else if (guestNo) {
         dispatch(guestMusicList(guestNo));
-      }
-      try {
-        const extraData = await dispatch(getMusicNice(memberNo));
-        console.log('Extra Videos in fetchData:', extraData);
-        setExtraVideos(extraData);
-      } catch (error) {
-        console.error('Error loading extra videos in fetchData:', error);
       }
     };
 
     fetchData();
-  }, [dispatch, members, memberNo, guestNo]);
+  }, [dispatch, memberNo, guestNo]);
 
-  const handleLikeClick = (videoLink) => {
+  const handleLikeClick = async (videoLink, currentNiceCount) => {
+    console.log('Like button clicked', videoLink);
+
     if (memberNo) {
       const niceData = {
         musicLink: videoLink,
@@ -42,10 +43,21 @@ function MusicList() {
           memberNo: memberNo,
         },
       };
-      dispatch(postMusicNice(niceData));
+      // 여기서 좋아요 API 호출 결과를 기다린 후 niceCount를 업데이트합니다.
+      const response = await dispatch(postMusicNice(niceData));
+      if (response.payload && response.payload.success) {
+        // 해당 비디오의 niceCount를 업데이트합니다.
+        setExtraVideos(
+          extraVideos.map((video) => {
+            if (video.musicLink === videoLink) {
+              return { ...video, niceCount: currentNiceCount + 1 };
+            }
+            return video;
+          })
+        );
+      }
     }
   };
-
   const removeDuplicates = (videos, memberCheck) => {
     const uniqueVideos = [];
     const seenLinks = new Set();
@@ -69,6 +81,7 @@ function MusicList() {
       try {
         const extraData = await dispatch(getMusicNice(memberNo));
         console.log('Extra Videos on filter change:', extraData);
+
         setExtraVideos(extraData);
       } catch (error) {
         console.error('Error loading extra videos on filter change:', error);
@@ -107,24 +120,23 @@ function MusicList() {
       )}
 
       <div className="videoContainer">
-        {sortedVideos.map(
-          (video, index) =>
-            video && (
-              <div className="videoItem" key={index}>
-                <a href={memberNo ? video.musicLink : video.guestMusicLink} target="_blank" rel="noopener noreferrer">
-                  <img src={video.thumbnailUrl} alt={memberNo ? video.musicTitle : video.guestMusicTitle} />
-                </a>
-                <div className="videoInfo">
-                  <h3>{memberNo ? video.musicTitle : video.guestMusicTitle}</h3>
-                  {memberNo && (
-                    <div className="likeButton">
-                      <button onClick={() => handleLikeClick(video.musicLink)}>좋아요</button>
-                    </div>
-                  )}
+        {sortedVideos.map((video, index) => (
+          <div className="videoItem" key={video.musicLink || video.guestMusicLink}>
+            <a href={memberNo ? video.musicLink : video.guestMusicLink} target="_blank" rel="noopener noreferrer">
+              <img src={video.thumbnailUrl} alt={video.musicTitle || video.guestMusicTitle} />
+            </a>
+            <div className="videoInfo">
+              <h3>{video.musicTitle || video.guestMusicTitle}</h3>
+              {memberNo && (
+                <div className="likeButton">
+                  <button onClick={() => handleLikeClick(video.musicLink, video.niceCount)}>
+                    좋아요 {video.niceCount}
+                  </button>
                 </div>
-              </div>
-            )
-        )}
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
