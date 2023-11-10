@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import axios from "axios";
+import {useSelector } from 'react-redux';
 
 const TakePictureAnalyze = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const members = useSelector((store) => store.memberReducer);
 
   useEffect(() => {
     getVideo();
@@ -67,7 +70,7 @@ const TakePictureAnalyze = () => {
           withCredentials: true, // 이 부분에서 수정이 필요합니다.
         };
 
-        const response = await axios.post("http://127.0.0.1:8080/api/v1/picture/upload", formData, config);
+        const response = await axios.post(`http://127.0.0.1:8080/api/v1/picture/upload`, formData, config);
 
         if (response.status === 200) {
           console.log("Photo uploaded successfully!");
