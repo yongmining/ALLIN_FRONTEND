@@ -2,8 +2,8 @@ import { GET_FEEDBACK, GET_FEEDBACKLIST } from '../modules/feedbackModule';
 
 // 관리자 내 피드백 리스트 조회
 export const callFeedbackListAPI = ({ currentPage }) => {
-  // let URL = `http://localhost:8080/api/v1/feedbacks?page=${currentPage}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedbacks?page=${currentPage}`;
+  let URL = `http://localhost:8080/api/v1/feedbacks?page=${currentPage}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedbacks?page=${currentPage}`;
 
   return async (dispatch, getState) => {
     const result = await fetch(URL, {
@@ -22,8 +22,8 @@ export const callFeedbackListAPI = ({ currentPage }) => {
 
 // 관리자 피드백 코드로 조회
 export const callFeedbackDetailAPI = (feedbackNo) => {
-  // const URL = `http://localhost:8080/api/v1/feedback/${feedbackNo}`;
-  const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedback/${feedbackNo}`;
+  const URL = `http://localhost:8080/api/v1/feedback/${feedbackNo}`;
+  // const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedback/${feedbackNo}`;
 
   return async (dispatch, getState) => {
     const result = await fetch(URL, {
@@ -42,8 +42,8 @@ export const callFeedbackDetailAPI = (feedbackNo) => {
 
 // 관리자 멤버코드로 작성한 피드백 조회
 export const callFeedbackByMemberAPI = (memberNo) => {
-  // const URL = `http://localhost:8080/api/v1/feedback/membmer/${memberNo}`;
-  const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedback/membmer/${memberNo}`;
+  const URL = `http://localhost:8080/api/v1/feedback/membmer/${memberNo}`;
+  // const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedback/membmer/${memberNo}`;
 
   return async (dispatch, getState) => {
     const result = await fetch(URL, {
@@ -62,8 +62,8 @@ export const callFeedbackByMemberAPI = (memberNo) => {
 
 // 피드백 작성
 export const createNewFeedback = (form, close) => {
-  // const URL = `http://localhost:8080/api/v1/feedback`;
-  const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedback`;
+  const URL = `http://localhost:8080/api/v1/feedback`;
+  // const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/feedback`;
 
   return async (dispatch, getState) => {
     const result = await fetch(URL, {

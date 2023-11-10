@@ -1,7 +1,7 @@
-import { createActions, handleActions } from "redux-actions";
+import { createActions, handleActions } from 'redux-actions';
 
 const initialState = [];
-export const GET_MEMBER_EMOTION = "emotion/GET_MEMBER_EMOTION";
+export const GET_MEMBER_EMOTION = 'emotion/GET_MEMBER_EMOTION';
 
 const actions = createActions({
   [GET_MEMBER_EMOTION]: () => {},
@@ -10,7 +10,7 @@ const actions = createActions({
 const memberEmotionReducer = handleActions(
   {
     [GET_MEMBER_EMOTION]: (state, { payload }) => {
-      return [...state, ...payload];
+      return payload;
     },
   },
   initialState

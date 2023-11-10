@@ -44,22 +44,23 @@ function YoutubeList() {
           memberNo: memberNo,
         },
       };
-      // 여기서 좋아요 API 호출 결과를 기다린 후 niceCount를 업데이트합니다.
-      const response = await dispatch(postYoutubeNice(niceData));
-      if (response.payload && response.payload.success) {
-        // 해당 비디오의 niceCount를 업데이트합니다.
-        setExtraVideos(
-          extraVideos.map((video) => {
-            if (video.youtubeLink === videoLink) {
-              return { ...video, niceCount: currentNiceCount + 1 };
-            }
-            return video;
-          })
-        );
+
+      try {
+        const response = await dispatch(postYoutubeNice(niceData));
+
+        if (response.payload && response.payload.success) {
+          // 좋아요 API 호출이 성공한 후 새로고침합니다.
+          window.location.reload();
+        } else {
+          // 실패한 응답 처리 로직
+          console.error('Error liking the video:', response);
+        }
+      } catch (error) {
+        // 예외 처리 로직
+        console.error('An error occurred while liking the video:', error);
       }
     }
   };
-
   const removeDuplicates = (videos, memberCheck) => {
     const uniqueVideos = [];
     const seenLinks = new Set();

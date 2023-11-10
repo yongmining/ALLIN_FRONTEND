@@ -1,8 +1,8 @@
 import { GET_YOUTUBENICE, GET_EXERCISENICE, GET_MUSICNICE } from '../modules/niceModule';
 
 export const postYoutubeNice = (niceData) => {
-  // let URL = `http://localhost:8080/api/v1/createOrCancelNice`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelNice`;
+  let URL = `http://localhost:8080/api/v1/createOrCancelNice`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelNice`;
 
   return async function (dispatch, getState) {
     const result = await fetch(URL, {
@@ -21,8 +21,8 @@ export const postYoutubeNice = (niceData) => {
 };
 
 export const getYoutubeNice = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/recommendations/emotion-age/${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/recommendations/emotion-age/${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/recommendations/emotion-age/${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/recommendations/emotion-age/${memberNo}`;
 
   return async (dispatch, getState) => {
     try {
@@ -48,8 +48,8 @@ export const getYoutubeNice = (memberNo) => {
   };
 };
 export const postMusicNice = (niceData) => {
-  // let URL = `http://localhost:8080/api/v1/createOrCancelMusicNice`;
-  let URL = `http:// ${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelMusicNice`;
+  let URL = `http://localhost:8080/api/v1/createOrCancelMusicNice`;
+  // let URL = `http:// ${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelMusicNice`;
 
   return async function (dispatch, getState) {
     const result = await fetch(URL, {
@@ -68,8 +68,8 @@ export const postMusicNice = (niceData) => {
 };
 
 export const getMusicNice = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/musicrecommendations/emotion-age/${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/musicrecommendations/emotion-age/${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/musicrecommendations/emotion-age/${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/musicrecommendations/emotion-age/${memberNo}`;
 
   return async (dispatch, getState) => {
     try {
@@ -94,8 +94,8 @@ export const getMusicNice = (memberNo) => {
   };
 };
 export const postExerciseNice = (niceData) => {
-  // let URL = `http://localhost:8080/api/v1/createOrCancelExerciseNice`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelExerciseNice`;
+  let URL = `http://localhost:8080/api/v1/createOrCancelExerciseNice`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/createOrCancelExerciseNice`;
 
   return async function (dispatch, getState) {
     const result = await fetch(URL, {
@@ -114,8 +114,8 @@ export const postExerciseNice = (niceData) => {
 };
 
 export const getExerciseNice = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/exerciserecommendations/emotion-age/${memberNo}`;
 
   return async (dispatch, getState) => {
     try {

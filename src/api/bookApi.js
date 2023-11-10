@@ -1,8 +1,8 @@
 import { GET_BOOK } from '../modules/bookModule';
 
 export const bookList = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/book/emotion?memberNo=${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/book/emotion?memberNo=${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/book/emotion?memberNo=${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/book/emotion?memberNo=${memberNo}`;
 
   return async (dispatch) => {
     try {
@@ -29,8 +29,7 @@ export const bookList = (memberNo) => {
 };
 
 export const guestBookList = (guestNo) => {
-  // let URL = `http://localhost:8080/api/v1/book/guest/emotion?memberNo=${guestNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/book/guest/emotion?memberNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/book/guest/emotion?guestNo=${guestNo}`;
   return async (dispatch) => {
     try {
       const response = await fetch(URL, {

@@ -2,8 +2,8 @@ import { GET_TALKLIST } from '../modules/talkModule';
 
 // 채팅 입력
 export const callTalkAddAPI = async (postData) => {
-  // const URL = `http://localhost:8080/api/v1/talk/add`;
-  const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/talk/add`;
+  const URL = `http://localhost:8080/api/v1/talk/add`;
+  // const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/talk/add`;
 
   try {
     const response = await fetch(URL, {
@@ -41,8 +41,8 @@ export const callHistoryAPI = () => {
     console.error('유효한 게스트 코드 또는 회원 토큰이 없습니다.');
     return;
   }
-  // const URL = `http://localhost:8080/api/v1/talk/history/${userNo}`;
-  const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/talk/history/${userNo}`;
+  const URL = `http://localhost:8080/api/v1/talk/history/${userNo}`;
+  // const URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/talk/history/${userNo}`;
 
   return async (dispatch, getState) => {
     try {

@@ -4,11 +4,9 @@ import { createNewFeedback } from '../api/feedbackApi';
 import '../css/feedback.css';
 import { getCurrentMember } from '../api/memberApi';
 import { CLOSE_MODAL } from '../modules/modalModule';
-import { useNavigate } from 'react-router-dom';
 
 function FeedBack({ closeFeedback }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const members = useSelector((store) => store.memberReducer);
 
   const [form, setForm] = useState({
@@ -23,7 +21,7 @@ function FeedBack({ closeFeedback }) {
 
   useEffect(() => {
     dispatch(getCurrentMember());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (members) {
@@ -49,8 +47,8 @@ function FeedBack({ closeFeedback }) {
 
   const handleSubmit = () => {
     dispatch(createNewFeedback(form, () => {}));
-    closeModal();
-    navigate('/');
+    closeFeedback();
+    window.location.reload();
   };
 
   return (

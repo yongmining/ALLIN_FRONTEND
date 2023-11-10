@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import axios from "axios";
+import React, { useEffect, useRef } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const TakePictureAnalyze = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getVideo();
@@ -18,7 +20,7 @@ const TakePictureAnalyze = () => {
         video.play();
       })
       .catch((err) => {
-        console.error("Error:", err);
+        console.error('Error:', err);
       });
   };
 
@@ -27,7 +29,7 @@ const TakePictureAnalyze = () => {
     const canvas = canvasRef.current;
 
     if (video && canvas) {
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       const width = video.videoWidth;
       const height = video.videoHeight;
 
@@ -41,41 +43,41 @@ const TakePictureAnalyze = () => {
 
   async function takePhoto() {
     paintToCanvas(); // 새로운 기능: 현재 영상 프레임을 캡처
-
+    navigate('/choiceContents', { replace: true });
     const canvas = canvasRef.current;
     if (canvas) {
-      const dataURL = canvas.toDataURL("image/jpeg");
+      const dataURL = canvas.toDataURL('image/jpeg');
 
       // Convert data URL to Blob
-      const byteCharacters = atob(dataURL.split(",")[1]);
+      const byteCharacters = atob(dataURL.split(',')[1]);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
-      const imageBlob = new Blob([new Uint8Array(byteNumbers)], { type: "image/jpeg" });
+      const imageBlob = new Blob([new Uint8Array(byteNumbers)], { type: 'image/jpeg' });
 
       try {
         const formData = new FormData();
-        formData.append("file", imageBlob);
+        formData.append('file', imageBlob);
 
         // CORS 요청 헤더 설정
         const config = {
           headers: {
-            "Content-Type": "multipart/form-data", // 다른 형식의 데이터일 경우 변경
-            "Access-Control-Allow-Origin": "*",
+            'Content-Type': 'multipart/form-data', // 다른 형식의 데이터일 경우 변경
+            'Access-Control-Allow-Origin': '*',
           },
           withCredentials: true, // 이 부분에서 수정이 필요합니다.
         };
 
-        const response = await axios.post("http://127.0.0.1:8080/api/v1/picture/upload", formData, config);
+        const response = await axios.post('http://127.0.0.1:8080/api/v1/picture/upload', formData, config);
 
         if (response.status === 200) {
-          console.log("Photo uploaded successfully!");
+          console.log('Photo uploaded successfully!');
         } else {
-          console.error("Error uploading photo:", response.status);
+          console.error('Error uploading photo:', response.status);
         }
       } catch (error) {
-        console.error("Error uploading photo:", error);
+        console.error('Error uploading photo:', error);
       }
     }
   }
@@ -84,7 +86,7 @@ const TakePictureAnalyze = () => {
     <div>
       <button onClick={takePhoto}>Take a photo</button>
       <video onCanPlay={paintToCanvas} ref={videoRef} autoPlay playsInline muted />
-      <canvas ref={canvasRef} style={{ display: "none" }} />
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
   );
 };

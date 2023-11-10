@@ -55,6 +55,7 @@ function MusicList() {
             return video;
           })
         );
+        window.location.reload();
       }
     }
   };

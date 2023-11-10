@@ -3,8 +3,8 @@ import { GET_MUSIC, GET_GUEST_MUSIC } from '../modules/musicModule';
 import { GET_EXERCISE, GET_GUEST_EXERCISE } from '../modules/exerciseModule';
 
 export const youtubeList = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/youtube/emotion?memberNo=${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/youtube/emotion?memberNo=${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/youtube/emotion?memberNo=${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/youtube/emotion?memberNo=${memberNo}`;
 
   return async (dispatch) => {
     const result = await fetch(URL, {
@@ -23,8 +23,8 @@ export const youtubeList = (memberNo) => {
 };
 
 export const musicList = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/music/emotion?memberNo=${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/music/emotion?memberNo=${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/music/emotion?memberNo=${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/music/emotion?memberNo=${memberNo}`;
 
   return async (dispatch) => {
     const result = await fetch(URL, {
@@ -43,8 +43,8 @@ export const musicList = (memberNo) => {
 };
 
 export const exerciseList = (memberNo) => {
-  // let URL = `http://localhost:8080/api/v1/exercise/emotion?memberNo=${memberNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/exercise/emotion?memberNo=${memberNo}`;
+  let URL = `http://localhost:8080/api/v1/exercise/emotion?memberNo=${memberNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/exercise/emotion?memberNo=${memberNo}`;
 
   return async (dispatch) => {
     const result = await fetch(URL, {
@@ -63,8 +63,8 @@ export const exerciseList = (memberNo) => {
 };
 
 export const guestYoutubeList = (guestNo) => {
-  // let URL = `http://localhost:8080/api/v1/guestYoutube/emotion?guestNo=${guestNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guestYoutube/emotion?guestNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/guestYoutube/emotion?guestNo=${guestNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guestYoutube/emotion?guestNo=${guestNo}`;
 
   return async (dispatch) => {
     const result = await fetch(URL, {
@@ -83,8 +83,8 @@ export const guestYoutubeList = (guestNo) => {
 };
 
 export const guestMusicList = (guestNo) => {
-  // let URL = `http://localhost:8080/api/v1/guestMusic/emotion?guestNo=${guestNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guestMusic/emotion?guestNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/guestMusic/emotion?guestNo=${guestNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guestMusic/emotion?guestNo=${guestNo}`;
 
   return async (dispatch) => {
     const result = await fetch(URL, {
@@ -102,8 +102,8 @@ export const guestMusicList = (guestNo) => {
   };
 };
 export const guestExerciseList = (guestNo) => {
-  // let URL = `http://localhost:8080/api/v1/guestExercise/emotion?guestNo=${guestNo}`;
-  let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guestExercise/emotion?guestNo=${guestNo}`;
+  let URL = `http://localhost:8080/api/v1/guestExercise/emotion?guestNo=${guestNo}`;
+  // let URL = `http://${process.env.REACT_APP_RESTAPI_URL}/api/v1/guestExercise/emotion?guestNo=${guestNo}`;
 
   return async (dispatch) => {
     const result = await fetch(URL, {
